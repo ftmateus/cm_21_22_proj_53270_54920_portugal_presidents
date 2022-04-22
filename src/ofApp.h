@@ -1,0 +1,45 @@
+/* Refer to the README.md in the example's root folder for more information on usage */
+
+#pragma once
+
+#include "ofMain.h"
+
+#define IMAGE_MEDIA_TYPE 0
+
+#define VIDEO_MEDIA_TYPE 1
+
+class ofApp : public ofBaseApp{
+	
+	public:
+		
+		void setup();
+		void update();
+		void draw();
+		
+		void keyPressed(int key);
+		void keyReleased(int key);
+		void mouseMoved(int x, int y );
+		void mouseDragged(int x, int y, int button);
+		void mousePressed(int x, int y, int button);
+		void mouseReleased(int x, int y, int button);
+		void mouseEntered(int x, int y);
+		void mouseExited(int x, int y);
+		void windowResized(int w, int h);
+		void dragEvent(ofDragInfo dragInfo);
+		void gotMessage(ofMessage msg);		
+		void drawImage(ofImage* img);
+		void drawVideo(ofVideoPlayer* vid);
+		
+		// we will have a dynamic number of images, based on the content of a directory:
+		ofDirectory dir;
+		//vector<ofImage> images;
+		vector<ofBaseDraws*> mediaFiles;
+
+		vector<int> mediaTypes;
+
+		bool frameByframe;
+
+		int currentMedia;
+		
+};
+
