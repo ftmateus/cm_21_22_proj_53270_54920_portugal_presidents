@@ -5,7 +5,7 @@ void ofApp::setup(){
 
     frameByframe = false;
 
-    dir.listDir("images/of_logos/");
+    dir.listDir("/");
     dir.allowExt("jpg");
     dir.allowExt("mov");
 
@@ -31,7 +31,7 @@ void ofApp::setup(){
                 mediaTypes.push_back(IMAGE_MEDIA_TYPE);
                 mediaFiles.push_back(img);
             }
-            else if (mediaExt == ".mov")
+             else if (mediaExt == ".mov")
             {
                 ofVideoPlayer *vid = new ofVideoPlayer();
                 vid->load(mediaPath);
