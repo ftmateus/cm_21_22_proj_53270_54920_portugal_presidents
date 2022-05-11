@@ -98,6 +98,7 @@ void ofApp::draw(){
 void ofApp::drawPresident()
 {
     const double aspectRatio = 4.0 / 5.0;
+    const int spaceBetween = 25;
 
     const int presidentCarrouselYPos = 50;
     const int centerPresidentImgHeight = 300;
@@ -109,21 +110,29 @@ void ofApp::drawPresident()
 
     int windowXCenter = ofGetWidth() / 2;
     int centerPresidentImgXPos = windowXCenter - centerPresidentImgWidth/2;
-    int previousPresidentImgXPos = centerPresidentImgXPos - neighbourPresidentImgWidth;
-    int nextPresidentImgXPos = windowXCenter + centerPresidentImgWidth/ 2;
 
     ofImage* centerPresidentImg = (ofImage*)mediaFiles[currentMedia];
     centerPresidentImg->draw(centerPresidentImgXPos, presidentCarrouselYPos, centerPresidentImgWidth, centerPresidentImgHeight);
 
-    if (currentMedia > 0)
+    for (int prevImageIdx = currentMedia - 1, times = 1; prevImageIdx > 0 && prevImageIdx >= currentMedia - 3; prevImageIdx--, times++)
     {
-        ofImage* prevPresidentImg = (ofImage*)mediaFiles[currentMedia - 1];
+        ofImage* prevPresidentImg = (ofImage*)mediaFiles[prevImageIdx];
+
+        //int previousPresidentImgXPos = centerPresidentImgXPos - (neighbourPresidentImgWidth)*times - spaceBetween*times;
+        int previousPresidentImgXPos = centerPresidentImgXPos - (neighbourPresidentImgWidth)*times - spaceBetween * times;
+
+
         prevPresidentImg->draw(previousPresidentImgXPos, presidentCarrouselYPos, neighbourPresidentImgWidth, neighbourPresidentImgHeight);
     }
 
-    if (currentMedia < mediaFiles.size() - 1)
+   
+    for (int nextImageIdx = currentMedia + 1, times = 1; nextImageIdx < mediaFiles.size() && nextImageIdx <= currentMedia + 3; nextImageIdx++, times++)
     {
-        ofImage* nextPresidentImg = (ofImage*)mediaFiles[currentMedia + 1];
+        //int nextPresidentImgXPos = windowXCenter + (centerPresidentImgWidth / 2)*times + spaceBetween*times;
+        int nextPresidentImgXPos = (centerPresidentImgXPos + centerPresidentImgWidth) + neighbourPresidentImgWidth*(times - 1) + spaceBetween * times;
+
+
+        ofImage* nextPresidentImg = (ofImage*)mediaFiles[nextImageIdx];
         nextPresidentImg->draw(nextPresidentImgXPos, presidentCarrouselYPos, neighbourPresidentImgWidth, neighbourPresidentImgHeight);
     }
         
