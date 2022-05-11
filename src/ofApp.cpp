@@ -114,23 +114,26 @@ void ofApp::drawPresident()
     ofImage* centerPresidentImg = (ofImage*)mediaFiles[currentMedia];
     centerPresidentImg->draw(centerPresidentImgXPos, presidentCarrouselYPos, centerPresidentImgWidth, centerPresidentImgHeight);
 
-    for (int prevImageIdx = currentMedia - 1, times = 1; prevImageIdx >= 0 && prevImageIdx >= currentMedia - 3; prevImageIdx--, times++)
+    for (int prevImageIdx = currentMedia - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++)
     {
         ofImage* prevPresidentImg = (ofImage*)mediaFiles[prevImageIdx];
 
         //int previousPresidentImgXPos = centerPresidentImgXPos - (neighbourPresidentImgWidth)*times - spaceBetween*times;
         int previousPresidentImgXPos = centerPresidentImgXPos - (neighbourPresidentImgWidth)*times - spaceBetween * times;
 
+        if (previousPresidentImgXPos <= 0) break;
+
 
         prevPresidentImg->draw(previousPresidentImgXPos, presidentCarrouselYPos, neighbourPresidentImgWidth, neighbourPresidentImgHeight);
     }
 
    
-    for (int nextImageIdx = currentMedia + 1, times = 1; nextImageIdx < mediaFiles.size() && nextImageIdx <= currentMedia + 3; nextImageIdx++, times++)
+    for (int nextImageIdx = currentMedia + 1, times = 1; nextImageIdx < mediaFiles.size(); nextImageIdx++, times++)
     {
         //int nextPresidentImgXPos = windowXCenter + (centerPresidentImgWidth / 2)*times + spaceBetween*times;
         int nextPresidentImgXPos = (centerPresidentImgXPos + centerPresidentImgWidth) + neighbourPresidentImgWidth*(times - 1) + spaceBetween * times;
 
+        if (nextPresidentImgXPos + neighbourPresidentImgWidth >= ofGetWidth()) break;
 
         ofImage* nextPresidentImg = (ofImage*)mediaFiles[nextImageIdx];
         nextPresidentImg->draw(nextPresidentImgXPos, presidentCarrouselYPos, neighbourPresidentImgWidth, neighbourPresidentImgHeight);
