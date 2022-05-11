@@ -7,6 +7,7 @@ void ofApp::setup(){
 
     dir.listDir("/");
     dir.allowExt("jpg");
+    dir.allowExt("png");
     dir.allowExt("mov");
 
     dir.sort(); // in linux the file system doesn't return file lists ordered in alphabetical order
@@ -24,7 +25,7 @@ void ofApp::setup(){
         if (extDotLocation)
         {
             string mediaExt = mediaPath.substr(extDotLocation);
-            if (mediaExt == ".jpg")
+            if (mediaExt == ".jpg" || mediaExt == ".png")
             {
                 ofImage *img = new ofImage();
                 img->load(mediaPath);
@@ -143,9 +144,9 @@ void ofApp::drawVideo(ofVideoPlayer *vid) {
 void ofApp::keyPressed(int key){
     if (dir.size() > 0){
         int oldMedia = -1;
-        if (key == OF_KEY_DOWN)
+        if (key == OF_KEY_RIGHT)
             oldMedia = currentMedia++;
-        else if (key == OF_KEY_UP)
+        else if (key == OF_KEY_LEFT)
             oldMedia = currentMedia--;
         
         if (oldMedia != -1 && mediaTypes[oldMedia] == VIDEO_MEDIA_TYPE)
