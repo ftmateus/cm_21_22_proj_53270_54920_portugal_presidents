@@ -156,9 +156,9 @@ void ofApp::keyPressed(int key){
         }
 
         if (currentMedia < 0)
-            currentMedia = (int)dir.size() - 1;
+            currentMedia = (int)mediaFiles.size() - 1;
         else
-            currentMedia %= dir.size();
+            currentMedia %= mediaFiles.size();
     }
 }
 
