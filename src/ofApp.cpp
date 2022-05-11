@@ -108,13 +108,13 @@ void ofApp::drawPresident()
     if (currentMedia > 0)
     {
         ofImage* prevPresidentImg = (ofImage*)mediaFiles[currentMedia - 1];
-        prevPresidentImg->draw(centerPresidentImgXPos - 250, 50, 125, 200);
+        prevPresidentImg->draw(centerPresidentImgXPos - 250/2, 50, 150, 200);
     }
 
     if (currentMedia < mediaFiles.size() - 1)
     {
         ofImage* nextPresidentImg = (ofImage*)mediaFiles[currentMedia + 1];
-        nextPresidentImg->draw(centerPresidentImgXPos + 250, 50, 125, 200);
+        nextPresidentImg->draw(centerPresidentImgXPos + 250, 50, 150, 200);
     }
         
 
