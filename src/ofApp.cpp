@@ -114,7 +114,7 @@ void ofApp::drawPresident()
     ofImage* centerPresidentImg = (ofImage*)mediaFiles[currentMedia];
     centerPresidentImg->draw(centerPresidentImgXPos, presidentCarrouselYPos, centerPresidentImgWidth, centerPresidentImgHeight);
 
-    for (int prevImageIdx = currentMedia - 1, times = 1; prevImageIdx > 0 && prevImageIdx >= currentMedia - 3; prevImageIdx--, times++)
+    for (int prevImageIdx = currentMedia - 1, times = 1; prevImageIdx >= 0 && prevImageIdx >= currentMedia - 3; prevImageIdx--, times++)
     {
         ofImage* prevPresidentImg = (ofImage*)mediaFiles[prevImageIdx];
 
