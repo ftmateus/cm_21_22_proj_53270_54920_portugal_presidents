@@ -97,17 +97,6 @@ void ofApp::draw(){
 
 void ofApp::drawPresident()
 {
-    const double aspectRatio = 4.0 / 5.0;
-    const int spaceBetween = 25;
-
-    const int presidentCarrouselYPos = 50;
-    const int centerPresidentImgHeight = 300;
-    const int centerPresidentImgWidth = centerPresidentImgHeight * aspectRatio;
-    const int neighbourPresidentImgHeight = 200;
-    const int neighbourPresidentImgWidth = neighbourPresidentImgHeight * aspectRatio;
-;
-    
-
     int windowXCenter = ofGetWidth() / 2;
     int centerPresidentImgXPos = windowXCenter - centerPresidentImgWidth/2;
 
@@ -115,24 +104,22 @@ void ofApp::drawPresident()
     centerPresidentImg->draw(centerPresidentImgXPos, presidentCarrouselYPos, centerPresidentImgWidth, centerPresidentImgHeight);
 
     for (int prevImageIdx = currentMedia - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++)
-    {
-        ofImage* prevPresidentImg = (ofImage*)mediaFiles[prevImageIdx];
-
-        //int previousPresidentImgXPos = centerPresidentImgXPos - (neighbourPresidentImgWidth)*times - spaceBetween*times;
+    {        
         int previousPresidentImgXPos = centerPresidentImgXPos - (neighbourPresidentImgWidth)*times - spaceBetween * times;
 
+        //off window limits check
         if (previousPresidentImgXPos <= 0) break;
 
-
+        ofImage* prevPresidentImg = (ofImage*)mediaFiles[prevImageIdx];
         prevPresidentImg->draw(previousPresidentImgXPos, presidentCarrouselYPos, neighbourPresidentImgWidth, neighbourPresidentImgHeight);
     }
 
    
     for (int nextImageIdx = currentMedia + 1, times = 1; nextImageIdx < mediaFiles.size(); nextImageIdx++, times++)
     {
-        //int nextPresidentImgXPos = windowXCenter + (centerPresidentImgWidth / 2)*times + spaceBetween*times;
         int nextPresidentImgXPos = (centerPresidentImgXPos + centerPresidentImgWidth) + neighbourPresidentImgWidth*(times - 1) + spaceBetween * times;
 
+        //off window limits check
         if (nextPresidentImgXPos + neighbourPresidentImgWidth >= ofGetWidth()) break;
 
         ofImage* nextPresidentImg = (ofImage*)mediaFiles[nextImageIdx];
@@ -185,9 +172,9 @@ void ofApp::drawVideo(ofVideoPlayer *vid) {
 void ofApp::keyPressed(int key){
     if (dir.size() > 0){
         int oldMedia = -1;
-        if (key == OF_KEY_RIGHT)
+        if (key == OF_KEY_RIGHT && currentMedia < mediaFiles.size() - 1)
             oldMedia = currentMedia++;
-        else if (key == OF_KEY_LEFT)
+        else if (key == OF_KEY_LEFT && currentMedia > 0)
             oldMedia = currentMedia--;
         
         if (oldMedia != -1 && mediaTypes[oldMedia] == VIDEO_MEDIA_TYPE)
@@ -197,10 +184,11 @@ void ofApp::keyPressed(int key){
             vid->stop();
         }
 
-        if (currentMedia < 0)
+       /* if (currentMedia < 0)
             currentMedia = (int)mediaFiles.size() - 1;
         else
-            currentMedia %= mediaFiles.size();
+            currentMedia %= mediaFiles.size();*/
+
     }
 }
 

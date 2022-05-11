@@ -40,6 +40,15 @@ class ofApp : public ofBaseApp{
 		bool frameByframe;
 
 		int currentMedia;
+
+		const double aspectRatio = 4.0 / 5.0;
+		const int spaceBetween = 25;
+
+		const int presidentCarrouselYPos = 50;
+		const int centerPresidentImgHeight = 300;
+		const int centerPresidentImgWidth = centerPresidentImgHeight * aspectRatio;
+		const int neighbourPresidentImgHeight = 200;
+		const int neighbourPresidentImgWidth = neighbourPresidentImgHeight * aspectRatio;
 		
 };
 
