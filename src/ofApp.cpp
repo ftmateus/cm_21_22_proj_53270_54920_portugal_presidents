@@ -97,24 +97,34 @@ void ofApp::draw(){
 
 void ofApp::drawPresident()
 {
+    const double aspectRatio = 4.0 / 5.0;
+
+    const int presidentCarrouselYPos = 50;
+    const int centerPresidentImgHeight = 300;
+    const int centerPresidentImgWidth = centerPresidentImgHeight * aspectRatio;
+    const int neighbourPresidentImgHeight = 200;
+    const int neighbourPresidentImgWidth = neighbourPresidentImgHeight * aspectRatio;
+;
+    
+
+    int windowXCenter = ofGetWidth() / 2;
+    int centerPresidentImgXPos = windowXCenter - centerPresidentImgWidth/2;
+    int previousPresidentImgXPos = centerPresidentImgXPos - neighbourPresidentImgWidth;
+    int nextPresidentImgXPos = windowXCenter + centerPresidentImgWidth/ 2;
+
     ofImage* centerPresidentImg = (ofImage*)mediaFiles[currentMedia];
-
-    int centerPresidentImgWidth = 250;
-    int centerPresidentImgHeight = 350;
-    int centerPresidentImgXPos = ofGetWidth() / 2 - centerPresidentImgWidth/2;
-
-    centerPresidentImg->draw(centerPresidentImgXPos, 50, centerPresidentImgWidth, centerPresidentImgHeight);
+    centerPresidentImg->draw(centerPresidentImgXPos, presidentCarrouselYPos, centerPresidentImgWidth, centerPresidentImgHeight);
 
     if (currentMedia > 0)
     {
         ofImage* prevPresidentImg = (ofImage*)mediaFiles[currentMedia - 1];
-        prevPresidentImg->draw(centerPresidentImgXPos - 250/2, 50, 150, 200);
+        prevPresidentImg->draw(previousPresidentImgXPos, presidentCarrouselYPos, neighbourPresidentImgWidth, neighbourPresidentImgHeight);
     }
 
     if (currentMedia < mediaFiles.size() - 1)
     {
         ofImage* nextPresidentImg = (ofImage*)mediaFiles[currentMedia + 1];
-        nextPresidentImg->draw(centerPresidentImgXPos + 250, 50, 150, 200);
+        nextPresidentImg->draw(nextPresidentImgXPos, presidentCarrouselYPos, neighbourPresidentImgWidth, neighbourPresidentImgHeight);
     }
         
 
