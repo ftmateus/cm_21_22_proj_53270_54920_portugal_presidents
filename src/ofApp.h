@@ -27,7 +27,7 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);		
-		void drawImage(ofImage* img);
+		void drawPresident();
 		void drawVideo(ofVideoPlayer* vid);
 		
 		// we will have a dynamic number of images, based on the content of a directory:

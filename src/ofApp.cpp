@@ -67,9 +67,8 @@ void ofApp::draw(){
         {
             case IMAGE_MEDIA_TYPE:
             {
-                ofImage* img = (ofImage*) mediaFiles[currentMedia];
-
-                drawImage(img);
+               
+                drawPresident();
                 
                 break;
             }
@@ -96,9 +95,29 @@ void ofApp::draw(){
     }
 }
 
-void ofApp::drawImage(ofImage* img)
+void ofApp::drawPresident()
 {
-    img->draw(380, 175);
+    ofImage* centerPresidentImg = (ofImage*)mediaFiles[currentMedia];
+
+    int centerPresidentImgWidth = 250;
+    int centerPresidentImgHeight = 350;
+    int centerPresidentImgXPos = ofGetWidth() / 2 - centerPresidentImgWidth/2;
+
+    centerPresidentImg->draw(centerPresidentImgXPos, 50, centerPresidentImgWidth, centerPresidentImgHeight);
+
+    if (currentMedia > 0)
+    {
+        ofImage* prevPresidentImg = (ofImage*)mediaFiles[currentMedia - 1];
+        prevPresidentImg->draw(centerPresidentImgXPos - 250, 50, 125, 200);
+    }
+
+    if (currentMedia < mediaFiles.size() - 1)
+    {
+        ofImage* nextPresidentImg = (ofImage*)mediaFiles[currentMedia + 1];
+        nextPresidentImg->draw(centerPresidentImgXPos + 250, 50, 125, 200);
+    }
+        
+
 
     ofSetColor(ofColor::gray);
     /*string pathInfo = dir.getName(currentMedia) + " " + dir.getPath(currentMedia) + "\n\n" +
