@@ -8,7 +8,7 @@
 
 #define VIDEO_MEDIA_TYPE 1
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp {
 	
 	public:
 		
@@ -29,6 +29,8 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);		
 		void drawPresident();
 		void drawVideo(ofVideoPlayer* vid);
+
+		ofTrueTypeFont myfont;
 		
 		// we will have a dynamic number of images, based on the content of a directory:
 		ofDirectory dir;

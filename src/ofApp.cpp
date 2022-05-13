@@ -5,6 +5,8 @@ void ofApp::setup(){
 
     frameByframe = false;
 
+    myfont.load("arial.ttf", 32);
+
     dir.listDir("/");
     dir.allowExt("jpg");
     dir.allowExt("png");
@@ -102,13 +104,14 @@ void ofApp::drawPresident()
 
     ofImage* centerPresidentImg = (ofImage*)mediaFiles[currentMedia];
     centerPresidentImg->draw(centerPresidentImgXPos, presidentCarrouselYPos, centerPresidentImgWidth, centerPresidentImgHeight);
+    
 
     for (int prevImageIdx = currentMedia - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++)
     {        
         int previousPresidentImgXPos = centerPresidentImgXPos - (neighbourPresidentImgWidth)*times - spaceBetween * times;
 
         //off window limits check
-        if (previousPresidentImgXPos <= 0) break;
+        if (previousPresidentImgXPos + neighbourPresidentImgWidth <= 0) break;
 
         ofImage* prevPresidentImg = (ofImage*)mediaFiles[prevImageIdx];
         prevPresidentImg->draw(previousPresidentImgXPos, presidentCarrouselYPos, neighbourPresidentImgWidth, neighbourPresidentImgHeight);
@@ -120,11 +123,15 @@ void ofApp::drawPresident()
         int nextPresidentImgXPos = (centerPresidentImgXPos + centerPresidentImgWidth) + neighbourPresidentImgWidth*(times - 1) + spaceBetween * times;
 
         //off window limits check
-        if (nextPresidentImgXPos + neighbourPresidentImgWidth >= ofGetWidth()) break;
+        if (nextPresidentImgXPos  >= ofGetWidth()) break;
 
         ofImage* nextPresidentImg = (ofImage*)mediaFiles[nextImageIdx];
         nextPresidentImg->draw(nextPresidentImgXPos, presidentCarrouselYPos, neighbourPresidentImgWidth, neighbourPresidentImgHeight);
     }
+
+    ofSetColor(ofColor::black);
+
+    ofDrawBitmapString("Hello World!", 1000, 1000);
         
 
 
