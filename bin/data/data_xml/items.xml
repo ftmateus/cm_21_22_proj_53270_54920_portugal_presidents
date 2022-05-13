@@ -1,43 +1,119 @@
 <items>
     <item>
-        <id>Teófilo Braga</id>
+        <id>pr_1</id>
+        <name>Teófilo Braga</name>
+        <startDate>1910</startDate>
+        <endDate>1911</endDate>
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
     </item>
     <item>
-        <id>Manuel de Arriaga</id>
+        <id>pr_2</id>
+        <name>Manuel de Arriaga</name>
+        <startDate>1911</startDate>
+        <endDate>1915</endDate>
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
     </item>
     <item>
-        <id>Bernardino Machado</id>
+        <id>pr_3</id>
+        <name>Bernardino Machado</name>
+        <startDate>1915</startDate>
+        <endDate>1917</endDate>
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
     </item>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    <item>
+        <id>pr_4</id>
+        <name>Sidónio Pais</name>
+        <startDate>1917</startDate>
+        <endDate>1918</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </item>
+    <item>
+        <id>pr_5</id>
+        <name>João do Canto e Castro</name>
+        <startDate>1918</startDate>
+        <endDate>1919</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </item>
+    <item>
+        <id>pr_6</id>
+        <name>António José de Almeida</name>
+        <startDate>1919</startDate>
+        <endDate>1923</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </item>
+    <item>
+        <id>pr_7</id>
+        <name>Manuel Teixeira Gomes</name>
+        <startDate>1923</startDate>
+        <endDate>1925</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </item>
+    <item>
+        <id>pr_8</id>
+        <name>José Mendes Cabeçadas Júnior</name>
+        <startDate>1926</startDate>
+        <endDate>1926</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </item>
+    <item>
+        <id>pr_9</id>
+        <name>Manuel Gomes da Costa</name>
+        <startDate>1926</startDate>
+        <endDate>1926</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </item>
+    <item>
+        <id>pr_10</id>
+        <name>Óscar Carmona</name>
+        <startDate>1926</startDate>
+        <endDate>1928</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </item>
+    <item>
+        <id>pr_11</id>
+        <name>António Salazar</name>
+        <startDate>1935</startDate>
+        <endDate>1935</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </item>
+    <item>
+        <id>pr_12</id>
+        <name>Francisco Craveiro Lopes</name>
+        <startDate>1951</startDate>
+        <endDate>1958</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </item>
+    <item>
+        <id>pr_13</id>
+        <name>Américo Thomaz</name>
+        <startDate>1958</startDate>
+        <endDate>1974</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
 </items>
 
