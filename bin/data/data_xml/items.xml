@@ -1,43 +1,86 @@
 <items>
-    <item>
-        <id>Teófilo Braga</id>
-        <luminance>228.883117676</luminance>
-        <color>20.069444656</color>
-        <faces>1</faces>
-    </item>
-    <item>
-        <id>Manuel de Arriaga</id>
-        <luminance>228.883117676</luminance>
-        <color>20.069444656</color>
-        <faces>1</faces>
-    </item>
-    <item>
-        <id>Bernardino Machado</id>
-        <luminance>228.883117676</luminance>
-        <color>20.069444656</color>
-        <faces>1</faces>
-    </item>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  <item>
+    <id>Teófilo Braga</id>
+    <luminance>228.883117676</luminance>
+    <color>20.069444656</color>
+    <faces>1</faces>
+  </item>
+  <item>
+    <id>Manuel de Arriaga</id>
+    <luminance>228.883117676</luminance>
+    <color>20.069444656</color>
+    <faces>1</faces>
+  </item>
+  <item>
+    <id>Bernardino Machado</id>
+    <luminance>228.883117676</luminance>
+    <color>20.069444656</color>
+    <faces>1</faces>
+  </item>
+
+
+  <item>
+    <id>pr_14</id>
+    <name>António Spínola</name>
+    <startDate>1974</startDate>
+    <endDate>1974</endDate>
+    <luminance>228.883117676</luminance>
+    <color>20.069444656</color>
+    <faces>1</faces>
+  </item>
+  <item>
+    <id>pr_15</id>
+    <name>Francisco da Costa Gomes</name>
+    <startDate>1974</startDate>
+    <endDate>1976</endDate>
+    <luminance>228.883117676</luminance>
+    <color>20.069444656</color>
+    <faces>1</faces>
+  </item>
+  <item>
+    <id>pr_16</id>
+    <name>António Ramalho Eanes</name>
+    <startDate>1976</startDate>
+    <endDate>1986</endDate>
+    <luminance>228.883117676</luminance>
+    <color>20.069444656</color>
+    <faces>1</faces>
+  </item>
+  <item>
+    <id>pr_17</id>
+    <name>Mário Soares</name>
+    <startDate>1986</startDate>
+    <endDate>1996</endDate>
+    <luminance>228.883117676</luminance>
+    <color>20.069444656</color>
+    <faces>1</faces>
+  </item>
+  <item>
+    <id>pr_18</id>
+    <name>Jorge Sampaio</name>
+    <startDate>1996</startDate>
+    <endDate>2006</endDate>
+    <luminance>228.883117676</luminance>
+    <color>20.069444656</color>
+    <faces>1</faces>
+  </item>
+  <item>
+    <id>pr_19</id>
+    <name>Aníbal Cavaco Silva</name>
+    <startDate>2006</startDate>
+    <endDate>2016</endDate>
+    <luminance>228.883117676</luminance>
+    <color>20.069444656</color>
+    <faces>1</faces>
+  </item>
+  <item>
+    <id>pr_20</id>
+    <name>Marcelo Rebelo de Sousa</name>
+    <startDate>2016</startDate>
+    <endDate>-</endDate>
+    <luminance>228.883117676</luminance>
+    <color>20.069444656</color>
+    <faces>1</faces>
+  </item>
 </items>
 
