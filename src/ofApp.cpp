@@ -1,16 +1,18 @@
 #include "ofApp.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
+void ofApp::setup() {
+    
+    ofSetWindowTitle("Presidentes de Portugal - David Pereira e Francisco Mateus");
 
     frameByframe = false;
 
-    dir.listDir("/images");
+    dir.listDir("images");
     dir.allowExt("jpg");
     dir.allowExt("png");
     //dir.allowExt("mov");
 
-    if (!mainXml.load("/data_xml/presidents.xml")) {
+    if (!mainXml.load("data_xml/presidents.xml")) {
         ofLogError() << "Couldn't load file";
         assert(FALSE);
     }
@@ -26,9 +28,7 @@ void ofApp::setup(){
 
     int n_presidents = mainXml.getNumTags("president");
 
-    for (int i = 0; i < n_presidents; i++)
-    {
-        //string profilePicture = pres.getChild("profilePicture").getValue();
+    for (int i = 0; i < n_presidents; i++) {
         string profilePicture = mainXml.getValue("president:profilePicture", "", i);
 
         ofImage* img = new ofImage();
@@ -109,7 +109,6 @@ void ofApp::drawPresident()
         ofImage* prevPresidentImg = (ofImage*)mediaFiles[prevImageIdx];
         prevPresidentImg->draw(previousPresidentImgXPos, presidentCarrouselYPos, neighbourPresidentImgWidth, neighbourPresidentImgHeight);
     }
-
    
     for (int nextImageIdx = currentMedia + 1, times = 1; nextImageIdx < mediaFiles.size(); nextImageIdx++, times++)
     {
@@ -145,16 +144,9 @@ void ofApp::drawPresident()
 
 
     ofSetColor(ofColor::gray);
-    /*string pathInfo = dir.getName(currentMedia) + " " + dir.getPath(currentMedia) + "\n\n" +
-        "press any key to advance current image\n\n" +
-        "many thanks to hikaru furuhashi for the OFs";
-    ofDrawBitmapString(pathInfo, 300, img->getHeight() + 80);*/
-
-    
 }
 
 void ofApp::drawVideo(ofVideoPlayer *vid) {
-
 
     vid->setLoopState(OF_LOOP_NORMAL);
 

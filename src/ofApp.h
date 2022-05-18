@@ -30,7 +30,12 @@ class ofApp : public ofBaseApp {
 		void gotMessage(ofMessage msg);		
 		void drawPresident();
 		void drawVideo(ofVideoPlayer* vid);
-
+        void edgesFilter(string itemName, ofImage image);
+        void textureFilter(string itemName, ofImage image);
+        void generateMetadata(string itemName, string path, ofImage image, bool isVideo);
+        void importMetadata();
+        void exportMetadata();
+    
 		ofTrueTypeFont myfont;
 		
 		// we will have a dynamic number of images, based on the content of a directory:
