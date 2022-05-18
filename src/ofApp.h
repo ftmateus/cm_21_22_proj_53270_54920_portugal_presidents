@@ -10,7 +10,7 @@
 #define VIDEO_MEDIA_TYPE 1
 
 class ofApp : public ofBaseApp {
-	
+
 	public:
 		
 		void setup();
