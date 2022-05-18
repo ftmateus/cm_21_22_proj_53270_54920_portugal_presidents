@@ -64,90 +64,90 @@ void ofApp::draw(){
         myfont.drawString("Presidentes de Portugal", windowXCenter - titleBox.width / 2, 50);
         titleBox.~ofRectangle();
     }
-    
 
-    if (dir.size() > 0){
-        ofSetColor(ofColor::white);
+    drawPresidents(); 
 
-        switch (mediaTypes[currentMedia])
-        {
-            case IMAGE_MEDIA_TYPE:
-            {
-               
-                drawPresident();
-                
-                break;
-            }
-            case VIDEO_MEDIA_TYPE:
-            {
-                ofVideoPlayer* vid = (ofVideoPlayer*) mediaFiles[currentMedia];
-
-                drawVideo(vid);
-
-                break;
-            }
-        }
-        ofSetColor(ofColor::gray);
-        /*for (int i = 0; i < (int)dir.size(); i++) {
-            if (i == currentMedia) {
-                ofSetColor(ofColor::red);
-            }
-            else {
-                ofSetColor(ofColor::black);
-            }
-            string fileInfo = "file " + ofToString(i + 1) + " = " + dir.getName(i);
-            ofDrawBitmapString(fileInfo, 50, i * 20 + 50);
-        }*/
-    }
+    drawPresidentDescription();
 }
 
-void ofApp::drawPresident()
+void ofApp::drawPresidentDescription()
+{
+    string presidentDescription = mainXml.getValue("president:description", "", currentMedia);
+}
+
+void ofApp::drawPresidents()
 {    
+    ofSetColor(ofColor::white);
     ofImage* centerPresidentImg = (ofImage*)mediaFiles[currentMedia];
-    centerPresidentImg->draw(centerPresidentImgXPos, presidentCarrouselYPos, centerPresidentImgWidth, centerPresidentImgHeight);
+    centerPresidentImg->draw(centerPresidentImgXPos, PRESIDENTS_CARROUSEL_Y_POS, CENTER_PRESIDENT_IMG_WIDTH, CENTER_PRESIDENT_IMG_HEIGHT);
     
     for (int prevImageIdx = currentMedia - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++)
     {        
-        int previousPresidentImgXPos = centerPresidentImgXPos - (neighbourPresidentImgWidth)*times - spaceBetween * times;
+        int previousPresidentImgXPos = centerPresidentImgXPos - (NEIGHBOUR_PRESIDENT_IMG_WIDTH)*times - SPACE_BETWEEN_PRESIDENTS * times;
 
         //off window limits check
-        if (previousPresidentImgXPos + neighbourPresidentImgWidth <= 0) break;
+        if (previousPresidentImgXPos + NEIGHBOUR_PRESIDENT_IMG_WIDTH <= 0) break;
 
         ofImage* prevPresidentImg = (ofImage*)mediaFiles[prevImageIdx];
-        prevPresidentImg->draw(previousPresidentImgXPos, presidentCarrouselYPos, neighbourPresidentImgWidth, neighbourPresidentImgHeight);
+        prevPresidentImg->draw(previousPresidentImgXPos, PRESIDENTS_CARROUSEL_Y_POS, NEIGHBOUR_PRESIDENT_IMG_WIDTH, NEIGHBOUR_PRESIDENT_IMG_HEIGHT);
     }
    
     for (int nextImageIdx = currentMedia + 1, times = 1; nextImageIdx < mediaFiles.size(); nextImageIdx++, times++)
     {
-        int nextPresidentImgXPos = (centerPresidentImgXPos + centerPresidentImgWidth) + neighbourPresidentImgWidth*(times - 1) + spaceBetween * times;
+        int nextPresidentImgXPos = (centerPresidentImgXPos + CENTER_PRESIDENT_IMG_WIDTH) + NEIGHBOUR_PRESIDENT_IMG_WIDTH*(times - 1) + SPACE_BETWEEN_PRESIDENTS * times;
 
         //off window limits check
         if (nextPresidentImgXPos  >= ofGetWidth()) break;
 
         ofImage* nextPresidentImg = (ofImage*)mediaFiles[nextImageIdx];
-        nextPresidentImg->draw(nextPresidentImgXPos, presidentCarrouselYPos, neighbourPresidentImgWidth, neighbourPresidentImgHeight);
+        nextPresidentImg->draw(nextPresidentImgXPos, PRESIDENTS_CARROUSEL_Y_POS, NEIGHBOUR_PRESIDENT_IMG_WIDTH, NEIGHBOUR_PRESIDENT_IMG_HEIGHT);
     }
 
+    myfont.load("arial.ttf", 20);
     ofSetColor(ofColor::black);
 
-    string presidentName = mainXml.getValue("president:name", "", currentMedia);
-    string startDate = mainXml.getValue("president:startDate", "", currentMedia);
-    string endDate = mainXml.getValue("president:endDate", "", currentMedia);
-    
-    myfont.load("arial.ttf", 20);
+    {
+        string presidentName = mainXml.getValue("president:name", "", currentMedia);
 
-    ofRectangle presidentNameBox = myfont.getStringBoundingBox(presidentName, 0, 0);
-    myfont.drawString(presidentName, windowXCenter - (presidentNameBox.width/2), presidentCarrouselYPos + centerPresidentImgHeight + 25);
-    presidentNameBox.~ofRectangle();
+        drawStringCentered(presidentName, windowXCenter, PRESIDENTS_CARROUSEL_Y_POS + CENTER_PRESIDENT_IMG_HEIGHT + 25);
+    }
 
-    ofRectangle startDateBox = myfont.getStringBoundingBox(startDate, 0,0);
-    myfont.drawString(startDate, centerPresidentImgXPos - startDateBox.width - 10, presidentCarrouselYPos + centerPresidentImgHeight - 75);
-    startDateBox.~ofRectangle();
+    {
+        string startDate = mainXml.getValue("president:startDate", "", currentMedia);
 
-    myfont.drawString(endDate, (windowXCenter + centerPresidentImgWidth / 2) + 10, presidentCarrouselYPos + centerPresidentImgHeight - 75);
+        drawStringRight(startDate, centerPresidentImgXPos - 10, PRESIDENTS_CARROUSEL_Y_POS + CENTER_PRESIDENT_IMG_HEIGHT - 75);
+    }
 
-    ofSetColor(ofColor::gray);
+    {
+        string endDate = mainXml.getValue("president:endDate", "", currentMedia);
+        myfont.drawString(endDate, (windowXCenter + CENTER_PRESIDENT_IMG_WIDTH / 2) + 10, PRESIDENTS_CARROUSEL_Y_POS + CENTER_PRESIDENT_IMG_HEIGHT - 75);
+    }
+
+    {
+        string birthDate = mainXml.getValue("president:birthDate", "", currentMedia);
+        string deathDate = mainXml.getValue("president:deathDate", "", currentMedia);
+
+        string presidentLifePeriod = birthDate + "->" + deathDate;
+
+        drawStringCentered(presidentLifePeriod, windowXCenter, PRESIDENTS_CARROUSEL_Y_POS + CENTER_PRESIDENT_IMG_HEIGHT + 50);
+    }
+
 }
+
+void ofApp::drawStringCentered(const std::string& c, float x, float y) 
+{
+    ofRectangle stringBox = myfont.getStringBoundingBox(c, 0, 0);
+    myfont.drawString(c, x - (stringBox.width / 2), y);
+    stringBox.~ofRectangle();
+}
+
+void ofApp::drawStringRight(const std::string& c, float x, float y)
+{
+    ofRectangle stringBox = myfont.getStringBoundingBox(c, 0, 0);
+    myfont.drawString(c, x - (stringBox.width), y);
+    stringBox.~ofRectangle();
+}
+
 
 void ofApp::drawVideo(ofVideoPlayer *vid) {
 
@@ -223,31 +223,31 @@ void ofApp::mousePressed(int x, int y, int button){
 
 }
 
+bool ofApp::isMousePtrInCarrousel(int x, int y)
+{
+    /* if (y < presidentCarrouselYPos || y > presidentCarrouselYPos + centerPresidentImgHeight)
+         return false;*/
+
+         //if(x <= centerPresidentImgXPos || x >= centerPresidentImgXPos + centerPresidentImgWidth)
+
+    return y >= PRESIDENTS_CARROUSEL_Y_POS && y <= PRESIDENTS_CARROUSEL_Y_POS + CENTER_PRESIDENT_IMG_HEIGHT;
+}
+
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
     /* OF_MOUSE_BUTTON_LEFT
     OF_MOUSE_BUTTON_RIGHT
     OF_MOUSE_BUTTON_MIDDLE */
 
-    /*int centerPresidentImgXPos = windowXCenter - centerPresidentImgWidth / 2;
+    int centerPresidentImgXPos = windowXCenter - CENTER_PRESIDENT_IMG_WIDTH / 2;
 
-    if (y >= presidentCarrouselYPos && y <= presidentCarrouselYPos + centerPresidentImgHeight)
+    if (isMousePtrInCarrousel(x, y))
     {
-        if (x <= centerPresidentImgXPos || x >= centerPresidentImgXPos + centerPresidentImgWidth)
+        if (x <= centerPresidentImgXPos || x >= centerPresidentImgXPos + CENTER_PRESIDENT_IMG_WIDTH)
         {
 
         }
-    }*/
-}
-
-bool ofApp::isMousePtrInCarrousel(int x, int y)
-{
-   /* if (y < presidentCarrouselYPos || y > presidentCarrouselYPos + centerPresidentImgHeight)
-        return false;*/
-
-    //if(x <= centerPresidentImgXPos || x >= centerPresidentImgXPos + centerPresidentImgWidth)
-
-    return y >= presidentCarrouselYPos && y <= presidentCarrouselYPos + centerPresidentImgHeight;
+    }
 }
 
 //--------------------------------------------------------------
@@ -274,9 +274,9 @@ void ofApp::mouseExited(int x, int y){
 }
 
 //--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
+void ofApp::windowResized(ofResizeEventArgs& resize){
     windowXCenter = ofGetWidth() / 2;
-    centerPresidentImgXPos = windowXCenter - centerPresidentImgWidth / 2;
+    centerPresidentImgXPos = windowXCenter - CENTER_PRESIDENT_IMG_WIDTH / 2;
 }
 
 //--------------------------------------------------------------

@@ -25,11 +25,11 @@ class ofApp : public ofBaseApp {
 		void mouseReleased(int x, int y, int button);
 		void mouseEntered(int x, int y);
 		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
+		void windowResized(ofResizeEventArgs& resize);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);		
 		void mouseScrolled(int x, int y, float scrollX, float scrollY);
-		void drawPresident();
+		void drawPresidents();
 		void drawVideo(ofVideoPlayer* vid);
         void edgesFilter(string itemName, ofImage image);
         void textureFilter(string itemName, ofImage image);
@@ -37,6 +37,10 @@ class ofApp : public ofBaseApp {
         void importMetadata();
         void exportMetadata();
 		bool isMousePtrInCarrousel(int x, int y);
+		void drawStringCentered(const std::string& c, float x, float y);
+		void drawStringRight(const std::string& c, float x, float y);
+		void drawPresidentDescription();
+
     
 		ofTrueTypeFont myfont;
 		
@@ -51,20 +55,22 @@ class ofApp : public ofBaseApp {
 
 		int currentMedia;
 
-
+		//computed
 		int windowXCenter;
 		int centerPresidentImgXPos;
 
 		ofxXmlSettings mainXml;
 
-		const double aspectRatio = 4.0 / 5.0;
-		const int spaceBetween = 25;
+		const double PRESIDENT_PORTRAIT_ASPECT_RATIO = 4.0 / 5.0;
+		const int SPACE_BETWEEN_PRESIDENTS = 25;
 
-		const int presidentCarrouselYPos = 75;
-		const int centerPresidentImgHeight = 300;
-		const int centerPresidentImgWidth = centerPresidentImgHeight * aspectRatio;
-		const int neighbourPresidentImgHeight = 200;
-		const int neighbourPresidentImgWidth = neighbourPresidentImgHeight * aspectRatio;
+		const int PRESIDENTS_CARROUSEL_Y_POS = 75;
+
+		const int CENTER_PRESIDENT_IMG_HEIGHT = 300;
+		const int CENTER_PRESIDENT_IMG_WIDTH = CENTER_PRESIDENT_IMG_HEIGHT * PRESIDENT_PORTRAIT_ASPECT_RATIO;
+
+		const int NEIGHBOUR_PRESIDENT_IMG_HEIGHT = 200;
+		const int NEIGHBOUR_PRESIDENT_IMG_WIDTH = NEIGHBOUR_PRESIDENT_IMG_HEIGHT * PRESIDENT_PORTRAIT_ASPECT_RATIO;
 		
 };
 
