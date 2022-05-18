@@ -56,6 +56,16 @@ void ofApp::update() {
 //--------------------------------------------------------------
 void ofApp::draw(){
 
+    {
+        myfont.load("arial.ttf", 34);
+        ofRectangle titleBox = myfont.getStringBoundingBox("Presidentes de Portugal", 50, 50);
+        int windowXCenter = ofGetWidth() / 2;
+
+        myfont.drawString("Presidentes de Portugal", windowXCenter - titleBox.width / 2, 50);
+        titleBox.~ofRectangle();
+    }
+    
+
     if (dir.size() > 0){
         ofSetColor(ofColor::white);
 
@@ -92,15 +102,7 @@ void ofApp::draw(){
 }
 
 void ofApp::drawPresident()
-{
-    myfont.load("arial.ttf", 34);
-    ofRectangle titleBox = myfont.getStringBoundingBox("🇵🇹 Presidentes de Portugal 🇵🇹", 50, 50);
-    int windowXCenter = ofGetWidth() / 2;
-
-    myfont.drawString("🇵🇹 Presidentes de Portugal 🇵🇹", windowXCenter - titleBox.width/2, 50);
-    
-    int centerPresidentImgXPos = windowXCenter - centerPresidentImgWidth/2;
-
+{    
     ofImage* centerPresidentImg = (ofImage*)mediaFiles[currentMedia];
     centerPresidentImg->draw(centerPresidentImgXPos, presidentCarrouselYPos, centerPresidentImgWidth, centerPresidentImgHeight);
     
@@ -223,8 +225,43 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
+    /* OF_MOUSE_BUTTON_LEFT
+    OF_MOUSE_BUTTON_RIGHT
+    OF_MOUSE_BUTTON_MIDDLE */
 
+    /*int centerPresidentImgXPos = windowXCenter - centerPresidentImgWidth / 2;
+
+    if (y >= presidentCarrouselYPos && y <= presidentCarrouselYPos + centerPresidentImgHeight)
+    {
+        if (x <= centerPresidentImgXPos || x >= centerPresidentImgXPos + centerPresidentImgWidth)
+        {
+
+        }
+    }*/
 }
+
+bool ofApp::isMousePtrInCarrousel(int x, int y)
+{
+   /* if (y < presidentCarrouselYPos || y > presidentCarrouselYPos + centerPresidentImgHeight)
+        return false;*/
+
+    //if(x <= centerPresidentImgXPos || x >= centerPresidentImgXPos + centerPresidentImgWidth)
+
+    return y >= presidentCarrouselYPos && y <= presidentCarrouselYPos + centerPresidentImgHeight;
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseScrolled(int x, int y, float scrollX, float scrollY) 
+{
+    if (isMousePtrInCarrousel(x, y))
+    {
+        if (scrollY >= 1.0 && currentMedia < mediaFiles.size() - 1)
+            currentMedia++;
+        else if (scrollY <= -1.0 && currentMedia > 0)
+            currentMedia--;
+    }
+}
+
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
@@ -238,7 +275,8 @@ void ofApp::mouseExited(int x, int y){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+    windowXCenter = ofGetWidth() / 2;
+    centerPresidentImgXPos = windowXCenter - centerPresidentImgWidth / 2;
 }
 
 //--------------------------------------------------------------

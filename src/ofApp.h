@@ -28,6 +28,7 @@ class ofApp : public ofBaseApp {
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);		
+		void mouseScrolled(int x, int y, float scrollX, float scrollY);
 		void drawPresident();
 		void drawVideo(ofVideoPlayer* vid);
         void edgesFilter(string itemName, ofImage image);
@@ -35,6 +36,7 @@ class ofApp : public ofBaseApp {
         void generateMetadata(string itemName, string path, ofImage image, bool isVideo);
         void importMetadata();
         void exportMetadata();
+		bool isMousePtrInCarrousel(int x, int y);
     
 		ofTrueTypeFont myfont;
 		
@@ -48,6 +50,10 @@ class ofApp : public ofBaseApp {
 		bool frameByframe;
 
 		int currentMedia;
+
+
+		int windowXCenter;
+		int centerPresidentImgXPos;
 
 		ofxXmlSettings mainXml;
 
