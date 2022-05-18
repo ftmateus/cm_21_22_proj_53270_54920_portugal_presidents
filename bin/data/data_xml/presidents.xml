@@ -1,0 +1,204 @@
+<?xml version="1.0"?>
+<presidents>
+    <president>
+        <id>pr_1</id>
+        <name>Teófilo Braga</name>
+        <profilePicture>Teofilo_Braga.png</profilePicture>
+        <startDate>1910</startDate>
+        <endDate>1911</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_2</id>
+        <name>Manuel de Arriaga</name>
+        <profilePicture>Manuel_de_Arriaga_-_Fotografia_Vasques.png</profilePicture>
+        <startDate>1911</startDate>
+        <endDate>1915</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_3</id>
+        <name>Bernardino Machado</name>
+        <profilePicture>BernardinoMachado.png</profilePicture>
+        <startDate>1915</startDate>
+        <endDate>1917</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_4</id>
+        <name>Sidónio Pais</name>
+		    <profilePicture>Sidonio_Pais.png</profilePicture>
+        <startDate>1917</startDate>
+        <endDate>1918</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_5</id>
+        <name>João do Canto e Castro</name>
+		    <profilePicture>Joao_do_Canto_e_Castro.png</profilePicture>
+        <startDate>1918</startDate>
+        <endDate>1919</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_6</id>
+        <name>António José de Almeida</name>
+		    <profilePicture>Antonio_Jose_de_Almeida.png</profilePicture>
+        <startDate>1919</startDate>
+        <endDate>1923</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_7</id>
+        <name>Manuel Teixeira Gomes</name>
+		    <profilePicture>Manuel_Teixeira_Gomes.png</profilePicture>
+        <startDate>1923</startDate>
+        <endDate>1925</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_8</id>
+        <name>José Mendes Cabeçadas Júnior</name>
+		    <profilePicture>Jose_Mendes_Cabecadas_Junior.png</profilePicture>
+        <startDate>1926</startDate>
+        <endDate>1926</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_9</id>
+        <name>Manuel Gomes da Costa</name>
+		    <profilePicture>Manuel_Gomes_da_Costa.png</profilePicture>
+        <startDate>1926</startDate>
+        <endDate>1926</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_10</id>
+        <name>Óscar Carmona</name>
+		    <profilePicture>Oscar_Carmona.png</profilePicture>
+        <startDate>1926</startDate>
+        <endDate>1928</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_11</id>
+        <name>António Salazar</name>
+		    <profilePicture>Antonio_de_Oliveira_Salazar.jpg</profilePicture>
+        <startDate>1935</startDate>
+        <endDate>1935</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_12</id>
+        <name>Francisco Craveiro Lopes</name>
+		    <profilePicture>Francisco_Craveiro_Lopes.jpg</profilePicture>
+        <startDate>1951</startDate>
+        <endDate>1958</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+	      <id>pr_13</id>
+	      <name>Américo Thomaz</name>
+	      <profilePicture>Americo_Thomaz.png</profilePicture>
+	      <startDate>1958</startDate>
+	      <endDate>1974</endDate>
+	      <luminance>228.883117676</luminance>
+	      <color>20.069444656</color>
+	      <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_14</id>
+        <name>António Spínola</name>
+	      <profilePicture>Antonio_Spinola.jpg</profilePicture>
+        <startDate>1974</startDate>
+        <endDate>1974</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_15</id>
+        <name>Francisco da Costa Gomes</name>
+	      <profilePicture>Francisco_da_Costa_Gomes.jpg</profilePicture>
+        <startDate>1974</startDate>
+        <endDate>1976</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_16</id>
+        <name>António Ramalho Eanes</name>
+	      <profilePicture>Antonio_Ramalho_Eanes.png</profilePicture>
+        <startDate>1976</startDate>
+        <endDate>1986</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_17</id>
+        <name>Mário Soares</name>
+	      <profilePicture>Mario_Soares.png</profilePicture>
+        <startDate>1986</startDate>
+        <endDate>1996</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_18</id>
+        <name>Jorge Sampaio</name>
+	      <profilePicture>Jorge_Sampaio.jpg</profilePicture>
+        <startDate>1996</startDate>
+        <endDate>2006</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_19</id>
+        <name>Aníbal Cavaco Silva</name>
+	      <profilePicture>Anibal_Cavaco_Silva.jpg</profilePicture>
+        <startDate>2006</startDate>
+        <endDate>2016</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+    </president>
+    <president>
+        <id>pr_20</id>
+        <name>Marcelo Rebelo de Sousa</name>
+	      <profilePicture>Marcelo_Rebelo_de_Sousa.jpg</profilePicture>
+        <startDate>2016</startDate>
+        <endDate>-</endDate>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
+      </president>
+</presidents>
+

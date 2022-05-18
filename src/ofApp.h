@@ -3,6 +3,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include <ofxXmlSettings.h>
 
 #define IMAGE_MEDIA_TYPE 0
 
@@ -42,6 +43,9 @@ class ofApp : public ofBaseApp {
 		bool frameByframe;
 
 		int currentMedia;
+
+		ofxXmlSettings mainXml;
+
 
 		const double aspectRatio = 4.0 / 5.0;
 		const int spaceBetween = 25;

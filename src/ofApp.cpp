@@ -7,10 +7,16 @@ void ofApp::setup(){
 
     myfont.load("arial.ttf", 32);
 
-    dir.listDir("/");
+    dir.listDir("/images");
     dir.allowExt("jpg");
     dir.allowExt("png");
-    dir.allowExt("mov");
+    //dir.allowExt("mov");
+
+    if (!mainXml.load("/data_xml/presidents.xml")) {
+        ofLogError() << "Couldn't load file";
+        assert(FALSE);
+    }
+    mainXml.pushTag("presidents");
 
     dir.sort(); // in linux the file system doesn't return file lists ordered in alphabetical order
 
@@ -20,28 +26,19 @@ void ofApp::setup(){
         mediaTypes.reserve(dir.size());
     }
 
-    // you can now iterate through the files and load them into the ofImage vector
-    for(int i = 0; i < (int)dir.size(); i++){
-        string mediaPath = dir.getPath(i);
-        size_t extDotLocation = mediaPath.find_last_of(".");
-        if (extDotLocation)
-        {
-            string mediaExt = mediaPath.substr(extDotLocation);
-            if (mediaExt == ".jpg" || mediaExt == ".png")
-            {
-                ofImage *img = new ofImage();
-                img->load(mediaPath);
-                mediaTypes.push_back(IMAGE_MEDIA_TYPE);
-                mediaFiles.push_back(img);
-            }
-             else if (mediaExt == ".mov")
-            {
-                ofVideoPlayer *vid = new ofVideoPlayer();
-                vid->load(mediaPath);
-                mediaTypes.push_back(VIDEO_MEDIA_TYPE);
-                mediaFiles.push_back(vid);
-            }
-        }
+    int n_presidents = mainXml.getNumTags("president");
+
+    for (int i = 0; i < n_presidents; i++)
+    {
+        //string profilePicture = pres.getChild("profilePicture").getValue();
+        string profilePicture = mainXml.getValue("president:profilePicture", "", i);
+
+        ofImage* img = new ofImage();
+        img->load("images/" + profilePicture);
+        mediaFiles.push_back(img);
+        mediaTypes.push_back(IMAGE_MEDIA_TYPE);
+
+        cout << profilePicture;
     }
     currentMedia = 0;
 
@@ -49,8 +46,7 @@ void ofApp::setup(){
 }
 
 //--------------------------------------------------------------
-void ofApp::update()
-{
+void ofApp::update() {
     if (mediaTypes[currentMedia] == VIDEO_MEDIA_TYPE)
     {
         ofVideoPlayer* vid = (ofVideoPlayer*)mediaFiles[currentMedia];
@@ -105,6 +101,7 @@ void ofApp::drawPresident()
     ofImage* centerPresidentImg = (ofImage*)mediaFiles[currentMedia];
     centerPresidentImg->draw(centerPresidentImgXPos, presidentCarrouselYPos, centerPresidentImgWidth, centerPresidentImgHeight);
     
+    auto presidentName = mainXml.getValue("president:name", "", currentMedia);
 
     for (int prevImageIdx = currentMedia - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++)
     {        
@@ -131,7 +128,7 @@ void ofApp::drawPresident()
 
     ofSetColor(ofColor::black);
 
-    ofDrawBitmapString("Hello World!", 1000, 1000);
+    ofDrawBitmapString(presidentName, 1000, 1000);
         
 
 
