@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
     
-    ofSetWindowTitle("Presidentes de Portugal - David Pereira e Francisco Mateus");
+    ofSetWindowTitle("🇵🇹 Presidentes de Portugal - David Pereira e Francisco Mateus 🇵🇹");
 
     frameByframe = false;
 
@@ -93,7 +93,12 @@ void ofApp::draw(){
 
 void ofApp::drawPresident()
 {
+    myfont.load("arial.ttf", 34);
+    ofRectangle titleBox = myfont.getStringBoundingBox("🇵🇹 Presidentes de Portugal 🇵🇹", 50, 50);
     int windowXCenter = ofGetWidth() / 2;
+
+    myfont.drawString("🇵🇹 Presidentes de Portugal 🇵🇹", windowXCenter - titleBox.width/2, 50);
+    
     int centerPresidentImgXPos = windowXCenter - centerPresidentImgWidth/2;
 
     ofImage* centerPresidentImg = (ofImage*)mediaFiles[currentMedia];
@@ -138,10 +143,6 @@ void ofApp::drawPresident()
     startDateBox.~ofRectangle();
 
     myfont.drawString(endDate, (windowXCenter + centerPresidentImgWidth / 2) + 10, presidentCarrouselYPos + centerPresidentImgHeight - 75);
-
-
-
-
 
     ofSetColor(ofColor::gray);
 }

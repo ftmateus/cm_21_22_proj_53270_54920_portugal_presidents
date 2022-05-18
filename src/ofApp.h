@@ -51,7 +51,6 @@ class ofApp : public ofBaseApp {
 
 		ofxXmlSettings mainXml;
 
-
 		const double aspectRatio = 4.0 / 5.0;
 		const int spaceBetween = 25;
 
