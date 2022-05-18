@@ -5,8 +5,6 @@ void ofApp::setup(){
 
     frameByframe = false;
 
-    myfont.load("arial.ttf", 32);
-
     dir.listDir("/images");
     dir.allowExt("jpg");
     dir.allowExt("png");
@@ -101,8 +99,6 @@ void ofApp::drawPresident()
     ofImage* centerPresidentImg = (ofImage*)mediaFiles[currentMedia];
     centerPresidentImg->draw(centerPresidentImgXPos, presidentCarrouselYPos, centerPresidentImgWidth, centerPresidentImgHeight);
     
-    auto presidentName = mainXml.getValue("president:name", "", currentMedia);
-
     for (int prevImageIdx = currentMedia - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++)
     {        
         int previousPresidentImgXPos = centerPresidentImgXPos - (neighbourPresidentImgWidth)*times - spaceBetween * times;
@@ -128,8 +124,24 @@ void ofApp::drawPresident()
 
     ofSetColor(ofColor::black);
 
-    ofDrawBitmapString(presidentName, 1000, 1000);
-        
+    string presidentName = mainXml.getValue("president:name", "", currentMedia);
+    string startDate = mainXml.getValue("president:startDate", "", currentMedia);
+    string endDate = mainXml.getValue("president:endDate", "", currentMedia);
+    
+    myfont.load("arial.ttf", 20);
+
+    ofRectangle presidentNameBox = myfont.getStringBoundingBox(presidentName, 0, 0);
+    myfont.drawString(presidentName, windowXCenter - (presidentNameBox.width/2), presidentCarrouselYPos + centerPresidentImgHeight + 25);
+    presidentNameBox.~ofRectangle();
+
+    ofRectangle startDateBox = myfont.getStringBoundingBox(startDate, 0,0);
+    myfont.drawString(startDate, centerPresidentImgXPos - startDateBox.width - 10, presidentCarrouselYPos + centerPresidentImgHeight - 75);
+    startDateBox.~ofRectangle();
+
+    myfont.drawString(endDate, (windowXCenter + centerPresidentImgWidth / 2) + 10, presidentCarrouselYPos + centerPresidentImgHeight - 75);
+
+
+
 
 
     ofSetColor(ofColor::gray);

@@ -50,7 +50,7 @@ class ofApp : public ofBaseApp {
 		const double aspectRatio = 4.0 / 5.0;
 		const int spaceBetween = 25;
 
-		const int presidentCarrouselYPos = 50;
+		const int presidentCarrouselYPos = 75;
 		const int centerPresidentImgHeight = 300;
 		const int centerPresidentImgWidth = centerPresidentImgHeight * aspectRatio;
 		const int neighbourPresidentImgHeight = 200;
