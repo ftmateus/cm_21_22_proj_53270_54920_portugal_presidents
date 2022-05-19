@@ -3,11 +3,16 @@
 #pragma once
 
 #include "ofMain.h"
-#include <ofxXmlSettings.h>
+#include "ofxXmlSettings.h"
+#include <ofxCVHaarFinder.h>
+#include "ofxCv.h"
 
 #define IMAGE_MEDIA_TYPE 0
 
 #define VIDEO_MEDIA_TYPE 1
+
+using namespace cv;
+using namespace ofxCv;
 
 class ofApp : public ofBaseApp {
 
@@ -31,9 +36,11 @@ class ofApp : public ofBaseApp {
 		void mouseScrolled(int x, int y, float scrollX, float scrollY);
 		void drawPresidents();
 		void drawVideo(ofVideoPlayer* vid);
-        void edgesFilter(string itemName, ofImage image);
-        void textureFilter(string itemName, ofImage image);
-        void generateMetadata(string itemName, string path, ofImage image, bool isVideo);
+        //void filterEdgeAndTexture();
+        string edgesFilter(string presidentName, ofImage image);
+        string textureFilter(string presidentName, ofImage image);
+        //double rhythmFilter(string path);
+        void generateMetadata(string presidentName, string path, ofImage image, bool isVideo);
         void importMetadata();
         void exportMetadata();
 		bool isMousePtrInCarrousel(int x, int y);
@@ -60,6 +67,8 @@ class ofApp : public ofBaseApp {
 		int centerPresidentImgXPos;
 
 		ofxXmlSettings mainXml;
+    
+        ofxCvHaarFinder finder;
 
 		const double PRESIDENT_PORTRAIT_ASPECT_RATIO = 4.0 / 5.0;
 		const int SPACE_BETWEEN_PRESIDENTS = 25;

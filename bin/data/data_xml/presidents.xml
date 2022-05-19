@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <presidents>
     <president>
         <id>pr_1</id>
@@ -11,13 +11,7 @@
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
-        <description>
-          Joaquim Teófilo Fernandes Braga (Ponta Delgada, 24 de Fevereiro de 1843 — Santa Isabel, Lisboa, 28 de Janeiro de 1924), que assinava Theophilo Braga, foi um poeta, filólogo, sociólogo, político, 
-		      filósofo e ensaísta português. Estreia-se na literatura em 1859 com Folhas Verdes. Bacharel, Licenciado e Doutor em Direito pela Universidade de Coimbra, fixa-se em Lisboa em 1872, onde lecciona 
-		      literatura no Curso Superior de Letras (actual Faculdade de Letras da Universidade de Lisboa). Da sua carreira literária contam-se obras de história literária, etnografia (com especial destaque 
-		      para as suas recolhas de contos e canções tradicionais), poesia, ficção e filosofia, tendo sido ele o introdutor do Positivismo em Portugal. Depois de ter presidido ao Governo Provisório da República 
-		      Portuguesa, a sua carreira política terminou após exercer fugazmente o cargo de Presidente da República, em substituição de Manuel de Arriaga, entre 29 de Maio e 5 de Outubro de 1915.
-        </description>
+        <description>Joaquim Teófilo Fernandes Braga (Ponta Delgada, 24 de Fevereiro de 1843 — Santa Isabel, Lisboa, 28 de Janeiro de 1924), que assinava Theophilo Braga, foi um poeta, filólogo, sociólogo, político, filósofo e ensaísta português. Estreia-se na literatura em 1859 com Folhas Verdes. Bacharel, Licenciado e Doutor em Direito pela Universidade de Coimbra, fixa-se em Lisboa em 1872, onde lecciona literatura no Curso Superior de Letras (actual Faculdade de Letras da Universidade de Lisboa). Da sua carreira literária contam-se obras de história literária, etnografia (com especial destaque para as suas recolhas de contos e canções tradicionais), poesia, ficção e filosofia, tendo sido ele o introdutor do Positivismo em Portugal. Depois de ter presidido ao Governo Provisório da República Portuguesa, a sua carreira política terminou após exercer fugazmente o cargo de Presidente da República, em substituição de Manuel de Arriaga, entre 29 de Maio e 5 de Outubro de 1915.</description>
     </president>
     <president>
         <id>pr_2</id>
@@ -30,12 +24,7 @@
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
-		<description>
-			Manuel José de Arriaga Brum da Silveira e Peyrelongue (Horta, Matriz, 8 de julho de 1840 — Lisboa, Santos-o-Velho, 5 de março de 1917) foi um advogado, professor, escritor e político português. 
-			Grande orador e membro destacado da geração doutrinária do republicanismo português, foi dirigente e um dos principais ideólogos do Partido Republicano Português. A 24 de agosto de 1911 tornou-se 
-			no primeiro presidente eleito da República Portuguesa, sucedendo na chefia do Estado ao Governo Provisório presidido por Teófilo Braga. Exerceu aquelas funções até 29 de maio de 1915,[1] data em que 
-			foi obrigado a demitir-se, sendo substituído no cargo pelo mesmo Teófilo Braga, que como substituto completou o tempo restante do mandato.[2]
-		</description>
+        <description>Manuel José de Arriaga Brum da Silveira e Peyrelongue (Horta, Matriz, 8 de julho de 1840 — Lisboa, Santos-o-Velho, 5 de março de 1917) foi um advogado, professor, escritor e político português. Grande orador e membro destacado da geração doutrinária do republicanismo português, foi dirigente e um dos principais ideólogos do Partido Republicano Português. A 24 de agosto de 1911 tornou-se no primeiro presidente eleito da República Portuguesa, sucedendo na chefia do Estado ao Governo Provisório presidido por Teófilo Braga. Exerceu aquelas funções até 29 de maio de 1915,[1] data em que foi obrigado a demitir-se, sendo substituído no cargo pelo mesmo Teófilo Braga, que como substituto completou o tempo restante do mandato.[2]</description>
     </president>
     <president>
         <id>pr_3</id>
@@ -48,17 +37,12 @@
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
-		<description>
-			Bernardino Luís Machado Guimarães GCTE • GCL (Rio de Janeiro, 28 de março de 1851 — Porto, 29 de abril de 1944)[1] foi o terceiro e o oitavo presidente eleito da República Portuguesa. Foi presidente da 
-			República Portuguesa por duas vezes: primeiro, de 6 de Agosto de 1915 até 5 de Dezembro de 1917, quando Sidónio Pais, à frente de uma junta militar, dissolve o Congresso e o destitui, obrigando-o a abandonar 
-			o país; mais tarde, em 1925, volta à presidência da República para, um ano depois, voltar a ser destituído pela revolução militar de 28 de Maio de 1926, que instituirá a Ditadura Militar e abrirá caminho à 
-			instauração do Estado Novo.
-		</description>
+        <description>Bernardino Luís Machado Guimarães GCTE • GCL (Rio de Janeiro, 28 de março de 1851 — Porto, 29 de abril de 1944)[1] foi o terceiro e o oitavo presidente eleito da República Portuguesa. Foi presidente da República Portuguesa por duas vezes: primeiro, de 6 de Agosto de 1915 até 5 de Dezembro de 1917, quando Sidónio Pais, à frente de uma junta militar, dissolve o Congresso e o destitui, obrigando-o a abandonar o país; mais tarde, em 1925, volta à presidência da República para, um ano depois, voltar a ser destituído pela revolução militar de 28 de Maio de 1926, que instituirá a Ditadura Militar e abrirá caminho à instauração do Estado Novo.</description>
     </president>
     <president>
         <id>pr_4</id>
         <name>Sidónio Pais</name>
-		    <profilePicture>Sidonio_Pais.png</profilePicture>
+        <profilePicture>Sidonio_Pais.png</profilePicture>
         <startDate>1917</startDate>
         <endDate>1918</endDate>
         <birthDate>1872</birthDate>
@@ -66,23 +50,12 @@
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
-		<description>
-			Sidónio Bernardino Cardoso da Silva Pais (Caminha, 1 de maio de 1872 — Socorro, Lisboa, 14 de dezembro de 1918) foi um militar e político que, entre outras funções, exerceu os cargos de Deputado, de Ministro do 
-			Fomento, de Ministro das Finanças, de Embaixador de Portugal em Berlim, de Ministro da Guerra, de Ministro dos Negócios Estrangeiros, de Presidente da Junta Revolucionária de 1917, de Presidente do Ministério e de 
-			Presidente da República Portuguesa. Oficial de Artilharia, foi também professor na Universidade de Coimbra, onde leccionou Cálculo Diferencial e Integral.
-			
-			Enquanto Presidente da República, de forma ditatorial, sem consultar o Congresso, suspendeu e alterou por decreto algumas normas da Constituição de 1911, protagonizando a primeira grande mudança no republicanismo português — 
-			a República Nova, de cunho presidencialista — transformando-se numa das figuras mais controversas da política portuguesa do século XX. O seu assassinato, no final de 1918, gerou grande comoção popular, culminando no poema-elogio 
-			fúnebre de Fernando Pessoa que lhe deu o epíteto de Presidente-Rei.
-
-			Em 1966, os seus restos mortais foram trasladados solenemente para o Panteão Nacional, na Igreja de Santa Engrácia, em Lisboa, quando da sua inauguração. A cerimónia ocorreu no dia 5 de dezembro e homenageou igualmente com estas 
-			honras outros ilustres portugueses. Antes disso, o seu corpo encontrava-se na Sala do Capítulo do Mosteiro dos Jerónimos.
-		</description>
+        <description>Sidónio Bernardino Cardoso da Silva Pais (Caminha, 1 de maio de 1872 — Socorro, Lisboa, 14 de dezembro de 1918) foi um militar e político que, entre outras funções, exerceu os cargos de Deputado, de Ministro do Fomento, de Ministro das Finanças, de Embaixador de Portugal em Berlim, de Ministro da Guerra, de Ministro dos Negócios Estrangeiros, de Presidente da Junta Revolucionária de 1917, de Presidente do Ministério e de Presidente da República Portuguesa. Oficial de Artilharia, foi também professor na Universidade de Coimbra, onde leccionou Cálculo Diferencial e Integral. Enquanto Presidente da República, de forma ditatorial, sem consultar o Congresso, suspendeu e alterou por decreto algumas normas da Constituição de 1911, protagonizando a primeira grande mudança no republicanismo português — a República Nova, de cunho presidencialista — transformando-se numa das figuras mais controversas da política portuguesa do século XX. O seu assassinato, no final de 1918, gerou grande comoção popular, culminando no poema-elogio fúnebre de Fernando Pessoa que lhe deu o epíteto de Presidente-Rei. Em 1966, os seus restos mortais foram trasladados solenemente para o Panteão Nacional, na Igreja de Santa Engrácia, em Lisboa, quando da sua inauguração. A cerimónia ocorreu no dia 5 de dezembro e homenageou igualmente com estas honras outros ilustres portugueses. Antes disso, o seu corpo encontrava-se na Sala do Capítulo do Mosteiro dos Jerónimos.</description>
     </president>
     <president>
         <id>pr_5</id>
         <name>João do Canto e Castro</name>
-		    <profilePicture>Joao_do_Canto_e_Castro.png</profilePicture>
+        <profilePicture>Joao_do_Canto_e_Castro.png</profilePicture>
         <startDate>1918</startDate>
         <endDate>1919</endDate>
         <birthDate>1862</birthDate>
@@ -90,14 +63,12 @@
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
-		<description>
-			João do Canto e Castro da Silva Antunes GCTE • CvNSC (Lisboa, 19 de maio de 1862 — Lisboa, 14 de março de 1934) foi um oficial da Marinha e quinto Presidente da República Portuguesa, de 16 de Dezembro de 1918 a 5 de Outubro de 1919.
-		</description>
+        <description>João do Canto e Castro da Silva Antunes GCTE • CvNSC (Lisboa, 19 de maio de 1862 — Lisboa, 14 de março de 1934) foi um oficial da Marinha e quinto Presidente da República Portuguesa, de 16 de Dezembro de 1918 a 5 de Outubro de 1919.</description>
     </president>
     <president>
         <id>pr_6</id>
         <name>António José de Almeida</name>
-		    <profilePicture>Antonio_Jose_de_Almeida.png</profilePicture>
+        <profilePicture>Antonio_Jose_de_Almeida.png</profilePicture>
         <startDate>1919</startDate>
         <endDate>1923</endDate>
         <birthDate>1866</birthDate>
@@ -105,16 +76,12 @@
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
-		<description>
-			António José de Almeida GCTE • GCC • GCA • GCSE (São Pedro de Alva, Vale da Vinha, 17 de Julho de 1866 — Lisboa, São Sebastião da Pedreira, 31 de Outubro de 1929) foi um político republicano português, sexto presidente da República Portuguesa, 
-			cargo que exerceu de 5 de Outubro de 1919 a 5 de Outubro de 1923. Foi o único presidente da Primeira República Portuguesa a cumprir integralmente e sem interrupções o seu mandato de 4 anos, tendo com ele Portugal retornado a uma presidência civil.[1] 
-			A data do seu nascimento é feriado municipal em Penacova.
-		</description>
+        <description>António José de Almeida GCTE • GCC • GCA • GCSE (São Pedro de Alva, Vale da Vinha, 17 de Julho de 1866 — Lisboa, São Sebastião da Pedreira, 31 de Outubro de 1929) foi um político republicano português, sexto presidente da República Portuguesa, cargo que exerceu de 5 de Outubro de 1919 a 5 de Outubro de 1923. Foi o único presidente da Primeira República Portuguesa a cumprir integralmente e sem interrupções o seu mandato de 4 anos, tendo com ele Portugal retornado a uma presidência civil.[1] A data do seu nascimento é feriado municipal em Penacova.</description>
     </president>
     <president>
         <id>pr_7</id>
         <name>Manuel Teixeira Gomes</name>
-		    <profilePicture>Manuel_Teixeira_Gomes.png</profilePicture>
+        <profilePicture>Manuel_Teixeira_Gomes.png</profilePicture>
         <startDate>1923</startDate>
         <endDate>1925</endDate>
         <birthDate>1860</birthDate>
@@ -126,7 +93,7 @@
     <president>
         <id>pr_8</id>
         <name>José Mendes Cabeçadas Júnior</name>
-		    <profilePicture>Jose_Mendes_Cabecadas_Junior.png</profilePicture>
+        <profilePicture>Jose_Mendes_Cabecadas_Junior.png</profilePicture>
         <startDate>1926</startDate>
         <endDate>1926</endDate>
         <birthDate>1883</birthDate>
@@ -138,7 +105,7 @@
     <president>
         <id>pr_9</id>
         <name>Manuel Gomes da Costa</name>
-		    <profilePicture>Manuel_Gomes_da_Costa.png</profilePicture>
+        <profilePicture>Manuel_Gomes_da_Costa.png</profilePicture>
         <startDate>1926</startDate>
         <endDate>1926</endDate>
         <birthDate>1863</birthDate>
@@ -150,7 +117,7 @@
     <president>
         <id>pr_10</id>
         <name>Óscar Carmona</name>
-		    <profilePicture>Oscar_Carmona.png</profilePicture>
+        <profilePicture>Oscar_Carmona.png</profilePicture>
         <startDate>1926</startDate>
         <endDate>1928</endDate>
         <birthDate>1869</birthDate>
@@ -162,7 +129,7 @@
     <president>
         <id>pr_11</id>
         <name>António Salazar</name>
-		    <profilePicture>Antonio_de_Oliveira_Salazar.jpg</profilePicture>
+        <profilePicture>Antonio_de_Oliveira_Salazar.jpg</profilePicture>
         <startDate>1935</startDate>
         <endDate>1935</endDate>
         <birthDate>1889</birthDate>
@@ -174,7 +141,7 @@
     <president>
         <id>pr_12</id>
         <name>Francisco Craveiro Lopes</name>
-		    <profilePicture>Francisco_Craveiro_Lopes.jpg</profilePicture>
+        <profilePicture>Francisco_Craveiro_Lopes.jpg</profilePicture>
         <startDate>1951</startDate>
         <endDate>1958</endDate>
         <birthDate>1894</birthDate>
@@ -184,21 +151,21 @@
         <faces>1</faces>
     </president>
     <president>
-	      <id>pr_13</id>
-	      <name>Américo Tomás</name>
-	      <profilePicture>Americo_Thomaz.png</profilePicture>
-	      <startDate>1958</startDate>
-	      <endDate>1974</endDate>
+        <id>pr_13</id>
+        <name>Américo Tomás</name>
+        <profilePicture>Americo_Thomaz.png</profilePicture>
+        <startDate>1958</startDate>
+        <endDate>1974</endDate>
         <birthDate>1894</birthDate>
         <deathDate>1987</deathDate>
-	      <luminance>228.883117676</luminance>
-	      <color>20.069444656</color>
-	      <faces>1</faces>
+        <luminance>228.883117676</luminance>
+        <color>20.069444656</color>
+        <faces>1</faces>
     </president>
     <president>
         <id>pr_14</id>
         <name>António Spínola</name>
-	      <profilePicture>Antonio_Spinola.jpg</profilePicture>
+        <profilePicture>Antonio_Spinola.jpg</profilePicture>
         <startDate>1974</startDate>
         <endDate>1974</endDate>
         <birthDate>1910</birthDate>
@@ -210,7 +177,7 @@
     <president>
         <id>pr_15</id>
         <name>Francisco da Costa Gomes</name>
-	      <profilePicture>Francisco_da_Costa_Gomes.jpg</profilePicture>
+        <profilePicture>Francisco_da_Costa_Gomes.jpg</profilePicture>
         <startDate>1974</startDate>
         <endDate>1976</endDate>
         <birthDate>1914</birthDate>
@@ -222,7 +189,7 @@
     <president>
         <id>pr_16</id>
         <name>António Ramalho Eanes</name>
-	      <profilePicture>Antonio_Ramalho_Eanes.png</profilePicture>
+        <profilePicture>Antonio_Ramalho_Eanes.png</profilePicture>
         <startDate>1976</startDate>
         <endDate>1986</endDate>
         <birthDate>1935</birthDate>
@@ -233,7 +200,7 @@
     <president>
         <id>pr_17</id>
         <name>Mário Soares</name>
-	      <profilePicture>Mario_Soares.png</profilePicture>
+        <profilePicture>Mario_Soares.png</profilePicture>
         <startDate>1986</startDate>
         <endDate>1996</endDate>
         <birthDate>1924</birthDate>
@@ -245,7 +212,7 @@
     <president>
         <id>pr_18</id>
         <name>Jorge Sampaio</name>
-	      <profilePicture>Jorge_Sampaio.jpg</profilePicture>
+        <profilePicture>Jorge_Sampaio.jpg</profilePicture>
         <startDate>1996</startDate>
         <endDate>2006</endDate>
         <birthDate>1939</birthDate>
@@ -257,7 +224,7 @@
     <president>
         <id>pr_19</id>
         <name>Aníbal Cavaco Silva</name>
-	      <profilePicture>Anibal_Cavaco_Silva.jpg</profilePicture>
+        <profilePicture>Anibal_Cavaco_Silva.jpg</profilePicture>
         <startDate>2006</startDate>
         <endDate>2016</endDate>
         <birthDate>1939</birthDate>
@@ -268,13 +235,60 @@
     <president>
         <id>pr_20</id>
         <name>Marcelo Rebelo de Sousa</name>
-	      <profilePicture>Marcelo_Rebelo_de_Sousa.jpg</profilePicture>
+        <profilePicture>Marcelo_Rebelo_de_Sousa.jpg</profilePicture>
         <startDate>2016</startDate>
         <endDate>-</endDate>
         <birthDate>1948</birthDate>
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
-      </president>
+    </president>
+    <president>
+        <id>104-1043692_magnifying-glass-png-no-background</id>
+        <luminance>0.000000000</luminance>
+        <color>0.000000000</color>
+        <faces>0</faces>
+        <edges>textures_edges/104-1043692_magnifying-glass-png-no-background-edges.jpg</edges>
+        <texture>textures_edges/104-1043692_magnifying-glass-png-no-background-texture.jpg</texture>
+    </president>
+    <president>
+        <id>Americo_Thomaz</id>
+        <luminance>134.035781860</luminance>
+        <color>0.000000000</color>
+        <faces>5</faces>
+        <edges>textures_edges/Americo_Thomaz-edges.jpg</edges>
+        <texture>textures_edges/Americo_Thomaz-texture.jpg</texture>
+    </president>
+    <president>
+        <id>Anibal_Cavaco_Silva</id>
+        <luminance>63.854969025</luminance>
+        <color>22.368421555</color>
+        <faces>3</faces>
+        <edges>textures_edges/Anibal_Cavaco_Silva-edges.jpg</edges>
+        <texture>textures_edges/Anibal_Cavaco_Silva-texture.jpg</texture>
+    </president>
+    <president>
+        <id>Antonio_Jose_de_Almeida</id>
+        <luminance>116.840225220</luminance>
+        <color>38.250000000</color>
+        <faces>0</faces>
+        <edges>textures_edges/Antonio_Jose_de_Almeida-edges.jpg</edges>
+        <texture>textures_edges/Antonio_Jose_de_Almeida-texture.jpg</texture>
+    </president>
+    <president>
+        <id>Antonio_Ramalho_Eanes</id>
+        <luminance>122.897766113</luminance>
+        <color>14.166666985</color>
+        <faces>2</faces>
+        <edges>textures_edges/Antonio_Ramalho_Eanes-edges.jpg</edges>
+        <texture>textures_edges/Antonio_Ramalho_Eanes-texture.jpg</texture>
+    </president>
+    <president>
+        <id>Antonio_Spinola</id>
+        <luminance>96.502044678</luminance>
+        <color>18.593750000</color>
+        <faces>1</faces>
+        <edges>textures_edges/Antonio_Spinola-edges.jpg</edges>
+        <texture>textures_edges/Antonio_Spinola-texture.jpg</texture>
+    </president>
 </presidents>
-
