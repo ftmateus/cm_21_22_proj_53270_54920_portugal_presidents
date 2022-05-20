@@ -6,6 +6,9 @@
 #include "ofxXmlSettings.h"
 #include "ofxCvHaarFinder.h"
 #include "ofxCv.h"
+#include "ofxDatGui.h"
+#include "Item.h"
+#include "ofxOpenCv.h"
 
 #define IMAGE_MEDIA_TYPE 0
 
@@ -40,14 +43,16 @@ class ofApp : public ofBaseApp {
         string edgesFilter(string presidentName, ofImage image);
         string textureFilter(string presidentName, ofImage image);
         //double rhythmFilter(string path);
-        /*void generateMetadata(string presidentName, string path, ofImage image, bool isVideo);
-        void importMetadata();
-        void extractMetadata();*/
+        void generateMetadata(string presidentName, string path, ofImage image, bool isVideo);
+        void importMetadata(ofxDatGuiButtonEvent e);
+        void extractMetadata(ofxDatGuiButtonEvent e);
 		bool isMousePtrInCarrousel(int x, int y);
 		void drawStringCentered(const std::string& c, float x, float y);
 		void drawStringRight(const std::string& c, float x, float y);
 		void drawPresidentDescription();
-
+        void initButtons();
+        //int objectTimesFilter(ofImage image, ofImage objImage);
+    
     
 		ofTrueTypeFont myfont;
 		
@@ -57,10 +62,18 @@ class ofApp : public ofBaseApp {
 		vector<ofBaseDraws*> mediaFiles;
 
 		vector<int> mediaTypes;
+        vector<Item*> items; // contains the filtered items
+        vector<Item*> auxItems; // contains all the items
+
+        ofxDatGuiButton* im1;
+        ofxDatGuiButton* im2;
+        ofxDatGuiButton* im3;
 
 		bool frameByframe;
 
 		int currentMedia;
+    
+        int imageSize = (ofGetViewportWidth() - 200) / 3;
 
 		//computed
 		int windowXCenter;

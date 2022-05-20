@@ -41,6 +41,8 @@ void ofApp::setup() {
     currentMedia = 0;
 
     ofBackground(ofColor::white);
+    
+    initButtons();
 }
 
 //--------------------------------------------------------------
@@ -312,8 +314,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
     }
 }*/
 
-string ofApp::edgesFilter(string presidentName, ofImage image)
-{
+string ofApp::edgesFilter(string presidentName, ofImage image) {
     double kernel_size;
     Mat kernel;
     kernel_size = 31;
@@ -342,8 +343,7 @@ string ofApp::edgesFilter(string presidentName, ofImage image)
     return path;
 }
 
-string ofApp::textureFilter(string presidentName, ofImage image)
-{
+string ofApp::textureFilter(string presidentName, ofImage image) {
     Mat src, dst;
     int kernel_size = 31;
 
@@ -433,7 +433,7 @@ string ofApp::textureFilter(string presidentName, ofImage image)
     return rhythm;
 }*/
 
-/*void ofApp::generateMetadata(string presidentName, string path, ofImage image, bool isVideo) {
+void ofApp::generateMetadata(string presidentName, string path, ofImage image, bool isVideo) {
     int numPresidents = mainXml.getNumTags("president");
     
     for(int i = 0; i < numPresidents; i++) {
@@ -513,16 +513,16 @@ string ofApp::textureFilter(string presidentName, ofImage image)
     if (texture != "")
         mainXml.setValue("texture", texture, numPresidents);
     // rhythm
-    if (isVideo) {
+    /*if (isVideo) {
         double rhythm = rhythmFilter(path);
         mainXml.setValue("rhythm", rhythm, numPresidents);
-    }
+    }*/
 
     mainXml.popTag(); // item
 
     mainXml.saveFile();
     
-}*/
+}
 
 /*void ofApp::filterItems(string filter)
 {
@@ -543,17 +543,17 @@ string ofApp::textureFilter(string presidentName, ofImage image)
     // filter items
     vector<Item*> filteredItems;
     int counter = 0;
-    int numItems = itemsXML.getNumTags("item");
+    int numItems = mainXml.getNumTags("item");
 
     for (int i = 0; i < numItems; i++) {
         bool wasAdded = false;
         // tags
-        itemsXML.pushTag("item", i);
-        itemsXML.pushTag("tags");
+        mainXml.pushTag("item", i);
+        mainXml.pushTag("tags");
 
-        int numTags = itemsXML.getNumTags("tag");
+        int numTags = mainXml.getNumTags("tag");
         for (int j = 0; j < numTags; j++) {
-            string tag = itemsXML.getValue("tag", "", j);
+            string tag = mainXml.getValue("tag", "", j);
 
             if (tag.find(filter) != std::string::npos) { // add this item
                 filteredItems.push_back(auxItems[i]);
@@ -562,16 +562,16 @@ string ofApp::textureFilter(string presidentName, ofImage image)
                 break;
             }
         }
-        itemsXML.popTag(); // tags
+        mainXml.popTag(); // tags
         // so the same item isnt added twice
         if (!wasAdded) {
             // times
-            itemsXML.pushTag("times");
+            mainXml.pushTag("times");
 
-            int numTimes = itemsXML.getNumTags("time");
+            int numTimes = mainXml.getNumTags("time");
             for (int j = 0; j < numTimes; j++) {
-                itemsXML.pushTag("time", j);
-                string name = itemsXML.getValue("name", "");
+                mainXml.pushTag("time", j);
+                string name = mainXml.getValue("name", "");
 
                 if (name.find(filter) != std::string::npos) { // add this item
                     filteredItems.push_back(auxItems[i]);
@@ -579,10 +579,10 @@ string ofApp::textureFilter(string presidentName, ofImage image)
                     break;
                 }
             }
-            itemsXML.popTag(); // times
+            mainXml.popTag(); // times
         }
 
-        itemsXML.popTag(); // item
+        mainXml.popTag(); // item
     }
     // items = filteredItems
     items.clear();
@@ -595,17 +595,17 @@ string ofApp::textureFilter(string presidentName, ofImage image)
 {
     vector<Item*> filteredItems;
     int counter = 0;
-    int numberOfItems = itemsXML.getNumTags("item");
+    int numberOfItems = mainXml.getNumTags("item");
 
     for (int i = 0; i < numberOfItems; i++) {
-        itemsXML.pushTag("item", i);
-        float color = itemsXML.getValue("color", 0);
+        mainXml.pushTag("item", i);
+        float color = mainXml.getValue("color", 0);
         if (abs(color - hue) <= 10 || abs(color - hue) >= 245) {
             // this item will apear
             filteredItems.push_back(auxItems[i]);
             counter++;
         }
-        itemsXML.popTag(); // item
+        mainXml.popTag(); // item
     }
     // items = filteredItems
     items.clear();
@@ -616,32 +616,32 @@ string ofApp::textureFilter(string presidentName, ofImage image)
 
 /*void ofApp::handleUserItems(int userId, vector<Item*> items_input, bool useItemsInput) {
     if (!useItemsInput) {
-        int numberOfUsers = user_itemsXML.getNumTags("user_items");
+        int numberOfUsers = user_mainXml.getNumTags("user_items");
 
         int numberOfItems = 0;
         vector<string> user_items;
 
         for (int i = 0; i < numberOfUsers; i++) {
-            user_itemsXML.pushTag("user_items", i);
+            user_mainXml.pushTag("user_items", i);
 
-            if (user_itemsXML.getValue("user", 0) == userId) {
+            if (user_mainXml.getValue("user", 0) == userId) {
                 // get items
-                user_itemsXML.pushTag("items", i);
-                numberOfItems = user_itemsXML.getNumTags("item");
+                user_mainXml.pushTag("items", i);
+                numberOfItems = user_mainXml.getNumTags("item");
 
                 user_items.assign(numberOfItems, string());
 
                 for (int j = 0; j < numberOfItems; j++) {
-                    user_itemsXML.pushTag("item", j);
-                    string itemId = user_itemsXML.getValue("id", "");
+                    user_mainXml.pushTag("item", j);
+                    string itemId = user_mainXml.getValue("id", "");
                     // add to vector
                     user_items.push_back(itemId);
 
-                    user_itemsXML.popTag(); // item
+                    user_mainXml.popTag(); // item
                 }
             }
-            user_itemsXML.popTag(); // items
-            user_itemsXML.popTag(); // user_items
+            user_mainXml.popTag(); // items
+            user_mainXml.popTag(); // user_items
         }
         //----------ofDirectory
         dir.listDir("items/");
@@ -694,3 +694,172 @@ string ofApp::textureFilter(string presidentName, ofImage image)
     }
     currentItem = 0;
 }*/
+
+void ofApp::importMetadata(ofxDatGuiButtonEvent e) {
+    int index = e.target->getIndex();
+    ofImage auxImg = items[index]->getImage();
+    ofImage object = ofImage();
+
+    string tags = ofSystemTextBoxDialog("Number of tags", "1");
+    int numberOfTags = stoi(tags);
+
+    vector<string> listTags;
+    listTags.assign(numberOfTags, string());
+
+    for (int i = 0; i < numberOfTags; i++) {
+        string tag = ofSystemTextBoxDialog("Tag " + ofToString(i + 1), "");
+        listTags[i] = tag;
+    }
+
+    string times = ofSystemTextBoxDialog("Number of objects to process (times a specific object (input as an image) appears in the item):", "1");
+    int numberTimes = stoi(times);
+    map<string, int> mapTimes;
+
+    for (int i = 0; i < numberTimes; i++) {
+        ofFileDialogResult result = ofSystemLoadDialog("Load file", false, "object_items/");
+
+        if (result.bSuccess) {
+            string path = result.getPath();
+            object.load(path);
+            // Number of times the object appears
+            /*int numberOfTimes = objectTimesFilter(auxImg, object);
+            if(numberOfTimes!=0)
+                mapTimes.insert({ ofFilePath().getBaseName(result.filePath), numberOfTimes });*/
+        }
+        else {
+            ofSystemTextBoxDialog("Error loading file...");
+        }
+    }
+    
+    (void)ofLog(OF_LOG_NOTICE, "index: " + ofToString(index));
+
+    mainXml.pushTag("item", index);
+    if (mainXml.getNumTags("tags") == 0)
+        mainXml.addTag("tags");
+
+        mainXml.pushTag("tags");
+        int numExTags = mainXml.getNumTags("tag"); // number of existing tags
+
+        for (int j = 0; j < numberOfTags; j++) {
+            mainXml.addValue("tag", listTags[j]);
+        }
+        mainXml.popTag(); // tags
+
+        if (mainXml.getNumTags("times") == 0)
+            mainXml.addTag("times");
+
+        mainXml.pushTag("times");
+        int numExTimes = mainXml.getNumTags("time"); // number of existing times
+
+        int j = numExTimes;
+        for (map<string, int>::iterator itr = mapTimes.begin(); itr != mapTimes.end(); ++itr) {
+            bool found = false;
+
+            int numTimesTag = mainXml.getNumTags("time");
+            for (int i = 0; i < numTimesTag; i++) {
+                mainXml.pushTag("time", i);
+                if (mainXml.getValue("name", "") == itr->first)
+                    found = true;
+                
+                mainXml.popTag(); // time
+            }
+
+            if (!found) {
+                mainXml.addTag("time");
+                mainXml.pushTag("time", j);
+
+                mainXml.addValue("name", itr->first);
+                mainXml.addValue("numTime", itr->second);
+
+                mainXml.popTag(); // time
+            }
+            j++;
+        }
+        mainXml.popTag(); // times
+
+        mainXml.popTag(); // item
+
+        // Saves file
+        if (mainXml.saveFile())
+            (void)ofLog(OF_LOG_NOTICE, "Saved!");
+        else
+            (void)ofLog(OF_LOG_NOTICE, "Didn't save!");
+}
+
+/*void Gallery::extractMetadata() {
+    
+}*/
+
+/*void Gallery::initXmlObjects() {
+    
+}*/
+
+void ofApp::initButtons()
+{
+    //---------Import
+    im1 = new ofxDatGuiButton("Import Metadata");
+    im1->setPosition(150, imageSize + 100);
+    im1->setIndex(0);
+    im1->setWidth(100);
+    im1->onButtonEvent(this, &ofApp::importMetadata);
+
+    im2 = new ofxDatGuiButton("Import Metadata");
+    im2->setPosition(200 + imageSize, imageSize + 100);
+    im2->setIndex(1);
+    im2->setWidth(100);
+    im2->onButtonEvent(this, &ofApp::importMetadata);
+
+    im3 = new ofxDatGuiButton("Import Metadata");
+    im3->setPosition(250 + imageSize * 2, imageSize + 100);
+    im3->setIndex(2);
+    im3->setWidth(100);
+    im3->onButtonEvent(this, &ofApp::importMetadata);
+}
+
+/*int ofApp::objectTimesFilter(ofImage image, ofImage objImage) {
+    int numberOfMatches = 0;
+    ofImage  tempImg = image;
+    tempImg.setImageType(OF_IMAGE_GRAYSCALE);
+    Mat img1 = toCv(tempImg);
+    objImage.setImageType(OF_IMAGE_GRAYSCALE);
+    Mat img2 = toCv(objImage);
+
+    if (!img1.empty() && !img2.empty())
+    {
+        if (img1.channels() != 1) {
+            cvtColor(img1, img1, cv::COLOR_RGB2GRAY);
+        }
+
+        if (img2.channels() != 1) {
+            cvtColor(img2, img2, cv::COLOR_RGB2GRAY);
+        }
+
+        vector<KeyPoint> keyP1;
+        vector<KeyPoint> keyP2;
+        Mat desc1;
+        Mat desc2;
+        vector<cv::DMatch> matches;
+
+        Ptr<ORB> detector = ORB::create();
+        detector->detectAndCompute(img1, Mat(), keyP1, desc1);
+        detector->detectAndCompute(img2, Mat(), keyP2, desc2);
+        matches.clear();
+
+        BFMatcher bruteMatcher(cv::NORM_L2, true);
+        bruteMatcher.match(desc1, desc2, matches, Mat());
+
+        int k1s = keyP1.size();
+        int k2s = keyP2.size();
+        int ms = matches.size();
+        float distances = 0;
+        for (int j = 0; j < matches.size(); j++) {
+            distances += matches[j].distance;
+        }
+        float distanceAvg = distances / ms;
+        if (distanceAvg < 340) {
+            numberOfMatches = 1;
+        }
+    }
+    return numberOfMatches;
+}*/
+

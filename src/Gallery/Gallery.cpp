@@ -528,17 +528,17 @@ void Gallery::generateMetadata(string presidentName, string path, ofImage image,
     // filter items
     vector<Item*> filteredItems;
     int counter = 0;
-    int numItems = itemsXML.getNumTags("item");
+    int numItems = mainXml.getNumTags("item");
 
     for (int i = 0; i < numItems; i++) {
         bool wasAdded = false;
         // tags
-        itemsXML.pushTag("item", i);
-        itemsXML.pushTag("tags");
+        mainXml.pushTag("item", i);
+        mainXml.pushTag("tags");
 
-        int numTags = itemsXML.getNumTags("tag");
+        int numTags = mainXml.getNumTags("tag");
         for (int j = 0; j < numTags; j++) {
-            string tag = itemsXML.getValue("tag", "", j);
+            string tag = mainXml.getValue("tag", "", j);
 
             if (tag.find(filter) != std::string::npos) { // add this item
                 filteredItems.push_back(auxItems[i]);
@@ -547,16 +547,16 @@ void Gallery::generateMetadata(string presidentName, string path, ofImage image,
                 break;
             }
         }
-        itemsXML.popTag(); // tags
+        mainXml.popTag(); // tags
         // so the same item isnt added twice
         if (!wasAdded) {
             // times
-            itemsXML.pushTag("times");
+            mainXml.pushTag("times");
 
-            int numTimes = itemsXML.getNumTags("time");
+            int numTimes = mainXml.getNumTags("time");
             for (int j = 0; j < numTimes; j++) {
-                itemsXML.pushTag("time", j);
-                string name = itemsXML.getValue("name", "");
+                mainXml.pushTag("time", j);
+                string name = mainXml.getValue("name", "");
 
                 if (name.find(filter) != std::string::npos) { // add this item
                     filteredItems.push_back(auxItems[i]);
@@ -564,10 +564,10 @@ void Gallery::generateMetadata(string presidentName, string path, ofImage image,
                     break;
                 }
             }
-            itemsXML.popTag(); // times
+            mainXml.popTag(); // times
         }
 
-        itemsXML.popTag(); // item
+        mainXml.popTag(); // item
     }
     // items = filteredItems
     items.clear();
@@ -581,7 +581,7 @@ void Gallery::filterByColor(float hue) {
     int counter = 0;
     int numPresidents = mainXml.getNumTags("president");
 
-    for (int i = 0; i < numberOfItems; i++) {
+    for (int i = 0; i < numPresidents; i++) {
         mainXml.pushTag("president", i);
         float color = mainXml.getValue("color", 0);
         if (abs(color - hue) <= 10 || abs(color - hue) >= 245) {
@@ -591,7 +591,6 @@ void Gallery::filterByColor(float hue) {
         }
         mainXml.popTag(); // item
     }
-    // items = filteredItems
     items.clear();
     items.resize(counter);
     itemsSize = counter;
@@ -600,32 +599,32 @@ void Gallery::filterByColor(float hue) {
 
 /*void Gallery::handleUserItems(int userId, vector<Item*> items_input, bool useItemsInput) {
     if (!useItemsInput) {
-        int numberOfUsers = user_itemsXML.getNumTags("user_items");
+        int numberOfUsers = user_mainXml.getNumTags("user_items");
 
         int numberOfItems = 0;
         vector<string> user_items;
 
         for (int i = 0; i < numberOfUsers; i++) {
-            user_itemsXML.pushTag("user_items", i);
+            user_mainXml.pushTag("user_items", i);
 
-            if (user_itemsXML.getValue("user", 0) == userId) {
+            if (user_mainXml.getValue("user", 0) == userId) {
                 // get items
-                user_itemsXML.pushTag("items", i);
-                numberOfItems = user_itemsXML.getNumTags("item");
+                user_mainXml.pushTag("items", i);
+                numberOfItems = user_mainXml.getNumTags("item");
 
                 user_items.assign(numberOfItems, string());
 
                 for (int j = 0; j < numberOfItems; j++) {
-                    user_itemsXML.pushTag("item", j);
-                    string itemId = user_itemsXML.getValue("id", "");
+                    user_mainXml.pushTag("item", j);
+                    string itemId = user_mainXml.getValue("id", "");
                     // add to vector
                     user_items.push_back(itemId);
 
-                    user_itemsXML.popTag(); // item
+                    user_mainXml.popTag(); // item
                 }
             }
-            user_itemsXML.popTag(); // items
-            user_itemsXML.popTag(); // user_items
+            user_mainXml.popTag(); // items
+            user_mainXml.popTag(); // user_items
         }
         //----------ofDirectory
         dir.listDir("items/");
@@ -685,5 +684,9 @@ void Gallery::filterByColor(float hue) {
 }*/
 
 /*void Gallery::extractMetadata() {
+    
+}*/
+
+/*void Gallery::initXmlObjects() {
     
 }*/
