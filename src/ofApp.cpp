@@ -41,8 +41,6 @@ void ofApp::setup() {
     currentMedia = 0;
 
     ofBackground(ofColor::white);
-    
-    initButtons();
 }
 
 //--------------------------------------------------------------
@@ -70,6 +68,8 @@ void ofApp::draw(){
     drawPresidents(); 
 
     drawPresidentDescription();
+    
+    initButtons();
 }
 
 void ofApp::drawPresidentDescription()
@@ -798,12 +798,12 @@ void ofApp::initButtons()
 {
     //---------Import
     im1 = new ofxDatGuiButton("Import Metadata");
-    im1->setPosition(150, imageSize + 100);
+    im1->setPosition(450, 550);
     im1->setIndex(0);
     im1->setWidth(100);
     im1->onButtonEvent(this, &ofApp::importMetadata);
 
-    im2 = new ofxDatGuiButton("Import Metadata");
+    /*im2 = new ofxDatGuiButton("Import Metadata");
     im2->setPosition(200 + imageSize, imageSize + 100);
     im2->setIndex(1);
     im2->setWidth(100);
@@ -813,7 +813,7 @@ void ofApp::initButtons()
     im3->setPosition(250 + imageSize * 2, imageSize + 100);
     im3->setIndex(2);
     im3->setWidth(100);
-    im3->onButtonEvent(this, &ofApp::importMetadata);
+    im3->onButtonEvent(this, &ofApp::importMetadata);*/
 }
 
 /*int ofApp::objectTimesFilter(ofImage image, ofImage objImage) {
