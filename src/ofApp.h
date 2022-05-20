@@ -5,14 +5,13 @@
 #include "ofMain.h"
 #include "ofxXmlSettings.h"
 #include <ofxCVHaarFinder.h>
-#include "ofxCv.h"
+#include "ofxGui.h"
 
 #define IMAGE_MEDIA_TYPE 0
 
 #define VIDEO_MEDIA_TYPE 1
 
 using namespace cv;
-using namespace ofxCv;
 
 class ofApp : public ofBaseApp {
 
@@ -43,10 +42,13 @@ class ofApp : public ofBaseApp {
         void generateMetadata(string presidentName, string path, ofImage image, bool isVideo);
         void importMetadata();
         void exportMetadata();
-		bool isMousePtrInCarrousel(int x, int y);
-		void drawStringCentered(const std::string& c, float x, float y);
+				void drawStringCentered(const std::string& c, float x, float y);
 		void drawStringRight(const std::string& c, float x, float y);
 		void drawPresidentDescription();
+		bool isMousePtrInCarrousel(int x, int y);
+		bool isMousePtrInsideCenterPresident(int x, int y);
+		bool isMousePtrOnCenterPresidentLeft(int x, int y);
+		bool isMousePtrOnCenterPresidentRight(int x, int y);
 
     
 		ofTrueTypeFont myfont;
@@ -61,6 +63,8 @@ class ofApp : public ofBaseApp {
 		bool frameByframe;
 
 		int currentMedia;
+
+		ofxPanel gui;
 
 		//computed
 		int windowXCenter;
