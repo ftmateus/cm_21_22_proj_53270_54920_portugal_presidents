@@ -433,7 +433,7 @@ string ofApp::textureFilter(string presidentName, ofImage image)
     return rhythm;
 }*/
 
-void ofApp::generateMetadata(string presidentName, string path, ofImage image, bool isVideo) {
+/*void ofApp::generateMetadata(string presidentName, string path, ofImage image, bool isVideo) {
     int numPresidents = mainXml.getNumTags("president");
     
     for(int i = 0; i < numPresidents; i++) {
@@ -482,7 +482,7 @@ void ofApp::generateMetadata(string presidentName, string path, ofImage image, b
 
     // faces
     // finder faces
-    /*finder.setup("data_xml/haarcascade_frontalface_default.xml");
+    finder.setup("data_xml/haarcascade_frontalface_default.xml");
     int faces = 0;
     if (isVideo) {
         ofVideoPlayer auxVideo;
@@ -502,7 +502,7 @@ void ofApp::generateMetadata(string presidentName, string path, ofImage image, b
         faces = finder.findHaarObjects(image);
     }
 
-    mainXml.setValue("faces", faces, numPresidents);*/
+    mainXml.setValue("faces", faces, numPresidents);
     // edges - filter2D
     string edges = edgesFilter(presidentName, image);
 
@@ -513,16 +513,16 @@ void ofApp::generateMetadata(string presidentName, string path, ofImage image, b
     if (texture != "")
         mainXml.setValue("texture", texture, numPresidents);
     // rhythm
-    /*if (isVideo) {
+    if (isVideo) {
         double rhythm = rhythmFilter(path);
         mainXml.setValue("rhythm", rhythm, numPresidents);
-    }*/
+    }
 
     mainXml.popTag(); // item
 
     mainXml.saveFile();
     
-}
+}*/
 
 /*void ofApp::filterItems(string filter)
 {

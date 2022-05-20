@@ -4,7 +4,7 @@
 
 #include "ofMain.h"
 #include "ofxXmlSettings.h"
-#include <ofxCVHaarFinder.h>
+#include "ofxCvHaarFinder.h"
 #include "ofxCv.h"
 
 #define IMAGE_MEDIA_TYPE 0
@@ -40,9 +40,9 @@ class ofApp : public ofBaseApp {
         string edgesFilter(string presidentName, ofImage image);
         string textureFilter(string presidentName, ofImage image);
         //double rhythmFilter(string path);
-        void generateMetadata(string presidentName, string path, ofImage image, bool isVideo);
+        /*void generateMetadata(string presidentName, string path, ofImage image, bool isVideo);
         void importMetadata();
-        void exportMetadata();
+        void extractMetadata();*/
 		bool isMousePtrInCarrousel(int x, int y);
 		void drawStringCentered(const std::string& c, float x, float y);
 		void drawStringRight(const std::string& c, float x, float y);
