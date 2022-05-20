@@ -49,6 +49,7 @@ class ofApp : public ofBaseApp {
 		bool isMousePtrInsideCenterPresident(int x, int y);
 		bool isMousePtrOnCenterPresidentLeft(int x, int y);
 		bool isMousePtrOnCenterPresidentRight(int x, int y);
+		bool checkMousePtrOnPresident(int x, int y);
 
     
 		ofTrueTypeFont myfont;

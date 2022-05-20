@@ -252,18 +252,12 @@ bool ofApp::isMousePtrOnCenterPresidentRight(int x, int y)
     return x > centerPresidentImgXPos + CENTER_PRESIDENT_IMG_WIDTH;
 }
 
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-    /* OF_MOUSE_BUTTON_LEFT
-    OF_MOUSE_BUTTON_RIGHT
-    OF_MOUSE_BUTTON_MIDDLE */
-
-    //int centerPresidentImgXPos = windowXCenter - CENTER_PRESIDENT_IMG_WIDTH / 2;
-
+bool ofApp::checkMousePtrOnPresident(int x, int y)
+{
     //if it's outside of carrousel, skip
-    if (!isMousePtrInCarrousel(x, y)) return;
+    if (!isMousePtrInCarrousel(x, y)) return false;
 
-    if (isMousePtrInsideCenterPresident(x, y)) return;
+    if (isMousePtrInsideCenterPresident(x, y)) return false;
 
     if (isMousePtrOnCenterPresidentLeft(x, y))
     {
@@ -279,6 +273,7 @@ void ofApp::mouseReleased(int x, int y, int button){
                 if (y <= CENTER_PRESIDENT_IMG_HEIGHT + NEIGHBOUR_PRESIDENT_IMG_HEIGHT)
                 {
                     currentMedia = prevImageIdx;
+                    return true;
                 }
             }
 
@@ -298,9 +293,24 @@ void ofApp::mouseReleased(int x, int y, int button){
                 if (y <= CENTER_PRESIDENT_IMG_HEIGHT + NEIGHBOUR_PRESIDENT_IMG_HEIGHT)
                 {
                     currentMedia = nextImageIdx;
+                    return true;
                 }
             }
         }
+    }
+    return false;
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseReleased(int x, int y, int button){
+    /* OF_MOUSE_BUTTON_LEFT
+    OF_MOUSE_BUTTON_RIGHT
+    OF_MOUSE_BUTTON_MIDDLE */
+
+    //int centerPresidentImgXPos = windowXCenter - CENTER_PRESIDENT_IMG_WIDTH / 2;
+    if (button == OF_MOUSE_BUTTON_LEFT)
+    {
+        if (checkMousePtrOnPresident(x, y)) return;
     }
 }
 
