@@ -51,6 +51,8 @@ class ofApp : public ofBaseApp {
 		void drawStringRight(const std::string& c, float x, float y);
 		void drawPresidentDescription();
         void initButtons();
+        void filterByColor(float hue);
+        void filterItems(string filter);
         //int objectTimesFilter(ofImage image, ofImage objImage);
     
     
@@ -64,6 +66,10 @@ class ofApp : public ofBaseApp {
 		vector<int> mediaTypes;
         vector<Item*> items; // contains the filtered items
         vector<Item*> auxItems; // contains all the items
+    
+        int itemsSize;
+    
+        ofxDatGui* gui;
 
         ofxDatGuiButton* im1;
         ofxDatGuiButton* im2;

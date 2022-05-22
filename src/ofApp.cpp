@@ -30,15 +30,21 @@ void ofApp::setup() {
 
     for (int i = 0; i < n_presidents; i++) {
         string profilePicture = mainXml.getValue("president:profilePicture", "", i);
-
+        string presidentName = mainXml.getValue("president:id", "", i);
         ofImage* img = new ofImage();
         img->load("images/" + profilePicture);
         mediaFiles.push_back(img);
         mediaTypes.push_back(IMAGE_MEDIA_TYPE);
+        ofImage imgM = ofImage("images/"+profilePicture);
+        generateMetadata(presidentName, "images/"+profilePicture, imgM, false);
 
         cout << profilePicture;
     }
     currentMedia = 0;
+    
+    /*gui = new ofxDatGui(0, 0);
+    
+    initButtons();*/
 
     ofBackground(ofColor::white);
 }
@@ -69,7 +75,6 @@ void ofApp::draw(){
 
     drawPresidentDescription();
     
-    initButtons();
 }
 
 void ofApp::drawPresidentDescription()
@@ -524,8 +529,7 @@ void ofApp::generateMetadata(string presidentName, string path, ofImage image, b
     
 }
 
-/*void ofApp::filterItems(string filter)
-{
+void ofApp::filterItems(string filter) {
     // if filter is empty, items = auxItems
     remove(filter.begin(), filter.end(), ' '); // trim
     if (filter == "") {
@@ -543,12 +547,12 @@ void ofApp::generateMetadata(string presidentName, string path, ofImage image, b
     // filter items
     vector<Item*> filteredItems;
     int counter = 0;
-    int numItems = mainXml.getNumTags("item");
+    int numPresidents = mainXml.getNumTags("president");
 
-    for (int i = 0; i < numItems; i++) {
+    for (int i = 0; i < numPresidents; i++) {
         bool wasAdded = false;
         // tags
-        mainXml.pushTag("item", i);
+        mainXml.pushTag("president", i);
         mainXml.pushTag("tags");
 
         int numTags = mainXml.getNumTags("tag");
@@ -589,16 +593,15 @@ void ofApp::generateMetadata(string presidentName, string path, ofImage image, b
     items.resize(counter);
     itemsSize = counter;
     items = filteredItems;
-}*/
+}
 
-/*void Gallery::filterByColor(float hue)
-{
+void ofApp::filterByColor(float hue) {
     vector<Item*> filteredItems;
     int counter = 0;
-    int numberOfItems = mainXml.getNumTags("item");
+    int numPresidents = mainXml.getNumTags("president");
 
-    for (int i = 0; i < numberOfItems; i++) {
-        mainXml.pushTag("item", i);
+    for (int i = 0; i < numPresidents; i++) {
+        mainXml.pushTag("president", i);
         float color = mainXml.getValue("color", 0);
         if (abs(color - hue) <= 10 || abs(color - hue) >= 245) {
             // this item will apear
@@ -612,7 +615,7 @@ void ofApp::generateMetadata(string presidentName, string path, ofImage image, b
     items.resize(counter);
     itemsSize = counter;
     items = filteredItems;
-}*/
+}
 
 /*void ofApp::handleUserItems(int userId, vector<Item*> items_input, bool useItemsInput) {
     if (!useItemsInput) {

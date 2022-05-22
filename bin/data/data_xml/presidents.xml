@@ -4,6 +4,7 @@
         <id>pr_1</id>
         <name>Teófilo Braga</name>
         <profilePicture>Teofilo_Braga.png</profilePicture>
+        <idName>Teofilo_Braga</idName>
         <startDate>1910</startDate>
         <endDate>1911</endDate>
         <birthDate>1843</birthDate>
@@ -17,6 +18,7 @@
         <id>pr_2</id>
         <name>Manuel de Arriaga</name>
         <profilePicture>Manuel_de_Arriaga_-_Fotografia_Vasques.png</profilePicture>
+        <idName>Manuel_de_Arriaga</idName>
         <startDate>1911</startDate>
         <endDate>1915</endDate>
         <birthDate>1840</birthDate>
@@ -30,6 +32,7 @@
         <id>pr_3</id>
         <name>Bernardino Machado</name>
         <profilePicture>BernardinoMachado.png</profilePicture>
+        <idName>BernardinoMachado</idName>
         <startDate>1915</startDate>
         <endDate>1917</endDate>
         <birthDate>1851</birthDate>
@@ -43,6 +46,7 @@
         <id>pr_4</id>
         <name>Sidónio Pais</name>
         <profilePicture>Sidonio_Pais.png</profilePicture>
+        <idName>SidonioPais</idName>
         <startDate>1917</startDate>
         <endDate>1918</endDate>
         <birthDate>1872</birthDate>
@@ -56,6 +60,7 @@
         <id>pr_5</id>
         <name>João do Canto e Castro</name>
         <profilePicture>Joao_do_Canto_e_Castro.png</profilePicture>
+        <idName>Joao_do_Canto_e_Castro</idName>
         <startDate>1918</startDate>
         <endDate>1919</endDate>
         <birthDate>1862</birthDate>
@@ -69,6 +74,7 @@
         <id>pr_6</id>
         <name>António José de Almeida</name>
         <profilePicture>Antonio_Jose_de_Almeida.png</profilePicture>
+        <idName>Antonio_Jose_de_Almeida</idName>
         <startDate>1919</startDate>
         <endDate>1923</endDate>
         <birthDate>1866</birthDate>
@@ -82,6 +88,7 @@
         <id>pr_7</id>
         <name>Manuel Teixeira Gomes</name>
         <profilePicture>Manuel_Teixeira_Gomes.png</profilePicture>
+        <idName>Manuel_Teixeira</idName>
         <startDate>1923</startDate>
         <endDate>1925</endDate>
         <birthDate>1860</birthDate>
@@ -94,6 +101,7 @@
         <id>pr_8</id>
         <name>José Mendes Cabeçadas Júnior</name>
         <profilePicture>Jose_Mendes_Cabecadas_Junior.png</profilePicture>
+        <idName>Jose_Mendes_Cabecadas_Junior</idName>
         <startDate>1926</startDate>
         <endDate>1926</endDate>
         <birthDate>1883</birthDate>
@@ -106,6 +114,7 @@
         <id>pr_9</id>
         <name>Manuel Gomes da Costa</name>
         <profilePicture>Manuel_Gomes_da_Costa.png</profilePicture>
+        <idName>Manuel_Gomes_da_Costa</idName>
         <startDate>1926</startDate>
         <endDate>1926</endDate>
         <birthDate>1863</birthDate>
@@ -118,6 +127,7 @@
         <id>pr_10</id>
         <name>Óscar Carmona</name>
         <profilePicture>Oscar_Carmona.png</profilePicture>
+        <idName>Oscar_Carmona</idName>
         <startDate>1926</startDate>
         <endDate>1928</endDate>
         <birthDate>1869</birthDate>
@@ -130,6 +140,7 @@
         <id>pr_11</id>
         <name>António Salazar</name>
         <profilePicture>Antonio_de_Oliveira_Salazar.jpg</profilePicture>
+        <idName>Antonio_de_Oliveira_Salazar</idName>
         <startDate>1935</startDate>
         <endDate>1935</endDate>
         <birthDate>1889</birthDate>
@@ -142,6 +153,7 @@
         <id>pr_12</id>
         <name>Francisco Craveiro Lopes</name>
         <profilePicture>Francisco_Craveiro_Lopes.jpg</profilePicture>
+        <idName>Francisco_Craveiro_Lopes</idName>
         <startDate>1951</startDate>
         <endDate>1958</endDate>
         <birthDate>1894</birthDate>
@@ -154,6 +166,7 @@
         <id>pr_13</id>
         <name>Américo Tomás</name>
         <profilePicture>Americo_Thomaz.png</profilePicture>
+        <idName>Americo_Thomaz</idName>
         <startDate>1958</startDate>
         <endDate>1974</endDate>
         <birthDate>1894</birthDate>
@@ -166,6 +179,7 @@
         <id>pr_14</id>
         <name>António Spínola</name>
         <profilePicture>Antonio_Spinola.jpg</profilePicture>
+        <idName>Antonio_Spinola</idName>
         <startDate>1974</startDate>
         <endDate>1974</endDate>
         <birthDate>1910</birthDate>
@@ -178,6 +192,7 @@
         <id>pr_15</id>
         <name>Francisco da Costa Gomes</name>
         <profilePicture>Francisco_da_Costa_Gomes.jpg</profilePicture>
+        <idName>Francisco_da_Costa_Gomes</idName>
         <startDate>1974</startDate>
         <endDate>1976</endDate>
         <birthDate>1914</birthDate>
@@ -190,6 +205,7 @@
         <id>pr_16</id>
         <name>António Ramalho Eanes</name>
         <profilePicture>Antonio_Ramalho_Eanes.png</profilePicture>
+        <idName>Antonio_Ramalho_Eanes</idName>
         <startDate>1976</startDate>
         <endDate>1986</endDate>
         <birthDate>1935</birthDate>
@@ -201,6 +217,7 @@
         <id>pr_17</id>
         <name>Mário Soares</name>
         <profilePicture>Mario_Soares.png</profilePicture>
+        <idName>Mario_Soares</idName>
         <startDate>1986</startDate>
         <endDate>1996</endDate>
         <birthDate>1924</birthDate>
@@ -213,6 +230,7 @@
         <id>pr_18</id>
         <name>Jorge Sampaio</name>
         <profilePicture>Jorge_Sampaio.jpg</profilePicture>
+        <idName>Jorge_Sampaio</idName>
         <startDate>1996</startDate>
         <endDate>2006</endDate>
         <birthDate>1939</birthDate>
@@ -225,6 +243,7 @@
         <id>pr_19</id>
         <name>Aníbal Cavaco Silva</name>
         <profilePicture>Anibal_Cavaco_Silva.jpg</profilePicture>
+        <idName>Anibal_Cavaco_Silva</idName>
         <startDate>2006</startDate>
         <endDate>2016</endDate>
         <birthDate>1939</birthDate>
@@ -236,6 +255,7 @@
         <id>pr_20</id>
         <name>Marcelo Rebelo de Sousa</name>
         <profilePicture>Marcelo_Rebelo_de_Sousa.jpg</profilePicture>
+        <idName>Marcelo_Rebelo_de_Sousa</idName>
         <startDate>2016</startDate>
         <endDate>-</endDate>
         <birthDate>1948</birthDate>
@@ -243,52 +263,4 @@
         <color>20.069444656</color>
         <faces>1</faces>
     </president>
-    <!--<president>
-            <id>104-1043692_magnifying-glass-png-no-background</id>
-            <luminance>0.000000000</luminance>
-            <color>0.000000000</color>
-            <faces>0</faces>
-            <edges>textures_edges/104-1043692_magnifying-glass-png-no-background-edges.jpg</edges>
-            <texture>textures_edges/104-1043692_magnifying-glass-png-no-background-texture.jpg</texture>
-        </president>
-        <president>
-            <id>Americo_Thomaz</id>
-            <luminance>134.035781860</luminance>
-            <color>0.000000000</color>
-            <faces>5</faces>
-            <edges>textures_edges/Americo_Thomaz-edges.jpg</edges>
-            <texture>textures_edges/Americo_Thomaz-texture.jpg</texture>
-        </president>
-        <president>
-            <id>Anibal_Cavaco_Silva</id>
-            <luminance>63.854969025</luminance>
-            <color>22.368421555</color>
-            <faces>3</faces>
-            <edges>textures_edges/Anibal_Cavaco_Silva-edges.jpg</edges>
-            <texture>textures_edges/Anibal_Cavaco_Silva-texture.jpg</texture>
-        </president>
-        <president>
-            <id>Antonio_Jose_de_Almeida</id>
-            <luminance>116.840225220</luminance>
-            <color>38.250000000</color>
-            <faces>0</faces>
-            <edges>textures_edges/Antonio_Jose_de_Almeida-edges.jpg</edges>
-            <texture>textures_edges/Antonio_Jose_de_Almeida-texture.jpg</texture>
-        </president>
-        <president>
-            <id>Antonio_Ramalho_Eanes</id>
-            <luminance>122.897766113</luminance>
-            <color>14.166666985</color>
-            <faces>2</faces>
-            <edges>textures_edges/Antonio_Ramalho_Eanes-edges.jpg</edges>
-            <texture>textures_edges/Antonio_Ramalho_Eanes-texture.jpg</texture>
-        </president>
-        <president>
-            <id>Antonio_Spinola</id>
-            <luminance>96.502044678</luminance>
-            <color>18.593750000</color>
-            <faces>1</faces>
-            <edges>textures_edges/Antonio_Spinola-edges.jpg</edges>
-            <texture>textures_edges/Antonio_Spinola-texture.jpg</texture>
-        </president>-->
 </presidents>
