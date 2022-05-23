@@ -16,7 +16,19 @@ using namespace cv;
 class ofApp : public ofBaseApp {
 
 	public:
-		
+
+		typedef struct
+		{
+			string name;
+			string startDate;
+			string endDate;
+			string birthDate;
+			string deathDate;
+			ofImage* profilePicture;
+			ofVideoPlayer* biographyVideo;
+			vector<ofImage*> otherImages;
+		} PresidentMedia;
+
 		void setup();
 		void update();
 		void draw();
@@ -34,7 +46,7 @@ class ofApp : public ofBaseApp {
 		void gotMessage(ofMessage msg);		
 		void mouseScrolled(int x, int y, float scrollX, float scrollY);
 		void drawPresidents();
-		void drawVideo(ofVideoPlayer* vid);
+		void drawBiographyVideo();
         //void filterEdgeAndTexture();
         string edgesFilter(string presidentName, ofImage image);
         string textureFilter(string presidentName, ofImage image);
@@ -49,23 +61,33 @@ class ofApp : public ofBaseApp {
 		bool isMousePtrInsideCenterPresident(int x, int y);
 		bool isMousePtrOnCenterPresidentLeft(int x, int y);
 		bool isMousePtrOnCenterPresidentRight(int x, int y);
-		bool checkMousePtrOnPresident(int x, int y);
+		bool isMousePtrBelowNeighbourPresidents(int x, int y);
+		int getPresidentIndexWhereMouseIsPointing(int x, int y);
+		void switchPresident(PresidentMedia* previousPresident);
 
+		#define MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT -1
+
+		ofxButton pauseBtn;
     
 		ofTrueTypeFont myfont;
 		
 		// we will have a dynamic number of images, based on the content of a directory:
-		ofDirectory dir;
+		ofDirectory imagesDir;
+		ofDirectory videosDir;
 		//vector<ofImage> images;
-		vector<ofBaseDraws*> mediaFiles;
+		/*vector<ofImage*> profilePictures;
 
-		vector<int> mediaTypes;
+		vector<ofVideoPlayer*> biographyVideos;*/
+
+		vector<PresidentMedia*> presidentsMedias;
 
 		bool frameByframe;
 
-		int currentMedia;
+		int currentPresidentIdx;
 
 		ofxPanel gui;
+
+		
 
 		//computed
 		int windowXCenter;
@@ -77,6 +99,9 @@ class ofApp : public ofBaseApp {
 
 		const double PRESIDENT_PORTRAIT_ASPECT_RATIO = 4.0 / 5.0;
 		const int SPACE_BETWEEN_PRESIDENTS = 25;
+
+		const int BIOGRAPHY_VIDEO_WIDTH = 640;
+		const int BIOGRAPHY_VIDEO_HEIGH = 360;
 
 		const int PRESIDENTS_CARROUSEL_Y_POS = 75;
 
