@@ -7,11 +7,41 @@
 		<ClCompile Include="src\main.cpp">
 			<Filter>src</Filter>
 		</ClCompile>
+		<ClCompile Include="src\.DS_Store">
+			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\Gallery\Gallery.cpp">
+			<Filter>src\Gallery</Filter>
+		</ClCompile>
+		<ClCompile Include="src\Item\.DS_Store">
+			<Filter>src\Item</Filter>
+		</ClCompile>
+		<ClCompile Include="src\Item\Item.cpp">
+			<Filter>src\Item</Filter>
+		</ClCompile>
 		<ClCompile Include="src\main.cpp">
 			<Filter>src</Filter>
 		</ClCompile>
 		<ClCompile Include="src\ofApp.cpp">
 			<Filter>src</Filter>
+		</ClCompile>
+		<ClCompile Include="src\VideoPlayer\ColorMode.cpp">
+			<Filter>src\VideoPlayer</Filter>
+		</ClCompile>
+		<ClCompile Include="src\VideoPlayer\PlayMode.cpp">
+			<Filter>src\VideoPlayer</Filter>
+		</ClCompile>
+		<ClCompile Include="src\VideoPlayer\VideoPlayer.cpp">
+			<Filter>src\VideoPlayer</Filter>
+		</ClCompile>
+		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\core\ofxDatGuiComponent.cpp">
+			<Filter>addons\ofxDatGui\src\core</Filter>
+		</ClCompile>
+		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\libs\ofxSmartFont\ofxSmartFont.cpp">
+			<Filter>addons\ofxDatGui\src\libs\ofxSmartFont</Filter>
+		</ClCompile>
+		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\ofxDatGui.cpp">
+			<Filter>addons\ofxDatGui\src</Filter>
 		</ClCompile>
 		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxBaseGui.cpp">
 			<Filter>addons\ofxGui\src</Filter>
@@ -42,36 +72,6 @@
 		</ClCompile>
 		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxToggle.cpp">
 			<Filter>addons\ofxGui\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\src\extra\ofxKinectExtras.cpp">
-			<Filter>addons\ofxKinect\src\extra</Filter>
-		</ClCompile>
-		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\src\ofxKinect.cpp">
-			<Filter>addons\ofxKinect\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\audio.c">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\cameras.c">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\core.c">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\flags.c">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\loader.c">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\registration.c">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\tilt.c">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
-		</ClCompile>
-		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\usb_libusb10.c">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
 		</ClCompile>
 		<ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxOpenCv\src\ofxCvColorImage.cpp">
 			<Filter>addons\ofxOpenCv\src</Filter>
@@ -111,47 +111,44 @@
 		<Filter Include="src">
 			<UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
 		</Filter>
+		<Filter Include="src\Gallery">
+			<UniqueIdentifier>{459853A0-DD80-7F6C-DDA3-3BB0}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="src\Item">
+			<UniqueIdentifier>{B148205C-9076-9293-F277-FE28}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="src\VideoPlayer">
+			<UniqueIdentifier>{B877E405-465B-88AB-E47A-0029}</UniqueIdentifier>
+		</Filter>
 		<Filter Include="addons">
 			<UniqueIdentifier>{71834F65-F3A9-211E-73B8-DC85}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui">
+			<UniqueIdentifier>{B36B06DF-1AA4-00D4-5A1B-6893}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui\src">
+			<UniqueIdentifier>{CAA2E9BA-611F-99B2-780A-B8BA}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui\src\components">
+			<UniqueIdentifier>{8EFE15E2-401E-A657-3818-AD66}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui\src\core">
+			<UniqueIdentifier>{6835CAB6-404A-D3AD-148B-CD60}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui\src\libs">
+			<UniqueIdentifier>{ABAEF2A2-DCDC-DB83-4614-EB2B}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui\src\libs\ofxSmartFont">
+			<UniqueIdentifier>{A694AB8C-4705-277A-3AC8-2B8E}</UniqueIdentifier>
+		</Filter>
+		<Filter Include="addons\ofxDatGui\src\themes">
+			<UniqueIdentifier>{2646318C-49AB-44C5-70D8-23E6}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxGui">
 			<UniqueIdentifier>{4F2A59AF-5F4E-704B-D067-EC13}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxGui\src">
 			<UniqueIdentifier>{645E9533-4DCD-6179-1CDF-CB65}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxKinect">
-			<UniqueIdentifier>{B7F05916-2DAA-8604-92E8-9A28}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxKinect\src">
-			<UniqueIdentifier>{C16604A1-D9F2-E615-4352-057F}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxKinect\src\extra">
-			<UniqueIdentifier>{7EB153FE-B71B-8161-D6DE-947F}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxKinect\libs">
-			<UniqueIdentifier>{3BE4DDBD-E9EF-0189-E5FD-4477}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxKinect\libs\libfreenect">
-			<UniqueIdentifier>{6416D445-F422-712E-EDA0-F45E}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxKinect\libs\libfreenect\include">
-			<UniqueIdentifier>{F7A2459D-BD30-38D3-05BB-4653}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxKinect\libs\libfreenect\platform">
-			<UniqueIdentifier>{7103C6E1-7CB0-0812-CF4A-0C3F}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxKinect\libs\libfreenect\platform\windows">
-			<UniqueIdentifier>{6FC8E074-DEF7-EC60-8276-5D23}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxKinect\libs\libfreenect\src">
-			<UniqueIdentifier>{62D6194F-F881-A1EE-EF63-07E8}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxKinect\libs\libusb">
-			<UniqueIdentifier>{9F431C76-08DD-FF8A-02F3-5ACC}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="addons\ofxKinect\libs\libusb\include">
-			<UniqueIdentifier>{DE5A1C38-1832-3CB6-57BA-5B69}</UniqueIdentifier>
 		</Filter>
 		<Filter Include="addons\ofxOpenCv">
 			<UniqueIdentifier>{FFA81411-43B9-BD99-75AF-1DC3}</UniqueIdentifier>
@@ -308,8 +305,86 @@
 		<ClInclude Include="src\ofApp.h">
 			<Filter>src</Filter>
 		</ClInclude>
+		<ClInclude Include="src\Gallery\Gallery.h">
+			<Filter>src\Gallery</Filter>
+		</ClInclude>
+		<ClInclude Include="src\Item\Item.h">
+			<Filter>src\Item</Filter>
+		</ClInclude>
 		<ClInclude Include="src\ofApp.h">
 			<Filter>src</Filter>
+		</ClInclude>
+		<ClInclude Include="src\VideoPlayer\ColorMode.h">
+			<Filter>src\VideoPlayer</Filter>
+		</ClInclude>
+		<ClInclude Include="src\VideoPlayer\PlayMode.hpp">
+			<Filter>src\VideoPlayer</Filter>
+		</ClInclude>
+		<ClInclude Include="src\VideoPlayer\VideoPlayer.hpp">
+			<Filter>src\VideoPlayer</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\components\ofxDatGui2dPad.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\components\ofxDatGuiButton.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\components\ofxDatGuiColorPicker.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\components\ofxDatGuiControls.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\components\ofxDatGuiFRM.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\components\ofxDatGuiGroups.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\components\ofxDatGuiLabel.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\components\ofxDatGuiMatrix.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\components\ofxDatGuiScrollView.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\components\ofxDatGuiSlider.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\components\ofxDatGuiTextInput.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\components\ofxDatGuiTextInputField.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\components\ofxDatGuiTimeGraph.h">
+			<Filter>addons\ofxDatGui\src\components</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\core\ofxDatGuiComponent.h">
+			<Filter>addons\ofxDatGui\src\core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\core\ofxDatGuiConstants.h">
+			<Filter>addons\ofxDatGui\src\core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\core\ofxDatGuiEvents.h">
+			<Filter>addons\ofxDatGui\src\core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\core\ofxDatGuiIntObject.h">
+			<Filter>addons\ofxDatGui\src\core</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\libs\ofxSmartFont\ofxSmartFont.h">
+			<Filter>addons\ofxDatGui\src\libs\ofxSmartFont</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\ofxDatGui.h">
+			<Filter>addons\ofxDatGui\src</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\themes\ofxDatGuiTheme.h">
+			<Filter>addons\ofxDatGui\src\themes</Filter>
+		</ClInclude>
+		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxDatGui\src\themes\ofxDatGuiThemes.h">
+			<Filter>addons\ofxDatGui\src\themes</Filter>
 		</ClInclude>
 		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxBaseGui.h">
 			<Filter>addons\ofxGui\src</Filter>
@@ -346,48 +421,6 @@
 		</ClInclude>
 		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxToggle.h">
 			<Filter>addons\ofxGui\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\src\extra\ofxKinectExtras.h">
-			<Filter>addons\ofxKinect\src\extra</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\src\ofxBase3DVideo.h">
-			<Filter>addons\ofxKinect\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\src\ofxKinect.h">
-			<Filter>addons\ofxKinect\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\include\libfreenect.h">
-			<Filter>addons\ofxKinect\libs\libfreenect\include</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\include\libfreenect_audio.h">
-			<Filter>addons\ofxKinect\libs\libfreenect\include</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\include\libfreenect_registration.h">
-			<Filter>addons\ofxKinect\libs\libfreenect\include</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\platform\windows\unistd.h">
-			<Filter>addons\ofxKinect\libs\libfreenect\platform\windows</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\cameras.h">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\flags.h">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\freenect_internal.h">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\loader.h">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\registration.h">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libfreenect\src\usb_libusb10.h">
-			<Filter>addons\ofxKinect\libs\libfreenect\src</Filter>
-		</ClInclude>
-		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxKinect\libs\libusb\include\libusb.h">
-			<Filter>addons\ofxKinect\libs\libusb\include</Filter>
 		</ClInclude>
 		<ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxOpenCv\src\ofxCvBlob.h">
 			<Filter>addons\ofxOpenCv\src</Filter>

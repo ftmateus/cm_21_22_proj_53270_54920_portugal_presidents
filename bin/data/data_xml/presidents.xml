@@ -212,6 +212,9 @@
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
+        <biographyVideo>
+          biografia_ramalho_eanes.mp4
+        </biographyVideo>
     </president>
     <president>
         <id>pr_17</id>
@@ -225,6 +228,9 @@
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
+        <biographyVideo>
+          biografia_mario_soares.mp4
+        </biographyVideo>
     </president>
     <president>
         <id>pr_18</id>
@@ -238,6 +244,9 @@
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
+        <biographyVideo>
+          Biografia_Jorge_Sampaio.mp4
+        </biographyVideo>
     </president>
     <president>
         <id>pr_19</id>
@@ -250,6 +259,9 @@
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
+        <biographyVideo>
+            Biografia_Cavaco_Silva.mp4
+        </biographyVideo>
     </president>
     <president>
         <id>pr_20</id>
@@ -262,5 +274,8 @@
         <luminance>228.883117676</luminance>
         <color>20.069444656</color>
         <faces>1</faces>
+        <biographyVideo>
+            Marcelo_Rebelo_de_Sousa_Biografia.mp4
+        </biographyVideo>
     </president>
 </presidents>
