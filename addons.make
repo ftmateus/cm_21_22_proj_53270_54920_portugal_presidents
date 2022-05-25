@@ -1,4 +1,5 @@
+ofxOpenCv
+ofxCv
 ofxDatGui
 ofxGui
-ofxOpenCv
 ofxXmlSettings

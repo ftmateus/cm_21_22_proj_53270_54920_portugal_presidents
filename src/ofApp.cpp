@@ -1,4 +1,6 @@
 #include "ofApp.h"
+#include <thread>
+#include <memory>
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -31,40 +33,66 @@ void ofApp::setup() {
             assert(false);
     }
 
-    if (!mainXml.load("data_xml/presidents.xml")) {
+    if (!presidentsMetadataXml.load("data_xml/presidents_metadata.xml")) {
         ofLogError() << "Couldn't load file";
         assert(false);
     }
-    mainXml.pushTag("presidents");
+
+    presidentsMetadataXml.pushTag("presidentsMetadata");
+    presidentsMetadataXml.clear();
+
+    if (!presidentsXml.load("data_xml/presidents.xml")) {
+        ofLogError() << "Couldn't load file";
+        assert(false);
+    }
+    presidentsXml.pushTag("presidents");
 
 
-    int n_presidents = mainXml.getNumTags("president");
+    int n_presidents = presidentsXml.getNumTags("president");
 
     for (int i = 0; i < n_presidents; i++) {
 
-        PresidentMedia* presMedia = new PresidentMedia();
+        President* presMedia = new President();
 
-        //string name = mainXml.getValue("president:name", "", i);
+        //string name = presidentsXml.getValue("president:name", "", i);
 
-        presMedia->name         = string(mainXml.getValue("president:name", "", i));
-        presMedia->startDate    = string(mainXml.getValue("president:startDate", "", i));
-        presMedia->endDate      = string(mainXml.getValue("president:endDate", "", i));
-        presMedia->birthDate    = string(mainXml.getValue("president:birthDate", "", i));
-        presMedia->deathDate    = string(mainXml.getValue("president:deathDate", "", i));
+        presMedia->name         = string(presidentsXml.getValue("president:name", "", i));
+        presMedia->pres_id = i;
+        presMedia->startDate    = string(presidentsXml.getValue("president:startDate", "", i));
+        presMedia->endDate      = string(presidentsXml.getValue("president:endDate", "", i));
+        presMedia->birthDate    = string(presidentsXml.getValue("president:birthDate", "", i));
+        presMedia->deathDate    = string(presidentsXml.getValue("president:deathDate", "", i));
 
-        string profilePicture = mainXml.getValue("president:profilePicture", "", i);
+        string profilePicture = presidentsXml.getValue("president:profilePicture", "", i);
         presMedia->profilePicture = new ofImage();
         presMedia->profilePicture->load("images/" + profilePicture);
 
-        string biographyVideo = mainXml.getValue("president:biographyVideo", "", i);
+        string biographyVideo = presidentsXml.getValue("president:biographyVideo", "", i);
         if (biographyVideo != "")
         {
             presMedia->biographyVideo = new ofVideoPlayer();
             presMedia->biographyVideo->load("videos/" + biographyVideo);
         }
 
+        generateMetadata(presMedia);
+
         presidentsMedias.push_back(presMedia);
     }
+
+    //vector<thread> threads;
+
+    //for (int i = 0; i < n_presidents; i+=4) {
+    //    int endPres = i + 4 > n_presidents - 1? n_presidents  - 1: i + 4;
+
+    //    std::thread _thread(&ofApp::generateMetadataThread, this, i, endPres);
+
+    //    //_thread.join();
+
+    //    threads.push_back(std::move(_thread));
+    //}
+
+    //for (int t = 0; t < threads.size(); t++)
+    //    threads[t].join();
 
     currentPresidentIdx = 0;
 
@@ -101,13 +129,13 @@ void ofApp::draw(){
 
     drawPresidents(); 
 
-    drawPresidentDescription();
+    drawBiographyVideo();
     
 }
 
 void ofApp::drawPresidentDescription()
 {
-    string presidentDescription = mainXml.getValue("president:description", "", currentPresidentIdx);
+    string presidentDescription = presidentsXml.getValue("president:description", "", currentPresidentIdx);
 }
 
 void ofApp::drawPresidents()
@@ -240,11 +268,11 @@ void ofApp::keyPressed(int key){
 }
 
 
-void ofApp::switchPresident(PresidentMedia* previousPresident)
+void ofApp::switchPresident(President* previousPresident)
 {
     if (previousPresident == NULL) return;
 
-    PresidentMedia* currentPresident = presidentsMedias[currentPresidentIdx];
+    President* currentPresident = presidentsMedias[currentPresidentIdx];
  
     if (previousPresident->biographyVideo != NULL)
     {
@@ -425,12 +453,12 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 //--------------------------------------------------------------
 /*void ofApp::filterEdgeAndTexture() {
-    int npresidents = mainXml.getNumTags("president");
+    int npresidents = presidentsXml.getNumTags("president");
     
     string id;
     
     for(int i = 0; i < npresidents; i++) {
-        id = mainXml.getValue("president:id", "", i);
+        id = presidentsXml.getValue("president:id", "", i);
         string path = dir.getPath(i);
         ofImage img = ofImage(path);
         generateMetadata(id, path, img, false);
@@ -445,40 +473,44 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 }*/
 
 
-string ofApp::edgesFilter(string presidentName, ofImage image) {
+string ofApp::edgesFilter(President *president) {
     double kernel_size;
     Mat kernel;
     kernel_size = 31;
     kernel = Mat::ones(kernel_size, kernel_size, CV_32F) / (kernel_size * kernel_size);
 
-    Mat src = toCv(image);
+    Mat src = toCv(*president->profilePicture);
     Mat dst;
     Mat gray_image;
 
     vector<Mat> channels;
     Mat hsv;
+
+    /**
+        Da erro em algumas imagens, como a do antonio salazar e francisco costa
+    */
     cvtColor(src, hsv, CV_RGB2HSV);
     split(hsv, channels);
     gray_image = channels[0];
 
-    Canny(image, dst, 10, 350);
+    Canny(*president->profilePicture, dst, 10, 350);
 
     //filter2D(src, dst, CV_32F, kernel);
 
     ofImage saveEdges;
     toOf(dst, saveEdges);
 
-    string path = "textures_edges/" + presidentName + "-edges.jpg";
+    string path = "textures_edges/" + president->name + "-edges.jpg";
     saveEdges.save(path);
 
     return path;
 }
 
-string ofApp::textureFilter(string presidentName, ofImage image) {
+string ofApp::textureFilter(President *president) {
     Mat src, dst;
     int kernel_size = 31;
 
-    src = toCv(image); // Load an image
+    src = toCv(*president->profilePicture); // Load an image
 
     double lambda = 1.0;
     double theta = 0;
@@ -492,7 +524,7 @@ string ofApp::textureFilter(string presidentName, ofImage image) {
     ofImage saveTexture;
     toOf(dst, saveTexture);
 
-    string path = "textures_edges/" + presidentName + "-texture.jpg";
+    string path = "textures_edges/" + president->name + "-texture.jpg";
     saveTexture.save(path);
 
     return path;
@@ -564,27 +596,34 @@ string ofApp::textureFilter(string presidentName, ofImage image) {
     return rhythm;
 }*/
 
-void ofApp::generateMetadata(string presidentName, string path, ofImage image, bool isVideo) {
-    int numPresidents = mainXml.getNumTags("president");
+
+void ofApp::generateMetadataThread(int startPres, int endPres) 
+{
+    for (int i = startPres; i <= endPres; i++)
+        generateMetadata(presidentsMedias[i]);
+}
+
+void ofApp::generateMetadata(President *president) {
+    //int numPresidents = presidentsXml.getNumTags("president");
     
-    for(int i = 0; i < numPresidents; i++) {
-        mainXml.pushTag("president", i);
-        string id = mainXml.getValue("id", "");
+    /*for(int i = 0; i < numPresidents; i++) {
+        presidentsXml.pushTag("president", i);
+        string id = presidentsXml.getValue("id", "");
         
         if(id == presidentName) {
-            mainXml.popTag();
+            presidentsXml.popTag();
             return;
         }
-        mainXml.popTag();
-    }
+        presidentsXml.popTag();
+    }*/
     
-    mainXml.addTag("president");
-    mainXml.pushTag("president", numPresidents); // mudar para numberOfItems + 1 depois de testar
+    presidentsMetadataXml.addTag("president");
+    presidentsMetadataXml.pushTag("president", president->pres_id); // mudar para numberOfItems + 1 depois de testar
     // saves the id - itemName
-    mainXml.setValue("id", presidentName, numPresidents);
+    presidentsMetadataXml.setValue("id", president->name, president->pres_id);
 
     // color && luminance
-    ofPixels& pixels = image.getPixels();
+    ofPixels& pixels = president->profilePicture->getPixels();
 
     float avgRed = 0;
     float avgGreen = 0;
@@ -608,14 +647,13 @@ void ofApp::generateMetadata(string presidentName, string path, ofImage image, b
     newColor.g = avgGreen;
     newColor.b = avgBlue;
 
-    mainXml.setValue("luminance", avgLuminance, numPresidents);
-    mainXml.setValue("color", newColor.getHue(), numPresidents);
+    presidentsMetadataXml.setValue("luminance", avgLuminance, president->pres_id);
+    presidentsMetadataXml.setValue("color", newColor.getHue(), president->pres_id);
 
     // faces
     // finder faces
     finder.setup("data_xml/haarcascade_frontalface_default.xml");
-    int faces = 0;
-    if (isVideo) {
+    /*if (isVideo) {
         ofVideoPlayer auxVideo;
         auxVideo.load(path);
 
@@ -630,28 +668,30 @@ void ofApp::generateMetadata(string presidentName, string path, ofImage image, b
         faces /= 5;
     }
     else {
-        faces = finder.findHaarObjects(image);
-    }
+        
+    }*/
 
-    mainXml.setValue("faces", faces, numPresidents);
+    int faces = finder.findHaarObjects(*president->profilePicture);
+
+    presidentsMetadataXml.setValue("faces", faces, president->pres_id);
     // edges - filter2D
-    string edges = edgesFilter(presidentName, image);
+    /*string edges = edgesFilter(president);
 
     if (edges != "")
-        mainXml.setValue("edges", edges, numPresidents);
-    // texture
-    string texture = textureFilter(presidentName, image);
+        presidentsMetadataXml.setValue("edges", edges, president->pres_id);*/
+    //// texture
+    string texture = textureFilter(president);
     if (texture != "")
-        mainXml.setValue("texture", texture, numPresidents);
+        presidentsMetadataXml.setValue("texture", texture, president->pres_id);
     // rhythm
     /*if (isVideo) {
         double rhythm = rhythmFilter(path);
-        mainXml.setValue("rhythm", rhythm, numPresidents);
+        presidentsXml.setValue("rhythm", rhythm, numPresidents);
     }*/
 
-    mainXml.popTag(); // item
+    presidentsMetadataXml.popTag(); // item
 
-    mainXml.saveFile();
+    presidentsMetadataXml.saveFile();
     
 }
 
@@ -673,17 +713,17 @@ void ofApp::filterItems(string filter) {
     // filter items
     vector<Item*> filteredItems;
     int counter = 0;
-    int numPresidents = mainXml.getNumTags("president");
+    int numPresidents = presidentsXml.getNumTags("president");
 
     for (int i = 0; i < numPresidents; i++) {
         bool wasAdded = false;
         // tags
-        mainXml.pushTag("president", i);
-        mainXml.pushTag("tags");
+        presidentsXml.pushTag("president", i);
+        presidentsXml.pushTag("tags");
 
-        int numTags = mainXml.getNumTags("tag");
+        int numTags = presidentsXml.getNumTags("tag");
         for (int j = 0; j < numTags; j++) {
-            string tag = mainXml.getValue("tag", "", j);
+            string tag = presidentsXml.getValue("tag", "", j);
 
             if (tag.find(filter) != std::string::npos) { // add this item
                 filteredItems.push_back(auxItems[i]);
@@ -692,16 +732,16 @@ void ofApp::filterItems(string filter) {
                 break;
             }
         }
-        mainXml.popTag(); // tags
+        presidentsXml.popTag(); // tags
         // so the same item isnt added twice
         if (!wasAdded) {
             // times
-            mainXml.pushTag("times");
+            presidentsXml.pushTag("times");
 
-            int numTimes = mainXml.getNumTags("time");
+            int numTimes = presidentsXml.getNumTags("time");
             for (int j = 0; j < numTimes; j++) {
-                mainXml.pushTag("time", j);
-                string name = mainXml.getValue("name", "");
+                presidentsXml.pushTag("time", j);
+                string name = presidentsXml.getValue("name", "");
 
                 if (name.find(filter) != std::string::npos) { // add this item
                     filteredItems.push_back(auxItems[i]);
@@ -709,10 +749,10 @@ void ofApp::filterItems(string filter) {
                     break;
                 }
             }
-            mainXml.popTag(); // times
+            presidentsXml.popTag(); // times
         }
 
-        mainXml.popTag(); // item
+        presidentsXml.popTag(); // item
     }
     // items = filteredItems
     items.clear();
@@ -724,17 +764,17 @@ void ofApp::filterItems(string filter) {
 void ofApp::filterByColor(float hue) {
     vector<Item*> filteredItems;
     int counter = 0;
-    int numPresidents = mainXml.getNumTags("president");
+    int numPresidents = presidentsXml.getNumTags("president");
 
     for (int i = 0; i < numPresidents; i++) {
-        mainXml.pushTag("president", i);
-        float color = mainXml.getValue("color", 0);
+        presidentsXml.pushTag("president", i);
+        float color = presidentsXml.getValue("color", 0);
         if (abs(color - hue) <= 10 || abs(color - hue) >= 245) {
             // this item will apear
             filteredItems.push_back(auxItems[i]);
             counter++;
         }
-        mainXml.popTag(); // item
+        presidentsXml.popTag(); // item
     }
     // items = filteredItems
     items.clear();
@@ -745,32 +785,32 @@ void ofApp::filterByColor(float hue) {
 
 /*void ofApp::handleUserItems(int userId, vector<Item*> items_input, bool useItemsInput) {
     if (!useItemsInput) {
-        int numberOfUsers = user_mainXml.getNumTags("user_items");
+        int numberOfUsers = user_presidentsXml.getNumTags("user_items");
 
         int numberOfItems = 0;
         vector<string> user_items;
 
         for (int i = 0; i < numberOfUsers; i++) {
-            user_mainXml.pushTag("user_items", i);
+            user_presidentsXml.pushTag("user_items", i);
 
-            if (user_mainXml.getValue("user", 0) == userId) {
+            if (user_presidentsXml.getValue("user", 0) == userId) {
                 // get items
-                user_mainXml.pushTag("items", i);
-                numberOfItems = user_mainXml.getNumTags("item");
+                user_presidentsXml.pushTag("items", i);
+                numberOfItems = user_presidentsXml.getNumTags("item");
 
                 user_items.assign(numberOfItems, string());
 
                 for (int j = 0; j < numberOfItems; j++) {
-                    user_mainXml.pushTag("item", j);
-                    string itemId = user_mainXml.getValue("id", "");
+                    user_presidentsXml.pushTag("item", j);
+                    string itemId = user_presidentsXml.getValue("id", "");
                     // add to vector
                     user_items.push_back(itemId);
 
-                    user_mainXml.popTag(); // item
+                    user_presidentsXml.popTag(); // item
                 }
             }
-            user_mainXml.popTag(); // items
-            user_mainXml.popTag(); // user_items
+            user_presidentsXml.popTag(); // items
+            user_presidentsXml.popTag(); // user_items
         }
         //----------ofDirectory
         dir.listDir("items/");
@@ -862,54 +902,54 @@ void ofApp::importMetadata(ofxDatGuiButtonEvent e) {
     
     (void)ofLog(OF_LOG_NOTICE, "index: " + ofToString(index));
 
-    mainXml.pushTag("item", index);
-    if (mainXml.getNumTags("tags") == 0)
-        mainXml.addTag("tags");
+    presidentsMetadataXml.pushTag("item", index);
+    if (presidentsMetadataXml.getNumTags("tags") == 0)
+        presidentsMetadataXml.addTag("tags");
 
-        mainXml.pushTag("tags");
-        int numExTags = mainXml.getNumTags("tag"); // number of existing tags
+        presidentsMetadataXml.pushTag("tags");
+        int numExTags = presidentsMetadataXml.getNumTags("tag"); // number of existing tags
 
         for (int j = 0; j < numberOfTags; j++) {
-            mainXml.addValue("tag", listTags[j]);
+            presidentsMetadataXml.addValue("tag", listTags[j]);
         }
-        mainXml.popTag(); // tags
+        presidentsMetadataXml.popTag(); // tags
 
-        if (mainXml.getNumTags("times") == 0)
-            mainXml.addTag("times");
+        if (presidentsMetadataXml.getNumTags("times") == 0)
+            presidentsMetadataXml.addTag("times");
 
-        mainXml.pushTag("times");
-        int numExTimes = mainXml.getNumTags("time"); // number of existing times
+        presidentsMetadataXml.pushTag("times");
+        int numExTimes = presidentsMetadataXml.getNumTags("time"); // number of existing times
 
         int j = numExTimes;
         for (map<string, int>::iterator itr = mapTimes.begin(); itr != mapTimes.end(); ++itr) {
             bool found = false;
 
-            int numTimesTag = mainXml.getNumTags("time");
+            int numTimesTag = presidentsMetadataXml.getNumTags("time");
             for (int i = 0; i < numTimesTag; i++) {
-                mainXml.pushTag("time", i);
-                if (mainXml.getValue("name", "") == itr->first)
+                presidentsMetadataXml.pushTag("time", i);
+                if (presidentsMetadataXml.getValue("name", "") == itr->first)
                     found = true;
                 
-                mainXml.popTag(); // time
+                presidentsMetadataXml.popTag(); // time
             }
 
             if (!found) {
-                mainXml.addTag("time");
-                mainXml.pushTag("time", j);
+                presidentsMetadataXml.addTag("time");
+                presidentsMetadataXml.pushTag("time", j);
 
-                mainXml.addValue("name", itr->first);
-                mainXml.addValue("numTime", itr->second);
+                presidentsMetadataXml.addValue("name", itr->first);
+                presidentsMetadataXml.addValue("numTime", itr->second);
 
-                mainXml.popTag(); // time
+                presidentsMetadataXml.popTag(); // time
             }
             j++;
         }
-        mainXml.popTag(); // times
+        presidentsMetadataXml.popTag(); // times
 
-        mainXml.popTag(); // item
+        presidentsMetadataXml.popTag(); // item
 
         // Saves file
-        if (mainXml.saveFile())
+        if (presidentsMetadataXml.saveFile())
             (void)ofLog(OF_LOG_NOTICE, "Saved!");
         else
             (void)ofLog(OF_LOG_NOTICE, "Didn't save!");

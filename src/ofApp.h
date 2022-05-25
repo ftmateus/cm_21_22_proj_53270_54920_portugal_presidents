@@ -5,7 +5,7 @@
 #include "ofMain.h"
 #include "ofxXmlSettings.h"
 #include "ofxCvHaarFinder.h"
-//#include "ofxCv.h"
+#include "ofxCv.h"
 #include "ofxDatGui.h"
 #include "Item.h"
 #include "ofxOpenCv.h"
@@ -16,6 +16,8 @@
 #define VIDEO_MEDIA_TYPE 1
 
 using namespace cv;
+using namespace ofxCv;
+
 
 class ofApp : public ofBaseApp {
 
@@ -24,6 +26,7 @@ class ofApp : public ofBaseApp {
 		typedef struct
 		{
 			string name;
+			int pres_id;
 			string startDate;
 			string endDate;
 			string birthDate;
@@ -31,7 +34,7 @@ class ofApp : public ofBaseApp {
 			ofImage* profilePicture;
 			ofVideoPlayer* biographyVideo;
 			vector<ofImage*> otherImages;
-		} PresidentMedia;
+		} President;
 
 		void setup();
 		void update();
@@ -52,11 +55,13 @@ class ofApp : public ofBaseApp {
 		void drawPresidents();
 		void drawBiographyVideo();
         //void filterEdgeAndTexture();
-        string edgesFilter(string presidentName, ofImage image);
-        string textureFilter(string presidentName, ofImage image);
-        //double rhythmFilter(string path);
-        void generateMetadata(string presidentName, string path, ofImage image, bool isVideo);
-        void importMetadata(ofxDatGuiButtonEvent e);
+        string edgesFilter(President* president);
+        string textureFilter(President* president);
+        //double rhythmFilter(string path);        
+		void generateMetadataThread(int startPres, int endPres);
+		void generateMetadata(President *president);
+		//void generateMetadata(string presidentName, string path, ofImage* image, bool isVideo);
+		void importMetadata(ofxDatGuiButtonEvent e);
         void extractMetadata(ofxDatGuiButtonEvent e);
 		void drawPresidentDescription();
         void initButtons();
@@ -74,7 +79,7 @@ class ofApp : public ofBaseApp {
 		bool isMousePtrOnCenterPresidentRight(int x, int y);
 		bool isMousePtrBelowNeighbourPresidents(int x, int y);
 		int getPresidentIndexWhereMouseIsPointing(int x, int y);
-		void switchPresident(PresidentMedia* previousPresident);
+		void switchPresident(President* previousPresident);
 
 		#define MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT -1
 
@@ -90,7 +95,7 @@ class ofApp : public ofBaseApp {
 
 		vector<ofVideoPlayer*> biographyVideos;*/
 
-		vector<PresidentMedia*> presidentsMedias;
+		vector<President*> presidentsMedias;
 
 		bool frameByframe;
 
@@ -98,13 +103,24 @@ class ofApp : public ofBaseApp {
 
 		ofxPanel gui;
 
+		vector<Item*> items; // contains the filtered items
+		vector<Item*> auxItems; // contains all the items
+
+		int itemsSize;
+
+		ofxDatGuiButton* im1;
+		ofxDatGuiButton* im2;
+		ofxDatGuiButton* im3;
+
 		
 
 		//computed
 		int windowXCenter;
 		int centerPresidentImgXPos;
 
-		ofxXmlSettings mainXml;
+		ofxXmlSettings presidentsXml;
+
+		ofxXmlSettings presidentsMetadataXml;
     
         ofxCvHaarFinder finder;
 
@@ -121,6 +137,6 @@ class ofApp : public ofBaseApp {
 
 		const int NEIGHBOUR_PRESIDENT_IMG_HEIGHT = 200;
 		const int NEIGHBOUR_PRESIDENT_IMG_WIDTH = NEIGHBOUR_PRESIDENT_IMG_HEIGHT * PRESIDENT_PORTRAIT_ASPECT_RATIO;
-		
+
 };
 
