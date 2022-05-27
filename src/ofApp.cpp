@@ -1,6 +1,4 @@
 #include "ofApp.h"
-#include <thread>
-#include <memory>
 
 //--------------------------------------------------------------
 void ofApp::setup() {
