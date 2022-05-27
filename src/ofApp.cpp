@@ -1,3 +1,12 @@
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+//define something for Windows (32-bit and 64-bit, this part is common)
+    #define METADATA_GENERATION_N_THREADS 4
+#else //macos
+
+   #define METADATA_GENERATION_N_THREADS 1
+#endif
+
+
 #include "ofApp.h"
 
 //--------------------------------------------------------------
@@ -707,16 +716,16 @@ string ofApp::textureFilter(President *president) {
 }*/
 
 
-void ofApp::generateMetadataThread(int startPres, int endPres) 
-{
+void ofApp::generateMetadataThread(int startPres, int endPres) {
+    ofxCvHaarFinder finder;
+    finder.setup("data_xml/haarcascade_frontalface_default.xml");
+
     for (int i = startPres; i <= endPres; i++)
-    {
-        generateMetadata(presidentsMedias[i]);
-    }
+        generateMetadata(presidentsMedias[i], &finder);
         
 }
 
-void ofApp::generateMetadata(President *president) {
+void ofApp::generateMetadata(President *president, ofxCvHaarFinder *finder) {
     //int numPresidents = presidentsXml.getNumTags("president");
     
     /*for(int i = 0; i < numPresidents; i++) {
@@ -788,10 +797,10 @@ void ofApp::generateMetadata(President *president) {
 
 
     // edges - filter2D
-    string edges = edgesFilter(president);
+    /*string edges = edgesFilter(president);
 
     if (edges != "")
-        presidentsMetadataXml.setValue("edges", edges, president->pres_id);
+        presidentsMetadataXml.setValue("edges", edges, president->pres_id);*/
     //// texture
     string texture = textureFilter(president);
 
@@ -809,11 +818,7 @@ void ofApp::generateMetadata(President *president) {
 
     //haarFinderMutex.lock();
 
-    ofxCvHaarFinder finder;
-
-    finder.setup("data_xml/haarcascade_frontalface_default.xml");
-
-    int faces = finder.findHaarObjects(*president->profilePicture);
+    int faces = finder->findHaarObjects(*president->profilePicture);
 
     //presidentsMetadataXml.setValue("faces", faces, president->pres_id);
     work->faces = faces;

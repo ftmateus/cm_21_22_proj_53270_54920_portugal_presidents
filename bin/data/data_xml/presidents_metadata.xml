@@ -2,10 +2,10 @@
 <presidentsMetadata>
     <president>
         <id>Teófilo Braga</id>
-        <luminance>144.819839478</luminance>
-        <color>19.318181992</color>
+        <luminance>145.083602905</luminance>
+        <color>18.478260040</color>
         <texture>textures_edges/Teófilo Braga-texture.jpg</texture>
-        <faces>0</faces>
+        <faces>2</faces>
         <edges></edges>
     </president>
     <president>

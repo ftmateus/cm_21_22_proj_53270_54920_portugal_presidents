@@ -75,7 +75,7 @@ class ofApp : public ofBaseApp {
 		void getPresidentsInfoThread(int startPres, int endPres);
 		void getPresidentInfo(int xmlIndex);
 		void generateMetadataThread(int startPres, int endPres);
-		void generateMetadata(President *president);
+		void generateMetadata(President *president, ofxCvHaarFinder* finder);
 		void startMetadataGeneration();
 		//void generateMetadata(string presidentName, string path, ofImage* image, bool isVideo);
 		void importMetadata(ofxDatGuiButtonEvent e);
