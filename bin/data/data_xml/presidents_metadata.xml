@@ -2,8 +2,8 @@
 <presidentsMetadata>
     <president>
         <id>Teófilo Braga</id>
-        <luminance>145.083602905</luminance>
-        <color>18.478260040</color>
+        <luminance>144.252105713</luminance>
+        <color>21.250000000</color>
         <texture>textures_edges/Teófilo Braga-texture.jpg</texture>
         <faces>2</faces>
         <edges></edges>
@@ -82,15 +82,15 @@
     </president>
     <president>
         <id>António Salazar</id>
-        <luminance>126.916282654</luminance>
-        <color>0.000000000</color>
+        <luminance>75.894515991</luminance>
+        <color>184.166671753</color>
         <texture>textures_edges/António Salazar-texture.jpg</texture>
-        <faces>1</faces>
+        <faces>4</faces>
         <edges></edges>
     </president>
     <president>
         <id>Francisco Craveiro Lopes</id>
-        <luminance>89.435302734</luminance>
+        <luminance>88.922233582</luminance>
         <color>0.000000000</color>
         <texture>textures_edges/Francisco Craveiro Lopes-texture.jpg</texture>
         <faces>6</faces>
@@ -106,15 +106,15 @@
     </president>
     <president>
         <id>António Spínola</id>
-        <luminance>97.777175903</luminance>
-        <color>14.166666985</color>
+        <luminance>96.502044678</luminance>
+        <color>18.593750000</color>
         <texture>textures_edges/António Spínola-texture.jpg</texture>
         <faces>1</faces>
         <edges></edges>
     </president>
     <president>
         <id>Francisco da Costa Gomes</id>
-        <luminance>86.750480652</luminance>
+        <luminance>86.251495361</luminance>
         <color>0.000000000</color>
         <texture>textures_edges/Francisco da Costa Gomes-texture.jpg</texture>
         <faces>4</faces>
@@ -138,26 +138,26 @@
     </president>
     <president>
         <id>Jorge Sampaio</id>
-        <luminance>75.096778870</luminance>
-        <color>36.428569794</color>
+        <luminance>74.245834351</luminance>
+        <color>42.500000000</color>
         <texture>textures_edges/Jorge Sampaio-texture.jpg</texture>
         <faces>2</faces>
         <edges></edges>
     </president>
     <president>
         <id>Aníbal Cavaco Silva</id>
-        <luminance>64.637672424</luminance>
-        <color>20.131578445</color>
+        <luminance>63.854969025</luminance>
+        <color>22.368421555</color>
         <texture>textures_edges/Aníbal Cavaco Silva-texture.jpg</texture>
-        <faces>4</faces>
+        <faces>3</faces>
         <edges></edges>
     </president>
     <president>
         <id>Marcelo Rebelo de Sousa</id>
-        <luminance>131.523468018</luminance>
-        <color>158.666671753</color>
+        <luminance>130.415283203</luminance>
+        <color>155.833328247</color>
         <texture>textures_edges/Marcelo Rebelo de Sousa-texture.jpg</texture>
-        <faces>2</faces>
+        <faces>1</faces>
         <edges></edges>
     </president>
 </presidentsMetadata>

@@ -6,7 +6,6 @@
    #define METADATA_GENERATION_N_THREADS 1
 #endif
 
-
 #include "ofApp.h"
 
 //--------------------------------------------------------------
@@ -1165,5 +1164,3 @@ void ofApp::initButtons()
     }
     return numberOfMatches;
 }*/
-
-
