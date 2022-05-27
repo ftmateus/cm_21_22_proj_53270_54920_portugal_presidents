@@ -1,6 +1,4 @@
 #include "ofApp.h"
-#include <thread>
-#include <memory>
 
 //--------------------------------------------------------------
 void ofApp::setup() {
@@ -54,8 +52,6 @@ void ofApp::setup() {
 
         President* presMedia = new President();
 
-        //string name = presidentsXml.getValue("president:name", "", i);
-
         presMedia->name         = string(presidentsXml.getValue("president:name", "", i));
         presMedia->pres_id = i;
         presMedia->startDate    = string(presidentsXml.getValue("president:startDate", "", i));
@@ -78,21 +74,6 @@ void ofApp::setup() {
 
         presidentsMedias.push_back(presMedia);
     }
-
-    //vector<thread> threads;
-
-    //for (int i = 0; i < n_presidents; i+=4) {
-    //    int endPres = i + 4 > n_presidents - 1? n_presidents  - 1: i + 4;
-
-    //    std::thread _thread(&ofApp::generateMetadataThread, this, i, endPres);
-
-    //    //_thread.join();
-
-    //    threads.push_back(std::move(_thread));
-    //}
-
-    //for (int t = 0; t < threads.size(); t++)
-    //    threads[t].join();
 
     currentPresidentIdx = 0;
 
