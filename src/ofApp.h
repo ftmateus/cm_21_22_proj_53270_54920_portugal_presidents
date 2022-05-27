@@ -32,9 +32,22 @@ class ofApp : public ofBaseApp {
 			string birthDate;
 			string deathDate;
 			ofImage* profilePicture;
+			string profilePicturePath;
 			ofVideoPlayer* biographyVideo;
+			string biographyVideoPath;
 			vector<ofImage*> otherImages;
 		} President;
+
+		typedef struct
+		{
+			President* president;
+			float luminance;
+			float color;
+			int faces;
+			string texture;
+			string edges;
+		} GenerateMetadataThreadWork;
+
 
 		void setup();
 		void update();
@@ -57,9 +70,13 @@ class ofApp : public ofBaseApp {
         //void filterEdgeAndTexture();
         string edgesFilter(President* president);
         string textureFilter(President* president);
-        //double rhythmFilter(string path);        
+        //double rhythmFilter(string path);
+		void getPresidentsInfo();
+		void getPresidentsInfoThread(int startPres, int endPres);
+		void getPresidentInfo(int xmlIndex);
 		void generateMetadataThread(int startPres, int endPres);
 		void generateMetadata(President *president);
+		void startMetadataGeneration();
 		//void generateMetadata(string presidentName, string path, ofImage* image, bool isVideo);
 		void importMetadata(ofxDatGuiButtonEvent e);
         void extractMetadata(ofxDatGuiButtonEvent e);
@@ -86,6 +103,8 @@ class ofApp : public ofBaseApp {
 		ofxButton pauseBtn;
     
 		ofTrueTypeFont myfont;
+
+		bool isGeneratingMetadata;
 		
 		// we will have a dynamic number of images, based on the content of a directory:
 		ofDirectory imagesDir;
@@ -95,7 +114,7 @@ class ofApp : public ofBaseApp {
 
 		vector<ofVideoPlayer*> biographyVideos;*/
 
-		vector<President*> presidentsMedias;
+		map<int, President*> presidentsMedias;
 
 		bool frameByframe;
 
@@ -113,6 +132,10 @@ class ofApp : public ofBaseApp {
 		ofxDatGuiButton* im3;
 
 		
+		map<int, GenerateMetadataThreadWork*> threadsWork;
+		
+
+		std::mutex mutex;
 
 		//computed
 		int windowXCenter;
@@ -122,7 +145,7 @@ class ofApp : public ofBaseApp {
 
 		ofxXmlSettings presidentsMetadataXml;
     
-        ofxCvHaarFinder finder;
+        
 
 		const double PRESIDENT_PORTRAIT_ASPECT_RATIO = 4.0 / 5.0;
 		const int SPACE_BETWEEN_PRESIDENTS = 25;

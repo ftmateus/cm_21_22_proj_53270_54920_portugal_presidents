@@ -27,9 +27,7 @@ void ofApp::setup() {
         imagesDir.sort(); // in linux the file system doesn't return file lists ordered in alphabetical order
 
         //allocate the vector to have as many ofImages as files
-        if (imagesDir.size())
-            presidentsMedias.reserve(imagesDir.size());
-        else
+        if (!imagesDir.size())
             assert(false);
     }
 
@@ -45,55 +43,16 @@ void ofApp::setup() {
         ofLogError() << "Couldn't load file";
         assert(false);
     }
-    presidentsXml.pushTag("presidents");
+   
 
+    getPresidentsInfo();
 
-    int n_presidents = presidentsXml.getNumTags("president");
+    //std::thread _thread(&ofApp::startMetadataGeneration, this);
 
-    for (int i = 0; i < n_presidents; i++) {
+    startMetadataGeneration();
 
-        President* presMedia = new President();
-
-        //string name = presidentsXml.getValue("president:name", "", i);
-
-        presMedia->name         = string(presidentsXml.getValue("president:name", "", i));
-        presMedia->pres_id = i;
-        presMedia->startDate    = string(presidentsXml.getValue("president:startDate", "", i));
-        presMedia->endDate      = string(presidentsXml.getValue("president:endDate", "", i));
-        presMedia->birthDate    = string(presidentsXml.getValue("president:birthDate", "", i));
-        presMedia->deathDate    = string(presidentsXml.getValue("president:deathDate", "", i));
-
-        string profilePicture = presidentsXml.getValue("president:profilePicture", "", i);
-        presMedia->profilePicture = new ofImage();
-        presMedia->profilePicture->load("images/" + profilePicture);
-
-        string biographyVideo = presidentsXml.getValue("president:biographyVideo", "", i);
-        if (biographyVideo != "")
-        {
-            presMedia->biographyVideo = new ofVideoPlayer();
-            presMedia->biographyVideo->load("videos/" + biographyVideo);
-        }
-
-        generateMetadata(presMedia);
-
-        presidentsMedias.push_back(presMedia);
-    }
-
-    //vector<thread> threads;
-
-    //for (int i = 0; i < n_presidents; i+=4) {
-    //    int endPres = i + 4 > n_presidents - 1? n_presidents  - 1: i + 4;
-
-    //    std::thread _thread(&ofApp::generateMetadataThread, this, i, endPres);
-
-    //    //_thread.join();
-
-    //    threads.push_back(std::move(_thread));
-    //}
-
-    //for (int t = 0; t < threads.size(); t++)
-    //    threads[t].join();
-
+    initButtons();
+        
     currentPresidentIdx = 0;
 
     ofBackground(ofColor::white);
@@ -105,6 +64,7 @@ void ofApp::update() {
     ofVideoPlayer* vid = presidentsMedias[currentPresidentIdx]->biographyVideo;
 
     if (vid == NULL) return;
+
 
     vid->update();
 }
@@ -124,6 +84,10 @@ void ofApp::draw(){
     pauseBtn.setPosition(windowXCenter, 600);
 
     pauseBtn.draw();
+
+    im1->draw();
+    /*im2->draw();
+    im3->draw();*/
 
     //gui.draw();
 
@@ -380,6 +344,101 @@ int ofApp::getPresidentIndexWhereMouseIsPointing(int x, int y)
     return MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT;
 }
 
+void ofApp::getPresidentsInfo()
+{
+    presidentsXml.pushTag("presidents");
+
+    vector<thread> threads;
+
+    const int n_threads = 1;
+
+    int n_presidents = presidentsXml.getNumTags("president");
+
+    int presidents_per_thread = n_presidents / n_threads;
+
+    //does not make cycle if n_threads == 1
+    for (int i = 0; i < n_presidents && n_threads > 1; i+=presidents_per_thread) {
+        int endPres = i + presidents_per_thread > n_presidents - 1 ? n_presidents - 1 : i + presidents_per_thread;
+
+        threads.push_back(std::thread(&ofApp::getPresidentsInfoThread, this, i, endPres));
+
+        //getPresidentsInfoThread(i, endPres);
+    }
+
+    if(n_threads == 1) getPresidentsInfoThread(0, n_presidents - 1);
+
+    for (int t = 0; t < threads.size(); t++)
+        threads[t].join();
+
+    //for (int w = 0; w < threadsWork.size(); w++)
+    //{
+    //    GenerateMetadataThreadWork* work = threadsWork[w];
+
+    //    presidentsMetadataXml.addTag("president");
+    //    presidentsMetadataXml.pushTag("president", w); // mudar para numberOfItems + 1 depois de testar
+    //    // saves the id - itemName
+    //    presidentsMetadataXml.setValue("id", work->president->name, w);
+
+    //    presidentsMetadataXml.setValue("luminance", work->luminance, w);
+    //    presidentsMetadataXml.setValue("color", work->color, w);
+    //    presidentsMetadataXml.setValue("texture", work->texture, w);
+    //    presidentsMetadataXml.setValue("faces", work->faces, w);
+    //    presidentsMetadataXml.setValue("edges", work->edges, w);
+
+
+    //    presidentsMetadataXml.popTag(); // item
+
+    //    presidentsMetadataXml.saveFile();
+    //}
+}
+
+void ofApp::getPresidentsInfoThread(int startPres, int endPres)
+{
+    for (int i = startPres; i <= endPres; i++)
+    {
+        getPresidentInfo(i);
+    }
+}
+
+void ofApp::getPresidentInfo(int xmlIndex)
+{
+    President* presMedia = new President();
+
+    //string name = presidentsXml.getValue("president:name", "", i);
+
+    presMedia->pres_id = xmlIndex;
+    presMedia->name = string(presidentsXml.getValue("president:name", "", xmlIndex));
+
+    if (presMedia->name == "") return;
+
+    presMedia->startDate = string(presidentsXml.getValue("president:startDate", "", xmlIndex));
+    presMedia->endDate = string(presidentsXml.getValue("president:endDate", "", xmlIndex));
+    presMedia->birthDate = string(presidentsXml.getValue("president:birthDate", "", xmlIndex));
+    presMedia->deathDate = string(presidentsXml.getValue("president:deathDate", "", xmlIndex));
+
+    presMedia->profilePicturePath = presidentsXml.getValue("president:profilePicture", "", xmlIndex);
+    presMedia->profilePicture = new ofImage();
+    
+    if (!presMedia->profilePicture->load("images/" + presMedia->profilePicturePath))
+        assert(false);
+
+    presMedia->biographyVideoPath = presidentsXml.getValue("president:biographyVideo", "", xmlIndex);
+    if (presMedia->biographyVideoPath != "")
+    {
+        presMedia->biographyVideo = new ofVideoPlayer();
+        if(!presMedia->biographyVideo->load("videos/" + presMedia->biographyVideoPath))
+            assert(false);
+    }
+
+    mutex.lock();
+
+    presidentsMedias[presMedia->pres_id] = presMedia;
+
+    mutex.unlock();
+
+    //generateMetadata(presMedia);
+}
+
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
     /* OF_MOUSE_BUTTON_LEFT
@@ -472,6 +531,59 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
     }
 }*/
 
+
+void ofApp::startMetadataGeneration()
+{
+    vector<thread> threads;
+
+    const int n_threads = 1;
+    int n_presidents = presidentsMedias.size();
+
+
+    int presidents_per_thread = n_presidents / n_threads;
+
+    isGeneratingMetadata = true;
+
+    for (int i = 0; i < n_presidents && n_threads > 1; i += presidents_per_thread) {
+        int endPres = i + presidents_per_thread > n_presidents - 1 ? n_presidents - 1 : i + presidents_per_thread;
+
+        std::thread _thread(&ofApp::generateMetadataThread, this, i, endPres);
+
+        //_thread.join();
+
+        threads.push_back(std::move(_thread));
+    }
+
+    if (n_threads == 1) generateMetadataThread(0, n_presidents - 1);
+
+    for (int t = 0; t < threads.size(); t++)
+    {
+        threads[t].join();
+    }
+
+    for (int w = 0; w < threadsWork.size(); w++)
+    {
+        GenerateMetadataThreadWork* work = threadsWork[w];
+
+        presidentsMetadataXml.addTag("president");
+        presidentsMetadataXml.pushTag("president", w); // mudar para numberOfItems + 1 depois de testar
+        // saves the id - itemName
+        presidentsMetadataXml.setValue("id", work->president->name, w);
+
+        presidentsMetadataXml.setValue("luminance", work->luminance, w);
+        presidentsMetadataXml.setValue("color", work->color, w);
+        presidentsMetadataXml.setValue("texture", work->texture, w);
+        presidentsMetadataXml.setValue("faces", work->faces, w);
+        presidentsMetadataXml.setValue("edges", work->edges, w);
+
+
+        presidentsMetadataXml.popTag(); // item
+
+        presidentsMetadataXml.saveFile();
+    }
+
+    isGeneratingMetadata = false;
+}
 
 string ofApp::edgesFilter(President *president) {
     double kernel_size;
@@ -600,7 +712,10 @@ string ofApp::textureFilter(President *president) {
 void ofApp::generateMetadataThread(int startPres, int endPres) 
 {
     for (int i = startPres; i <= endPres; i++)
+    {
         generateMetadata(presidentsMedias[i]);
+    }
+        
 }
 
 void ofApp::generateMetadata(President *president) {
@@ -616,11 +731,11 @@ void ofApp::generateMetadata(President *president) {
         }
         presidentsXml.popTag();
     }*/
+
+    if (president == NULL) return;
     
-    presidentsMetadataXml.addTag("president");
-    presidentsMetadataXml.pushTag("president", president->pres_id); // mudar para numberOfItems + 1 depois de testar
-    // saves the id - itemName
-    presidentsMetadataXml.setValue("id", president->name, president->pres_id);
+    GenerateMetadataThreadWork* work = new GenerateMetadataThreadWork();
+    work->president = president;
 
     // color && luminance
     ofPixels& pixels = president->profilePicture->getPixels();
@@ -647,12 +762,14 @@ void ofApp::generateMetadata(President *president) {
     newColor.g = avgGreen;
     newColor.b = avgBlue;
 
-    presidentsMetadataXml.setValue("luminance", avgLuminance, president->pres_id);
-    presidentsMetadataXml.setValue("color", newColor.getHue(), president->pres_id);
+    
+    work->luminance = avgLuminance;
+    work->color = newColor.getHue();
+
 
     // faces
     // finder faces
-    finder.setup("data_xml/haarcascade_frontalface_default.xml");
+    //
     /*if (isVideo) {
         ofVideoPlayer auxVideo;
         auxVideo.load(path);
@@ -671,28 +788,42 @@ void ofApp::generateMetadata(President *president) {
         
     }*/
 
-    int faces = finder.findHaarObjects(*president->profilePicture);
 
-    presidentsMetadataXml.setValue("faces", faces, president->pres_id);
     // edges - filter2D
-    /*string edges = edgesFilter(president);
+    string edges = edgesFilter(president);
 
     if (edges != "")
-        presidentsMetadataXml.setValue("edges", edges, president->pres_id);*/
+        presidentsMetadataXml.setValue("edges", edges, president->pres_id);
     //// texture
     string texture = textureFilter(president);
+
     if (texture != "")
-        presidentsMetadataXml.setValue("texture", texture, president->pres_id);
+    {
+        //presidentsMetadataXml.setValue("texture", texture, president->pres_id);
+        work->texture = texture;
+    }
+    
     // rhythm
     /*if (isVideo) {
         double rhythm = rhythmFilter(path);
         presidentsXml.setValue("rhythm", rhythm, numPresidents);
     }*/
 
-    presidentsMetadataXml.popTag(); // item
+    //haarFinderMutex.lock();
 
-    presidentsMetadataXml.saveFile();
-    
+    ofxCvHaarFinder finder;
+
+    finder.setup("data_xml/haarcascade_frontalface_default.xml");
+
+    int faces = finder.findHaarObjects(*president->profilePicture);
+
+    //presidentsMetadataXml.setValue("faces", faces, president->pres_id);
+    work->faces = faces;
+
+    threadsWork[president->pres_id] = work;
+
+    //haarFinderMutex.unlock();
+ 
 }
 
 void ofApp::filterItems(string filter) {
