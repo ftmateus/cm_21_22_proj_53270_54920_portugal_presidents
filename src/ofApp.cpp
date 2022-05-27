@@ -1,6 +1,6 @@
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 //define something for Windows (32-bit and 64-bit, this part is common)
-    #define METADATA_GENERATION_N_THREADS 4
+    #define METADATA_GENERATION_N_THREADS 1
 #else //macos
 
    #define METADATA_GENERATION_N_THREADS 1
@@ -543,7 +543,7 @@ void ofApp::startMetadataGeneration()
 {
     vector<thread> threads;
 
-    const int n_threads = 1;
+    const int n_threads = METADATA_GENERATION_N_THREADS;
     int n_presidents = presidentsMedias.size();
 
 
@@ -1033,6 +1033,7 @@ void ofApp::importMetadata(ofxDatGuiButtonEvent e) {
             ofSystemTextBoxDialog("Error loading file...");
         }
     }
+
     
     (void)ofLog(OF_LOG_NOTICE, "index: " + ofToString(index));
 

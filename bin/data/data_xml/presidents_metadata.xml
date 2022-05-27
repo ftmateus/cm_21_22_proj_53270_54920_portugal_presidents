@@ -10,26 +10,26 @@
     </president>
     <president>
         <id>Manuel de Arriaga</id>
-        <luminance>126.837608337</luminance>
+        <luminance>126.851211548</luminance>
         <color>19.615385056</color>
         <texture>textures_edges/Manuel de Arriaga-texture.jpg</texture>
-        <faces>0</faces>
+        <faces>1</faces>
         <edges></edges>
     </president>
     <president>
         <id>Bernardino Machado</id>
-        <luminance>127.579826355</luminance>
+        <luminance>127.668922424</luminance>
         <color>21.935483932</color>
         <texture>textures_edges/Bernardino Machado-texture.jpg</texture>
-        <faces>0</faces>
+        <faces>3</faces>
         <edges></edges>
     </president>
     <president>
         <id>Sidónio Pais</id>
-        <luminance>78.104957581</luminance>
-        <color>37.187500000</color>
+        <luminance>78.241447449</luminance>
+        <color>33.055557251</color>
         <texture>textures_edges/Sidónio Pais-texture.jpg</texture>
-        <faces>1</faces>
+        <faces>4</faces>
         <edges></edges>
     </president>
     <president>
@@ -42,10 +42,10 @@
     </president>
     <president>
         <id>António José de Almeida</id>
-        <luminance>116.840225220</luminance>
-        <color>38.250000000</color>
+        <luminance>84.622238159</luminance>
+        <color>19.318181992</color>
         <texture>textures_edges/António José de Almeida-texture.jpg</texture>
-        <faces>0</faces>
+        <faces>2</faces>
         <edges></edges>
     </president>
     <president>
@@ -58,10 +58,10 @@
     </president>
     <president>
         <id>José Mendes Cabeçadas Júnior</id>
-        <luminance>123.309814453</luminance>
+        <luminance>123.648345947</luminance>
         <color>19.615385056</color>
         <texture>textures_edges/José Mendes Cabeçadas Júnior-texture.jpg</texture>
-        <faces>0</faces>
+        <faces>4</faces>
         <edges></edges>
     </president>
     <president>
@@ -74,18 +74,18 @@
     </president>
     <president>
         <id>Óscar Carmona</id>
-        <luminance>74.159614563</luminance>
+        <luminance>74.301727295</luminance>
         <color>48.571426392</color>
         <texture>textures_edges/Óscar Carmona-texture.jpg</texture>
-        <faces>0</faces>
+        <faces>3</faces>
         <edges></edges>
     </president>
     <president>
         <id>António Salazar</id>
-        <luminance>126.916282654</luminance>
-        <color>0.000000000</color>
+        <luminance>77.196327209</luminance>
+        <color>188.214279175</color>
         <texture>textures_edges/António Salazar-texture.jpg</texture>
-        <faces>1</faces>
+        <faces>3</faces>
         <edges></edges>
     </president>
     <president>

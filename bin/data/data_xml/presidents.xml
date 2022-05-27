@@ -14,7 +14,7 @@
     <president>
         <id>pr_2</id>
         <name>Manuel de Arriaga</name>
-        <profilePicture>Manuel_de_Arriaga_-_Fotografia_Vasques.png</profilePicture>
+        <profilePicture>Manuel_de_Arriaga_-_Fotografia_Vasques.jpg</profilePicture>
         <idName>Manuel_de_Arriaga</idName>
         <startDate>1911</startDate>
         <endDate>1915</endDate>
@@ -25,7 +25,7 @@
     <president>
         <id>pr_3</id>
         <name>Bernardino Machado</name>
-        <profilePicture>BernardinoMachado.png</profilePicture>
+        <profilePicture>BernardinoMachado.jpg</profilePicture>
         <idName>BernardinoMachado</idName>
         <startDate>1915</startDate>
         <endDate>1917</endDate>
@@ -36,7 +36,7 @@
     <president>
         <id>pr_4</id>
         <name>Sidónio Pais</name>
-        <profilePicture>Sidonio_Pais.png</profilePicture>
+        <profilePicture>Sidonio_Pais.jpg</profilePicture>
         <idName>SidonioPais</idName>
         <startDate>1917</startDate>
         <endDate>1918</endDate>
@@ -58,7 +58,7 @@
     <president>
         <id>pr_6</id>
         <name>António José de Almeida</name>
-        <profilePicture>Antonio_Jose_de_Almeida.png</profilePicture>
+        <profilePicture>06_antonio_jose_de_almeida.jpg</profilePicture>
         <idName>Antonio_Jose_de_Almeida</idName>
         <startDate>1919</startDate>
         <endDate>1923</endDate>
@@ -79,7 +79,7 @@
     <president>
         <id>pr_8</id>
         <name>José Mendes Cabeçadas Júnior</name>
-        <profilePicture>Jose_Mendes_Cabecadas_Junior.png</profilePicture>
+        <profilePicture>Jose_Mendes_Cabecadas_Junior.jpg</profilePicture>
         <idName>Jose_Mendes_Cabecadas_Junior</idName>
         <startDate>1926</startDate>
         <endDate>1926</endDate>
@@ -99,7 +99,7 @@
     <president>
         <id>pr_10</id>
         <name>Óscar Carmona</name>
-        <profilePicture>Oscar_Carmona.png</profilePicture>
+        <profilePicture>Oscar_Carmona.jpg</profilePicture>
         <idName>Oscar_Carmona</idName>
         <startDate>1926</startDate>
         <endDate>1928</endDate>
