@@ -10,6 +10,9 @@
 #include "Item.h"
 #include "ofxOpenCv.h"
 #include "ofxGui.h"
+#include "Metadata.h"
+#include "GenerateMetadataThreadWork.h"
+#include "President.h"
 
 #define IMAGE_MEDIA_TYPE 0
 
@@ -21,34 +24,7 @@ using namespace ofxCv;
 
 class ofApp : public ofBaseApp {
 
-	public:
-
-		typedef struct
-		{
-			string name;
-			int pres_id;
-			string startDate;
-			string endDate;
-			string birthDate;
-			string deathDate;
-			ofImage* profilePicture;
-			string profilePicturePath;
-			ofVideoPlayer* biographyVideo;
-			string biographyVideoPath;
-			vector<ofImage*> otherImages;
-		} President;
-
-		typedef struct
-		{
-			President* president;
-			float luminance;
-			float color;
-			int faces;
-			string texture;
-			string edges;
-		} GenerateMetadataThreadWork;
-
-
+	public :
 		void setup();
 		void update();
 		void draw();
@@ -68,26 +44,17 @@ class ofApp : public ofBaseApp {
 		void drawPresidents();
 		void drawBiographyVideo();
         //void filterEdgeAndTexture();
-        string edgesFilter(President* president);
-        string textureFilter(President* president);
-        //double rhythmFilter(string path);
 		void getPresidentsInfo();
 		void getPresidentsInfoThread(int startPres, int endPres);
 		void getPresidentInfo(int xmlIndex);
-		void generateMetadataThread(int startPres, int endPres);
-		void generateMetadata(President *president, ofxCvHaarFinder* finder);
-		void startMetadataGeneration();
+		void onButtonEvent(ofxDatGuiButtonEvent e);
+
+
 		//void generateMetadata(string presidentName, string path, ofImage* image, bool isVideo);
-		void importMetadata(ofxDatGuiButtonEvent e);
-        void extractMetadata(ofxDatGuiButtonEvent e);
 		void drawPresidentDescription();
         void initButtons();
-        void filterByColor(float hue);
-        void filterItems(string filter);
         //int objectTimesFilter(ofImage image, ofImage objImage);
     
-        void importMetadata();
-        void exportMetadata();
 		void drawStringCentered(const std::string& c, float x, float y);
 		void drawStringRight(const std::string& c, float x, float y);
 		bool isMousePtrInCarrousel(int x, int y);
@@ -97,6 +64,7 @@ class ofApp : public ofBaseApp {
 		bool isMousePtrBelowNeighbourPresidents(int x, int y);
 		int getPresidentIndexWhereMouseIsPointing(int x, int y);
 		void switchPresident(President* previousPresident);
+		void ofApponButtonEvent(ofxDatGuiButtonEvent e);
 
 		#define MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT -1
 
@@ -127,9 +95,9 @@ class ofApp : public ofBaseApp {
 
 		int itemsSize;
 
-		ofxDatGuiButton* im1;
-		ofxDatGuiButton* im2;
-		ofxDatGuiButton* im3;
+		ofxDatGuiButton* importMetadataBtn;
+		ofxDatGuiButton* generateMetadataBtn;
+
 
 		
 		map<int, GenerateMetadataThreadWork*> threadsWork;
@@ -144,8 +112,6 @@ class ofApp : public ofBaseApp {
 		ofxXmlSettings presidentsXml;
 
 		ofxXmlSettings presidentsMetadataXml;
-    
-        
 
 		const double PRESIDENT_PORTRAIT_ASPECT_RATIO = 4.0 / 5.0;
 		const int SPACE_BETWEEN_PRESIDENTS = 25;

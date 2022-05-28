@@ -180,8 +180,8 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Metadata.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Metadata.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\Gallery\Gallery.cpp" />
     <ClCompile Include="src\Item\Item.cpp" />
@@ -227,10 +227,12 @@
     <ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Metadata.h" />
+    <ClInclude Include="src\GenerateMetadataThreadWork.h" />
+    <ClInclude Include="src\Metadata.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Gallery\Gallery.h" />
     <ClInclude Include="src\Item\Item.h" />
+    <ClInclude Include="src\President.h" />
     <ClInclude Include="src\VideoPlayer\ColorMode.h" />
     <ClInclude Include="src\VideoPlayer\PlayMode.hpp" />
     <ClInclude Include="src\VideoPlayer\VideoPlayer.hpp" />

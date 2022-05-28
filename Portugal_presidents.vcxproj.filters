@@ -139,8 +139,8 @@
     <ClCompile Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxXmlSettings\libs\tinyxmlparser.cpp">
       <Filter>addons\ofxXmlSettings\libs</Filter>
     </ClCompile>
-    <ClCompile Include="Metadata.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\Metadata.cpp">
+      <Filter>src\Metadata</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -368,6 +368,9 @@
     </Filter>
     <Filter Include="addons\ofxXmlSettings\libs">
       <UniqueIdentifier>{687714A8-1662-FA1C-261F-50F0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Metadata">
+      <UniqueIdentifier>{b008ed47-e315-4c41-9a51-971575ab0b1e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1424,7 +1427,13 @@
     <ClInclude Include="..\openFramework\of_v0.11.2_vs2017_release\addons\ofxXmlSettings\libs\tinyxml.h">
       <Filter>addons\ofxXmlSettings\libs</Filter>
     </ClInclude>
-    <ClInclude Include="Metadata.h">
+    <ClInclude Include="src\Metadata.h">
+      <Filter>src\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="src\President.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GenerateMetadataThreadWork.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
