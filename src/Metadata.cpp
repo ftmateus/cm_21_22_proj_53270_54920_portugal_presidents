@@ -11,9 +11,7 @@
 #define METADATA_GENERATION_N_THREADS 1
 #endif
 
-namespace Metadata
-{
-    void startMetadataGeneration(ofApp* app)
+    void Metadata::startMetadataGeneration(ofApp* app)
     {
         vector<thread> threads;
 
@@ -26,7 +24,7 @@ namespace Metadata
         for (int i = 0; i < n_presidents && METADATA_GENERATION_N_THREADS > 1; i += presidents_per_thread) {
             int endPres = i + presidents_per_thread > n_presidents - 1 ? n_presidents - 1 : i + presidents_per_thread;
 
-            std::thread _thread(generateMetadataThread, app, i, endPres);
+            std::thread _thread(GenerateMetadataThreadWork, app, i, endPres);
 
             //_thread.join();
 
@@ -65,7 +63,7 @@ namespace Metadata
     }
 
 
-    void generateMetadataThread(ofApp* app, int startPres, int endPres) {
+    void Metadata::generateMetadataThread(ofApp* app, int startPres, int endPres) {
         ofxCvHaarFinder finder;
         finder.setup("data_xml/haarcascade_frontalface_default.xml");
 
@@ -74,7 +72,7 @@ namespace Metadata
 
     }
 
-    void generateMetadata(ofApp* app, President* president, ofxCvHaarFinder* finder) {
+    void Metadata::generateMetadata(ofApp* app, President* president, ofxCvHaarFinder* finder) {
         //int numPresidents = presidentsXml.getNumTags("president");
 
         /*for(int i = 0; i < numPresidents; i++) {
@@ -168,7 +166,7 @@ namespace Metadata
     }
 
 
-    string edgesFilter(President* president) {
+    string Metadata::edgesFilter(President* president) {
         double kernel_size;
         Mat kernel;
         kernel_size = 31;
@@ -201,7 +199,7 @@ namespace Metadata
         return path;
     }
 
-    string textureFilter(President* president) {
+    string Metadata::textureFilter(President* president) {
         Mat src, dst;
         int kernel_size = 31;
 
@@ -225,7 +223,7 @@ namespace Metadata
         return path;
     }
 
-    double rhythmFilter(ofVideoPlayer* video)
+    double Metadata::rhythmFilter(ofVideoPlayer* video)
     {
         Mat src_0 = toCv(video->getPixels());
         video->setPosition(0.25);
@@ -288,7 +286,7 @@ namespace Metadata
         return rhythm;
     }
 
-    void filterItems(ofApp* app, string filter) {
+    void Metadata::filterItems(ofApp* app, string filter) {
         // if filter is empty, items = auxItems
         remove(filter.begin(), filter.end(), ' '); // trim
         if (filter == "") {
@@ -355,7 +353,7 @@ namespace Metadata
     }
 
 
-    void filterByColor(ofApp* app, float hue) {
+    void Metadata::filterByColor(ofApp* app, float hue) {
         vector<Item*> filteredItems;
         int counter = 0;
         int numPresidents = app->presidentsXml.getNumTags("president");
@@ -377,7 +375,7 @@ namespace Metadata
         app->items = filteredItems;
     }
 
-    void importMetadata(ofApp* app, int index) {
+    void Metadata::importMetadata(ofApp* app, int index) {
         //int index = e.target->getIndex();
         ofImage auxImg = app->items[index]->getImage();
         ofImage object = ofImage();
@@ -468,7 +466,6 @@ namespace Metadata
         else
             (void)ofLog(OF_LOG_NOTICE, "Didn't save!");
     }
-}
 
 
 

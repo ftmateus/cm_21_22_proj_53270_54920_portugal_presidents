@@ -43,12 +43,10 @@ class ofApp : public ofBaseApp {
 		void mouseScrolled(int x, int y, float scrollX, float scrollY);
 		void drawPresidents();
 		void drawBiographyVideo();
-        //void filterEdgeAndTexture();
 		void getPresidentsInfo();
 		void getPresidentsInfoThread(int startPres, int endPres);
 		void getPresidentInfo(int xmlIndex);
 		void onButtonEvent(ofxDatGuiButtonEvent e);
-
 
 		//void generateMetadata(string presidentName, string path, ofImage* image, bool isVideo);
 		void drawPresidentDescription();
@@ -98,10 +96,7 @@ class ofApp : public ofBaseApp {
 		ofxDatGuiButton* importMetadataBtn;
 		ofxDatGuiButton* generateMetadataBtn;
 
-
-		
 		map<int, GenerateMetadataThreadWork*> threadsWork;
-		
 
 		std::mutex mutex;
 
@@ -126,6 +121,5 @@ class ofApp : public ofBaseApp {
 
 		const int NEIGHBOUR_PRESIDENT_IMG_HEIGHT = 200;
 		const int NEIGHBOUR_PRESIDENT_IMG_WIDTH = NEIGHBOUR_PRESIDENT_IMG_HEIGHT * PRESIDENT_PORTRAIT_ASPECT_RATIO;
-
 };
 

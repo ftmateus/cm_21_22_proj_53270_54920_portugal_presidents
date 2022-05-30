@@ -44,7 +44,6 @@ void ofApp::setup() {
         assert(false);
     }
    
-
     getPresidentsInfo();
 
     //std::thread _thread(&ofApp::startMetadataGeneration, this);
@@ -106,19 +105,16 @@ void ofApp::draw(){
     
 }
 
-void ofApp::drawPresidentDescription()
-{
+void ofApp::drawPresidentDescription() {
     string presidentDescription = presidentsXml.getValue("president:description", "", currentPresidentIdx);
 }
 
-void ofApp::drawPresidents()
-{    
+void ofApp::drawPresidents() {
     ofSetColor(ofColor::white);
     ofImage* centerPresidentImg = presidentsMedias[currentPresidentIdx]->profilePicture;
     centerPresidentImg->draw(centerPresidentImgXPos, PRESIDENTS_CARROUSEL_Y_POS, CENTER_PRESIDENT_IMG_WIDTH, CENTER_PRESIDENT_IMG_HEIGHT);
     
-    for (int prevImageIdx = currentPresidentIdx - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++)
-    {        
+    for (int prevImageIdx = currentPresidentIdx - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++) {
         int previousPresidentImgXPos = centerPresidentImgXPos - (NEIGHBOUR_PRESIDENT_IMG_WIDTH)*times - SPACE_BETWEEN_PRESIDENTS * times;
 
         //off window limits check
@@ -128,8 +124,7 @@ void ofApp::drawPresidents()
         prevPresidentImg->draw(previousPresidentImgXPos, PRESIDENTS_CARROUSEL_Y_POS, NEIGHBOUR_PRESIDENT_IMG_WIDTH, NEIGHBOUR_PRESIDENT_IMG_HEIGHT);
     }
    
-    for (int nextImageIdx = currentPresidentIdx + 1, times = 1; nextImageIdx < presidentsMedias.size(); nextImageIdx++, times++)
-    {
+    for (int nextImageIdx = currentPresidentIdx + 1, times = 1; nextImageIdx < presidentsMedias.size(); nextImageIdx++, times++) {
         int nextPresidentImgXPos = (centerPresidentImgXPos + CENTER_PRESIDENT_IMG_WIDTH) + NEIGHBOUR_PRESIDENT_IMG_WIDTH*(times - 1) + SPACE_BETWEEN_PRESIDENTS * times;
 
         //off window limits check
@@ -170,15 +165,13 @@ void ofApp::drawPresidents()
 
 }
 
-void ofApp::drawStringCentered(const std::string& c, float x, float y) 
-{
+void ofApp::drawStringCentered(const std::string& c, float x, float y) {
     ofRectangle stringBox = myfont.getStringBoundingBox(c, 0, 0);
     myfont.drawString(c, x - (stringBox.width / 2), y);
     stringBox.~ofRectangle();
 }
 
-void ofApp::drawStringRight(const std::string& c, float x, float y)
-{
+void ofApp::drawStringRight(const std::string& c, float x, float y) {
     ofRectangle stringBox = myfont.getStringBoundingBox(c, 0, 0);
     myfont.drawString(c, x - (stringBox.width), y);
     stringBox.~ofRectangle();
@@ -186,7 +179,6 @@ void ofApp::drawStringRight(const std::string& c, float x, float y)
 
 
 void ofApp::drawBiographyVideo() {
-
     ofVideoPlayer* vid = presidentsMedias[currentPresidentIdx]->biographyVideo;
 
     if (vid == NULL) return;
@@ -196,18 +188,6 @@ void ofApp::drawBiographyVideo() {
     vid->draw(windowXCenter - BIOGRAPHY_VIDEO_WIDTH/2, 512, BIOGRAPHY_VIDEO_WIDTH, BIOGRAPHY_VIDEO_HEIGH);
     ofSetHexColor(0x000000);
     ofPixels& pixels = vid->getPixels();
-
-    /*ofSetHexColor(0x000000);
-    ofDrawBitmapString("press f to change", 300, vid->getHeight() + 80);
-    if (frameByframe) ofSetHexColor(0xCCCCCC);
-    ofDrawBitmapString("mouse speed position", 300, vid->getHeight() + 100);
-    if (!frameByframe) ofSetHexColor(0xCCCCCC); else ofSetHexColor(0x000000);
-    ofDrawBitmapString("keys <- -> frame by frame ", 300, vid->getHeight() + 120);
-    ofSetHexColor(0x000000);
-
-    ofDrawBitmapString("frame: " + ofToString(vid->getCurrentFrame()) + "/" + ofToString(vid->getTotalNumFrames()), 300, vid->getHeight() + 140);
-    ofDrawBitmapString("duration: " + ofToString(vid->getPosition() * vid->getDuration(), 2) + "/" + ofToString(vid->getDuration(), 2), 300, vid->getHeight() + 160);
-    ofDrawBitmapString("speed: " + ofToString(vid->getSpeed(), 2), 300, vid->getHeight() + 180);*/
 }
 
 //--------------------------------------------------------------
@@ -219,12 +199,10 @@ void ofApp::keyPressed(int key){
         previousPresidentIdx = currentPresidentIdx++;
     else if (key == OF_KEY_LEFT && currentPresidentIdx > 0)
         previousPresidentIdx = currentPresidentIdx--;
-    else if (key == ' ')
-    {
+    else if (key == ' ') {
         ofVideoPlayer* vid = presidentsMedias[currentPresidentIdx]->biographyVideo;
 
-        if (vid != NULL)
-        {
+        if (vid != NULL) {
             vid->setPaused(!vid->isPaused());
             //vid->closeMovie();
         }
@@ -241,21 +219,16 @@ void ofApp::keyPressed(int key){
 }
 
 
-void ofApp::switchPresident(President* previousPresident)
-{
+void ofApp::switchPresident(President* previousPresident) {
     if (previousPresident == NULL) return;
 
     President* currentPresident = presidentsMedias[currentPresidentIdx];
  
     if (previousPresident->biographyVideo != NULL)
-    {
         previousPresident->biographyVideo->stop();
-    }
 
-    if (currentPresident->biographyVideo != NULL)
-    {
+    if (currentPresident->biographyVideo != NULL) {
         currentPresident->biographyVideo->setLoopState(OF_LOOP_NORMAL);
-
         currentPresident->biographyVideo->play();
     }
 
@@ -282,33 +255,27 @@ void ofApp::mousePressed(int x, int y, int button){
 
 }
 
-bool ofApp::isMousePtrInCarrousel(int x, int y)
-{
+bool ofApp::isMousePtrInCarrousel(int x, int y) {
     return y >= PRESIDENTS_CARROUSEL_Y_POS && y <= PRESIDENTS_CARROUSEL_Y_POS + CENTER_PRESIDENT_IMG_HEIGHT;
 }
 
-bool ofApp::isMousePtrInsideCenterPresident(int x, int y)
-{
+bool ofApp::isMousePtrInsideCenterPresident(int x, int y) {
     return x >= centerPresidentImgXPos && x <= centerPresidentImgXPos + CENTER_PRESIDENT_IMG_WIDTH;
 }
 
-bool ofApp::isMousePtrOnCenterPresidentLeft(int x, int y)
-{
+bool ofApp::isMousePtrOnCenterPresidentLeft(int x, int y) {
     return x < centerPresidentImgXPos;
 }
 
-bool ofApp::isMousePtrOnCenterPresidentRight(int x, int y)
-{
+bool ofApp::isMousePtrOnCenterPresidentRight(int x, int y) {
     return x > centerPresidentImgXPos + CENTER_PRESIDENT_IMG_WIDTH;
 }
 
-bool ofApp::isMousePtrBelowNeighbourPresidents(int x, int y)
-{
+bool ofApp::isMousePtrBelowNeighbourPresidents(int x, int y) {
     return y > PRESIDENTS_CARROUSEL_Y_POS + NEIGHBOUR_PRESIDENT_IMG_HEIGHT;
 }
 
-int ofApp::getPresidentIndexWhereMouseIsPointing(int x, int y)
-{
+int ofApp::getPresidentIndexWhereMouseIsPointing(int x, int y) {
     //if it's outside of carrousel, skip
     if (!isMousePtrInCarrousel(x, y)) 
         return MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT;
@@ -319,44 +286,32 @@ int ofApp::getPresidentIndexWhereMouseIsPointing(int x, int y)
     if (isMousePtrBelowNeighbourPresidents(x, y)) 
         return MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT;
 
-    if (isMousePtrOnCenterPresidentLeft(x, y))
-    {
-        for (int prevImageIdx = currentPresidentIdx - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++)
-        {
+    if (isMousePtrOnCenterPresidentLeft(x, y)) {
+        for (int prevImageIdx = currentPresidentIdx - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++) {
             int previousPresidentImgXPos = centerPresidentImgXPos - (NEIGHBOUR_PRESIDENT_IMG_WIDTH)*times - SPACE_BETWEEN_PRESIDENTS * times;
 
             //off window limits check
             if (previousPresidentImgXPos + NEIGHBOUR_PRESIDENT_IMG_WIDTH <= 0) break;
 
             if (x >= previousPresidentImgXPos && x <= previousPresidentImgXPos + NEIGHBOUR_PRESIDENT_IMG_WIDTH)
-            {
                 return prevImageIdx;
-            }
-
         }
-    }
-    else if (isMousePtrOnCenterPresidentRight(x, y))
-    {
-        for (int nextImageIdx = currentPresidentIdx + 1, times = 1; nextImageIdx < presidentsMedias.size(); nextImageIdx++, times++)
-        {
+    } else if (isMousePtrOnCenterPresidentRight(x, y)) {
+        for (int nextImageIdx = currentPresidentIdx + 1, times = 1; nextImageIdx < presidentsMedias.size(); nextImageIdx++, times++) {
             int nextPresidentImgXPos = (centerPresidentImgXPos + CENTER_PRESIDENT_IMG_WIDTH) + NEIGHBOUR_PRESIDENT_IMG_WIDTH * (times - 1) + SPACE_BETWEEN_PRESIDENTS * times;
 
             //off window limits check
             if (nextPresidentImgXPos >= ofGetWidth()) break;
 
             if (x >= nextPresidentImgXPos && x <= nextPresidentImgXPos + NEIGHBOUR_PRESIDENT_IMG_WIDTH)
-            {
                 return nextImageIdx;
-            }
         }
     }
     
-
     return MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT;
 }
 
-void ofApp::getPresidentsInfo()
-{
+void ofApp::getPresidentsInfo() {
     presidentsXml.pushTag("presidents");
 
     vector<thread> threads;
@@ -403,16 +358,12 @@ void ofApp::getPresidentsInfo()
     //}
 }
 
-void ofApp::getPresidentsInfoThread(int startPres, int endPres)
-{
+void ofApp::getPresidentsInfoThread(int startPres, int endPres) {
     for (int i = startPres; i <= endPres; i++)
-    {
         getPresidentInfo(i);
-    }
 }
 
-void ofApp::getPresidentInfo(int xmlIndex)
-{
+void ofApp::getPresidentInfo(int xmlIndex) {
     President* presMedia = new President();
 
     //string name = presidentsXml.getValue("president:name", "", i);
@@ -434,8 +385,7 @@ void ofApp::getPresidentInfo(int xmlIndex)
         assert(false);
 
     presMedia->biographyVideoPath = presidentsXml.getValue("president:biographyVideo", "", xmlIndex);
-    if (presMedia->biographyVideoPath != "")
-    {
+    if (presMedia->biographyVideoPath != "") {
         presMedia->biographyVideo = new ofVideoPlayer();
         if(!presMedia->biographyVideo->load("videos/" + presMedia->biographyVideoPath))
             assert(false);
@@ -451,17 +401,15 @@ void ofApp::getPresidentInfo(int xmlIndex)
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
+void ofApp::mouseReleased(int x, int y, int button) {
     /* OF_MOUSE_BUTTON_LEFT
     OF_MOUSE_BUTTON_RIGHT
     OF_MOUSE_BUTTON_MIDDLE */
 
     //int centerPresidentImgXPos = windowXCenter - CENTER_PRESIDENT_IMG_WIDTH / 2;
-    if (button == OF_MOUSE_BUTTON_LEFT)
-    {
+    if (button == OF_MOUSE_BUTTON_LEFT) {
         int president = getPresidentIndexWhereMouseIsPointing(x, y);
-        if (president != MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT)
-        {
+        if (president != MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT) {
             int previousPresidentIdx = currentPresidentIdx;
             currentPresidentIdx = president;
             switchPresident(presidentsMedias[previousPresidentIdx]);
@@ -471,22 +419,16 @@ void ofApp::mouseReleased(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseScrolled(int x, int y, float scrollX, float scrollY) 
-{
-    if (isMousePtrInCarrousel(x, y))
-    {
+void ofApp::mouseScrolled(int x, int y, float scrollX, float scrollY) {
+    if (isMousePtrInCarrousel(x, y)) {
         int previousPresidentIdx = -1;
         if (scrollY >= 1.0 && currentPresidentIdx < presidentsMedias.size() - 1)
             previousPresidentIdx = currentPresidentIdx++;
         else if (scrollY <= -1.0 && currentPresidentIdx > 0)
             previousPresidentIdx = currentPresidentIdx--;
-
         if (previousPresidentIdx != -1)
             switchPresident(presidentsMedias[previousPresidentIdx]);
-
     }
-
-    
 }
 
 //--------------------------------------------------------------
@@ -500,15 +442,12 @@ void ofApp::mouseExited(int x, int y){
 }
 
 //--------------------------------------------------------------
-void ofApp::windowResized(ofResizeEventArgs& resize) 
-{
+void ofApp::windowResized(ofResizeEventArgs& resize) {
     windowXCenter = ofGetWidth() / 2;
     centerPresidentImgXPos = windowXCenter - CENTER_PRESIDENT_IMG_WIDTH / 2;
 
     if (resize.width <= CENTER_PRESIDENT_IMG_WIDTH + 2 * (NEIGHBOUR_PRESIDENT_IMG_WIDTH)+SPACE_BETWEEN_PRESIDENTS * 2)
-    {
         ofSetWindowShape(CENTER_PRESIDENT_IMG_WIDTH + 2 * (NEIGHBOUR_PRESIDENT_IMG_WIDTH)+SPACE_BETWEEN_PRESIDENTS * 2, ofGetHeight());
-    }
 }
 
 //--------------------------------------------------------------
@@ -520,7 +459,6 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
-
 
 /*void Gallery::extractMetadata() {
     
@@ -537,7 +475,7 @@ void ofApp::initButtons()
     
     importMetadataBtn->setIndex(0);
     importMetadataBtn->setWidth(100);
-    importMetadataBtn->onButtonEvent(this, onButtonEvent);
+    importMetadataBtn->onButtonEvent(this, &ofApp::onButtonEvent);
 
     importMetadataBtn->setEnabled(true);
 
@@ -550,8 +488,7 @@ void ofApp::initButtons()
     generateMetadataBtn->setEnabled(true);
 }
 
-void ofApp::onButtonEvent(ofxDatGuiButtonEvent e)
-{
+void ofApp::onButtonEvent(ofxDatGuiButtonEvent e) {
 
 }
 

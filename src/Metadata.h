@@ -1,10 +1,13 @@
+#pragma once
+
 #include "ofMain.h"
 #include "ofxDatGui.h"
 #include "ofApp.h"
 #include "President.h"
 
-namespace Metadata
+class Metadata : public ofBaseApp
 {
+    public :
 	void startMetadataGeneration(ofApp* app);
 
 	void generateMetadataThread(ofApp* app, int startPres, int endPres);
