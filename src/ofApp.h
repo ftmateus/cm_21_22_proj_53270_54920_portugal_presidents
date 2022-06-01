@@ -3,7 +3,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "President.h"
 #include "ofxXmlSettings.h"
 #include "ofxCvHaarFinder.h"
 #include "ofxCv.h"
@@ -11,7 +10,6 @@
 #include "Item.h"
 #include "ofxOpenCv.h"
 #include "ofxGui.h"
-//#include "Metadata.h"
 
 #define IMAGE_MEDIA_TYPE 0
 
@@ -19,25 +17,13 @@
 
 using namespace cv;
 using namespace ofxCv;
-
-//using namespace Metadata;
-
+using cv::ORB;
 
 class ofApp : public ofBaseApp {
 
 	public:
 
-		typedef struct GenerateMetadataThreadWork
-		{
-			President* president;
-			float luminance;
-			float color;
-			int faces;
-			string texture;
-			string edges;
-		} GenerateMetadataThreadWork;
-
-		/*typedef struct
+		typedef struct
 		{
 			string name;
 			int pres_id;
@@ -50,7 +36,18 @@ class ofApp : public ofBaseApp {
 			ofVideoPlayer* biographyVideo;
 			string biographyVideoPath;
 			vector<ofImage*> otherImages;
-		} President;*/
+		} President;
+
+		typedef struct
+		{
+			President* president;
+			float luminance;
+			float color;
+			int faces;
+			string texture;
+			string edges;
+            double rhythm;
+		} GenerateMetadataThreadWork;
 
 		void setup();
 		void update();
@@ -70,22 +67,23 @@ class ofApp : public ofBaseApp {
 		void mouseScrolled(int x, int y, float scrollX, float scrollY);
 		void drawPresidents();
 		void drawBiographyVideo();
-        //void filterEdgeAndTexture();
         string edgesFilter(President* president);
         string textureFilter(President* president);
-        //double rhythmFilter(string path);
+        double rhythmFilter(ofVideoPlayer* video);
 		void getPresidentsInfo();
 		void getPresidentsInfoThread(int startPres, int endPres);
 		void getPresidentInfo(int xmlIndex);
 		void generateMetadataThread(int startPres, int endPres);
 		void generateMetadata(President *president, ofxCvHaarFinder* finder);
 		void startMetadataGeneration();
-		//void generateMetadata(string presidentName, string path, ofImage* image, bool isVideo);
 		void importMetadata(ofxDatGuiButtonEvent e);
         void extractMetadata(ofxDatGuiButtonEvent e);
 		void drawPresidentDescription();
         void initButtons();
-        //int objectTimesFilter(ofImage image, ofImage objImage);
+        void onButtonEvent(ofxDatGuiButtonEvent e);
+        void filterByColor(float hue);
+        void filterItems(string filter);
+        int objectTimesFilter(ofImage image, ofImage objImage);
     
         void importMetadata();
         void exportMetadata();
@@ -128,14 +126,12 @@ class ofApp : public ofBaseApp {
 
 		int itemsSize;
 
-		ofxDatGuiButton* im1;
-		ofxDatGuiButton* im2;
-		ofxDatGuiButton* im3;
-
+        ofxDatGuiButton* importMetadataBtn;
+        ofxDatGuiButton* generateMetadataBtn;
+        ofxDatGuiButton* extractMetadataBtn;
 		
 		map<int, GenerateMetadataThreadWork*> threadsWork;
 		
-
 		std::mutex mutex;
 
 		//computed
@@ -143,10 +139,7 @@ class ofApp : public ofBaseApp {
 		int centerPresidentImgXPos;
 
 		ofxXmlSettings presidentsXml;
-
 		ofxXmlSettings presidentsMetadataXml;
-    
-        
 
 		const double PRESIDENT_PORTRAIT_ASPECT_RATIO = 4.0 / 5.0;
 		const int SPACE_BETWEEN_PRESIDENTS = 25;
