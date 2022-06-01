@@ -173,9 +173,9 @@ public:
 
             xml.setValue("luminance", metadata->luminance, w);
             xml.setValue("color", metadata->color, w);
-            xml.setValue("texture", metadata->texture, w);
+            xml.setValue("texture", metadata->texturePath, w);
             xml.setValue("faces", metadata->faces, w);
-            xml.setValue("edges", metadata->edges, w);
+            xml.setValue("edges", metadata->edgesPath, w);
             xml.setValue("rhythm", metadata->rhythm, w);
 
 
@@ -283,11 +283,11 @@ public:
         // edges - filter2D
         string edges = edgesFilter(president);
         //assert(edges != "");
-        metadata->edges = edges;
+        metadata->edgesPath = edges;
 
         string texture = textureFilter(president);
         //assert(texture != "");
-        metadata->texture = texture;
+        metadata->texturePath = texture;
 
         // rhythm
         metadata->rhythm = rhythmFilter(president);

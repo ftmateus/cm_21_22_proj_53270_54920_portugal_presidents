@@ -61,8 +61,8 @@ class ofApp : public ofBaseApp {
 		void generateMetadata(President *president, ofxCvHaarFinder* finder);
 		void startMetadataGeneration();*/
 		//void generateMetadata(string presidentName, string path, ofImage* image, bool isVideo);
-		void importMetadata(ofxDatGuiButtonEvent e);
-        void extractMetadata(ofxDatGuiButtonEvent e);
+		/*void importMetadata(ofxDatGuiButtonEvent e);
+        void extractMetadata(ofxDatGuiButtonEvent e);*/
 		ofImage *getPresidentProfilePicture(President *president);
         void initButtons();
 
@@ -81,6 +81,10 @@ class ofApp : public ofBaseApp {
 		bool isMousePtrBelowNeighbourPresidents(int x, int y);
 		int getPresidentIndexWhereMouseIsPointing(int x, int y);
 		void switchPresident(President* previousPresident);
+
+		void importMetadata();
+		void exportMetadata();
+
 
 		#define MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT -1
 

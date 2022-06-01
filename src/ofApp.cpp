@@ -30,31 +30,31 @@ void ofApp::setup() {
             assert(false);
     }
 
-    if (!data->presidentsMetadataXml.load("data_xml/presidents_metadata.xml")) 
-    {
-        ofLogError() << "Couldn't load file";
-        assert(false);
-        
-    }
-
-    data->presidentsMetadataXml.pushTag("presidentsMetadata");
-    data->presidentsMetadataXml.clear();
 
     if (!data->presidentsXml.load("data_xml/presidents.xml")) {
         ofLogError() << "Couldn't load file";
         assert(false);
     }
    
-
     getPresidentsInfo();
 
-    //std::thread _thread(&ofApp::startMetadataGeneration, this);
-
-    //startMetadataGeneration();
+    if (data->presidentsMetadataXml.load("data_xml/presidents_metadata.xml"))
+    {
+        importMetadata();
+    }
+    else
+    {
+        data->presidentsMetadataXml.clear();
+        data->presidentsMetadataXml.addTag("presidentsMetadata");
+        data->presidentsMetadataXml.save("data_xml/presidents_metadata.xml");
+        //data->presidentsMetadataXml.pushTag("presidentsMetadata");
+        //data->presidentsMetadataXml.load("data_xml/presidents_metadata.xml");
+        /*ofLogError() << "Couldn't load file";
+        assert(false);*/
+    }
 
     initButtons();
         
-
     ofBackground(ofColor::white);
 }
 
@@ -110,7 +110,7 @@ ofImage *ofApp::getPresidentProfilePicture(President* president)
     {
         if (president->metadata->edgesProfilePicture == NULL)
         {
-            string edgesFilename = president->metadata->edges;
+            string edgesFilename = president->metadata->edgesPath;
             president->metadata->edgesProfilePicture = new ofImage();
             president->metadata->edgesProfilePicture->load(edgesFilename);
         }
@@ -120,7 +120,7 @@ ofImage *ofApp::getPresidentProfilePicture(President* president)
     {
         if (president->metadata->edgesProfilePicture == NULL)
         {
-            string textureFilename = president->metadata->texture;
+            string textureFilename = president->metadata->texturePath;
             president->metadata->textureProfilePicture = new ofImage();
             president->metadata->textureProfilePicture->load(textureFilename);
         }
@@ -194,6 +194,34 @@ void ofApp::drawPresidents()
 
 }
 
+void ofApp::importMetadata()
+{
+    auto xml = data->presidentsMetadataXml;
+
+    xml.pushTag("presidentsMetadata");
+
+    if (xml.getNumTags("president") < data->presidentsMedias.size()) return;
+
+    for (int p = 0; p < data->presidentsMedias.size(); p++)
+    {
+        PresidentMetadata* metadata = new PresidentMetadata();
+
+        metadata->luminance = stof(string(xml.getValue("president:luminance", "", p)));
+        metadata->faces     = stoi(string(xml.getValue("president:faces", "", p)));
+        metadata->rhythm    = stod(string(xml.getValue("president:rhythm", "", p)));
+        metadata->color     = stof(string(xml.getValue("president:color", "", p)));
+        metadata->texturePath   = string(xml.getValue("president:texture", "", p));
+        metadata->edgesPath     = string(xml.getValue("president:edges", "", p));
+
+        
+        data->metadataGenerated = true;
+
+
+        President* president = data->presidentsMedias[p];
+        president->metadata = metadata;
+    }
+}
+
 void ofApp::drawStringCentered(const std::string& c, float x, float y) 
 {
     ofRectangle stringBox = myfont.getStringBoundingBox(c, 0, 0);
@@ -220,18 +248,6 @@ void ofApp::drawBiographyVideo() {
     vid->draw(windowXCenter - BIOGRAPHY_VIDEO_WIDTH/2, 512, BIOGRAPHY_VIDEO_WIDTH, BIOGRAPHY_VIDEO_HEIGH);
     ofSetHexColor(0x000000);
     ofPixels& pixels = vid->getPixels();
-
-    /*ofSetHexColor(0x000000);
-    ofDrawBitmapString("press f to change", 300, vid->getHeight() + 80);
-    if (frameByframe) ofSetHexColor(0xCCCCCC);
-    ofDrawBitmapString("mouse speed position", 300, vid->getHeight() + 100);
-    if (!frameByframe) ofSetHexColor(0xCCCCCC); else ofSetHexColor(0x000000);
-    ofDrawBitmapString("keys <- -> frame by frame ", 300, vid->getHeight() + 120);
-    ofSetHexColor(0x000000);
-
-    ofDrawBitmapString("frame: " + ofToString(vid->getCurrentFrame()) + "/" + ofToString(vid->getTotalNumFrames()), 300, vid->getHeight() + 140);
-    ofDrawBitmapString("duration: " + ofToString(vid->getPosition() * vid->getDuration(), 2) + "/" + ofToString(vid->getDuration(), 2), 300, vid->getHeight() + 160);
-    ofDrawBitmapString("speed: " + ofToString(vid->getSpeed(), 2), 300, vid->getHeight() + 180);*/
 }
 
 //--------------------------------------------------------------
@@ -585,26 +601,6 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
-//--------------------------------------------------------------
-/*void ofApp::filterEdgeAndTexture() {
-    int npresidents = data->presidentsXml.getNumTags("president");
-    
-    string id;
-    
-    for(int i = 0; i < npresidents; i++) {
-        id = data->presidentsXml.getValue("president:id", "", i);
-        string path = dir.getPath(i);
-        ofImage img = ofImage(path);
-        generateMetadata(id, path, img, false);
-    }
-    for(int i = 0; i < (int)dir.size(); i++) {
-        string fileName = dir.getName(i);
-        string presidentName = ofFilePath().getBaseName(fileName);
-        string path = dir.getPath(i);
-        ofImage img = ofImage(path);
-        generateMetadata(presidentName, path, img, false);
-    }
-}*/
 
 /*void ofApp::handleUserItems(int userId, vector<Item*> items_input, bool useItemsInput) {
     if (!useItemsInput) {
@@ -687,97 +683,97 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
     currentItem = 0;
 }*/
 
-void ofApp::importMetadata(ofxDatGuiButtonEvent e) {
-    int index = e.target->getIndex();
-    ofImage auxImg = items[index]->getImage();
-    ofImage object = ofImage();
-
-    string tags = ofSystemTextBoxDialog("Number of tags", "1");
-    int numberOfTags = stoi(tags);
-
-    vector<string> listTags;
-    listTags.assign(numberOfTags, string());
-
-    for (int i = 0; i < numberOfTags; i++) {
-        string tag = ofSystemTextBoxDialog("Tag " + ofToString(i + 1), "");
-        listTags[i] = tag;
-    }
-
-    string times = ofSystemTextBoxDialog("Number of objects to process (times a specific object (input as an image) appears in the item):", "1");
-    int numberTimes = stoi(times);
-    map<string, int> mapTimes;
-
-    for (int i = 0; i < numberTimes; i++) {
-        ofFileDialogResult result = ofSystemLoadDialog("Load file", false, "object_items/");
-
-        if (result.bSuccess) {
-            string path = result.getPath();
-            object.load(path);
-            // Number of times the object appears
-            /*int numberOfTimes = objectTimesFilter(auxImg, object);
-            if(numberOfTimes!=0)
-                mapTimes.insert({ ofFilePath().getBaseName(result.filePath), numberOfTimes });*/
-        }
-        else {
-            ofSystemTextBoxDialog("Error loading file...");
-        }
-    }
-
-    
-    (void)ofLog(OF_LOG_NOTICE, "index: " + ofToString(index));
-
-    data->presidentsMetadataXml.pushTag("item", index);
-    if (data->presidentsMetadataXml.getNumTags("tags") == 0)
-        data->presidentsMetadataXml.addTag("tags");
-
-        data->presidentsMetadataXml.pushTag("tags");
-        int numExTags = data->presidentsMetadataXml.getNumTags("tag"); // number of existing tags
-
-        for (int j = 0; j < numberOfTags; j++) {
-            data->presidentsMetadataXml.addValue("tag", listTags[j]);
-        }
-        data->presidentsMetadataXml.popTag(); // tags
-
-        if (data->presidentsMetadataXml.getNumTags("times") == 0)
-            data->presidentsMetadataXml.addTag("times");
-
-        data->presidentsMetadataXml.pushTag("times");
-        int numExTimes = data->presidentsMetadataXml.getNumTags("time"); // number of existing times
-
-        int j = numExTimes;
-        for (map<string, int>::iterator itr = mapTimes.begin(); itr != mapTimes.end(); ++itr) {
-            bool found = false;
-
-            int numTimesTag = data->presidentsMetadataXml.getNumTags("time");
-            for (int i = 0; i < numTimesTag; i++) {
-                data->presidentsMetadataXml.pushTag("time", i);
-                if (data->presidentsMetadataXml.getValue("name", "") == itr->first)
-                    found = true;
-                
-                data->presidentsMetadataXml.popTag(); // time
-            }
-
-            if (!found) {
-                data->presidentsMetadataXml.addTag("time");
-                data->presidentsMetadataXml.pushTag("time", j);
-
-                data->presidentsMetadataXml.addValue("name", itr->first);
-                data->presidentsMetadataXml.addValue("numTime", itr->second);
-
-                data->presidentsMetadataXml.popTag(); // time
-            }
-            j++;
-        }
-        data->presidentsMetadataXml.popTag(); // times
-
-        data->presidentsMetadataXml.popTag(); // item
-
-        // Saves file
-        if (data->presidentsMetadataXml.saveFile())
-            (void)ofLog(OF_LOG_NOTICE, "Saved!");
-        else
-            (void)ofLog(OF_LOG_NOTICE, "Didn't save!");
-}
+//void ofApp::importMetadata(ofxDatGuiButtonEvent e) {
+//    int index = e.target->getIndex();
+//    ofImage auxImg = items[index]->getImage();
+//    ofImage object = ofImage();
+//
+//    string tags = ofSystemTextBoxDialog("Number of tags", "1");
+//    int numberOfTags = stoi(tags);
+//
+//    vector<string> listTags;
+//    listTags.assign(numberOfTags, string());
+//
+//    for (int i = 0; i < numberOfTags; i++) {
+//        string tag = ofSystemTextBoxDialog("Tag " + ofToString(i + 1), "");
+//        listTags[i] = tag;
+//    }
+//
+//    string times = ofSystemTextBoxDialog("Number of objects to process (times a specific object (input as an image) appears in the item):", "1");
+//    int numberTimes = stoi(times);
+//    map<string, int> mapTimes;
+//
+//    for (int i = 0; i < numberTimes; i++) {
+//        ofFileDialogResult result = ofSystemLoadDialog("Load file", false, "object_items/");
+//
+//        if (result.bSuccess) {
+//            string path = result.getPath();
+//            object.load(path);
+//            // Number of times the object appears
+//            /*int numberOfTimes = objectTimesFilter(auxImg, object);
+//            if(numberOfTimes!=0)
+//                mapTimes.insert({ ofFilePath().getBaseName(result.filePath), numberOfTimes });*/
+//        }
+//        else {
+//            ofSystemTextBoxDialog("Error loading file...");
+//        }
+//    }
+//
+//    
+//    (void)ofLog(OF_LOG_NOTICE, "index: " + ofToString(index));
+//
+//    data->presidentsMetadataXml.pushTag("item", index);
+//    if (data->presidentsMetadataXml.getNumTags("tags") == 0)
+//        data->presidentsMetadataXml.addTag("tags");
+//
+//        data->presidentsMetadataXml.pushTag("tags");
+//        int numExTags = data->presidentsMetadataXml.getNumTags("tag"); // number of existing tags
+//
+//        for (int j = 0; j < numberOfTags; j++) {
+//            data->presidentsMetadataXml.addValue("tag", listTags[j]);
+//        }
+//        data->presidentsMetadataXml.popTag(); // tags
+//
+//        if (data->presidentsMetadataXml.getNumTags("times") == 0)
+//            data->presidentsMetadataXml.addTag("times");
+//
+//        data->presidentsMetadataXml.pushTag("times");
+//        int numExTimes = data->presidentsMetadataXml.getNumTags("time"); // number of existing times
+//
+//        int j = numExTimes;
+//        for (map<string, int>::iterator itr = mapTimes.begin(); itr != mapTimes.end(); ++itr) {
+//            bool found = false;
+//
+//            int numTimesTag = data->presidentsMetadataXml.getNumTags("time");
+//            for (int i = 0; i < numTimesTag; i++) {
+//                data->presidentsMetadataXml.pushTag("time", i);
+//                if (data->presidentsMetadataXml.getValue("name", "") == itr->first)
+//                    found = true;
+//                
+//                data->presidentsMetadataXml.popTag(); // time
+//            }
+//
+//            if (!found) {
+//                data->presidentsMetadataXml.addTag("time");
+//                data->presidentsMetadataXml.pushTag("time", j);
+//
+//                data->presidentsMetadataXml.addValue("name", itr->first);
+//                data->presidentsMetadataXml.addValue("numTime", itr->second);
+//
+//                data->presidentsMetadataXml.popTag(); // time
+//            }
+//            j++;
+//        }
+//        data->presidentsMetadataXml.popTag(); // times
+//
+//        data->presidentsMetadataXml.popTag(); // item
+//
+//        // Saves file
+//        if (data->presidentsMetadataXml.saveFile())
+//            (void)ofLog(OF_LOG_NOTICE, "Saved!");
+//        else
+//            (void)ofLog(OF_LOG_NOTICE, "Didn't save!");
+//}
 
 /*void Gallery::extractMetadata() {
     
@@ -794,7 +790,7 @@ void ofApp::initButtons()
     im1->setPosition(450, 550);
     im1->setIndex(0);
     im1->setWidth(100);
-    im1->onButtonEvent(this, &ofApp::importMetadata);
+    //im1->onButtonEvent(this, &ofApp::importMetadata);
 
     /*im2 = new ofxDatGuiButton("Import Metadata");
     im2->setPosition(200 + imageSize, imageSize + 100);

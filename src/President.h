@@ -13,8 +13,8 @@ class PresidentMetadata
 		float color;
 		int faces;
 		double rhythm;
-		string texture;
-		string edges;
+		string texturePath;
+		string edgesPath;
 		ofImage* edgesProfilePicture;
 		ofImage* textureProfilePicture;
 
