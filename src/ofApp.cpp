@@ -7,11 +7,16 @@
 #endif
 
 #include "ofApp.h"
+#include "Metadata.h"
+
+using namespace Metadata;
 
 //--------------------------------------------------------------
 void ofApp::setup() {
 
     ofSetVerticalSync(true);
+
+    Metadata::app = this;
     
     ofSetWindowTitle("🇵🇹 Presidentes de Portugal - David Pereira e Francisco Mateus 🇵🇹");
 
@@ -37,9 +42,11 @@ void ofApp::setup() {
             assert(false);
     }
 
-    if (!presidentsMetadataXml.load("data_xml/presidents_metadata.xml")) {
+    if (!presidentsMetadataXml.load("data_xml/presidents_metadata.xml")) 
+    {
         ofLogError() << "Couldn't load file";
         assert(false);
+        
     }
 
     presidentsMetadataXml.pushTag("presidentsMetadata");
@@ -826,94 +833,6 @@ void ofApp::generateMetadata(President *president, ofxCvHaarFinder *finder) {
 
     //haarFinderMutex.unlock();
  
-}
-
-void ofApp::filterItems(string filter) {
-    // if filter is empty, items = auxItems
-    remove(filter.begin(), filter.end(), ' '); // trim
-    if (filter == "") {
-        (void)ofLog(OF_LOG_NOTICE, "Items = AuxItems!");
-        items.clear();
-
-        int size = auxItems.size();
-        items.resize(size);
-        itemsSize = size;
-        items = auxItems;
-
-        return;
-    }
-
-    // filter items
-    vector<Item*> filteredItems;
-    int counter = 0;
-    int numPresidents = presidentsXml.getNumTags("president");
-
-    for (int i = 0; i < numPresidents; i++) {
-        bool wasAdded = false;
-        // tags
-        presidentsXml.pushTag("president", i);
-        presidentsXml.pushTag("tags");
-
-        int numTags = presidentsXml.getNumTags("tag");
-        for (int j = 0; j < numTags; j++) {
-            string tag = presidentsXml.getValue("tag", "", j);
-
-            if (tag.find(filter) != std::string::npos) { // add this item
-                filteredItems.push_back(auxItems[i]);
-                counter++;
-                wasAdded = true;
-                break;
-            }
-        }
-        presidentsXml.popTag(); // tags
-        // so the same item isnt added twice
-        if (!wasAdded) {
-            // times
-            presidentsXml.pushTag("times");
-
-            int numTimes = presidentsXml.getNumTags("time");
-            for (int j = 0; j < numTimes; j++) {
-                presidentsXml.pushTag("time", j);
-                string name = presidentsXml.getValue("name", "");
-
-                if (name.find(filter) != std::string::npos) { // add this item
-                    filteredItems.push_back(auxItems[i]);
-                    counter++;
-                    break;
-                }
-            }
-            presidentsXml.popTag(); // times
-        }
-
-        presidentsXml.popTag(); // item
-    }
-    // items = filteredItems
-    items.clear();
-    items.resize(counter);
-    itemsSize = counter;
-    items = filteredItems;
-}
-
-void ofApp::filterByColor(float hue) {
-    vector<Item*> filteredItems;
-    int counter = 0;
-    int numPresidents = presidentsXml.getNumTags("president");
-
-    for (int i = 0; i < numPresidents; i++) {
-        presidentsXml.pushTag("president", i);
-        float color = presidentsXml.getValue("color", 0);
-        if (abs(color - hue) <= 10 || abs(color - hue) >= 245) {
-            // this item will apear
-            filteredItems.push_back(auxItems[i]);
-            counter++;
-        }
-        presidentsXml.popTag(); // item
-    }
-    // items = filteredItems
-    items.clear();
-    items.resize(counter);
-    itemsSize = counter;
-    items = filteredItems;
 }
 
 /*void ofApp::handleUserItems(int userId, vector<Item*> items_input, bool useItemsInput) {

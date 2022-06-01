@@ -3,6 +3,7 @@
 #pragma once
 
 #include "ofMain.h"
+#include "President.h"
 #include "ofxXmlSettings.h"
 #include "ofxCvHaarFinder.h"
 #include "ofxCv.h"
@@ -10,6 +11,7 @@
 #include "Item.h"
 #include "ofxOpenCv.h"
 #include "ofxGui.h"
+//#include "Metadata.h"
 
 #define IMAGE_MEDIA_TYPE 0
 
@@ -18,12 +20,24 @@
 using namespace cv;
 using namespace ofxCv;
 
+//using namespace Metadata;
+
 
 class ofApp : public ofBaseApp {
 
 	public:
 
-		typedef struct
+		typedef struct GenerateMetadataThreadWork
+		{
+			President* president;
+			float luminance;
+			float color;
+			int faces;
+			string texture;
+			string edges;
+		} GenerateMetadataThreadWork;
+
+		/*typedef struct
 		{
 			string name;
 			int pres_id;
@@ -36,18 +50,7 @@ class ofApp : public ofBaseApp {
 			ofVideoPlayer* biographyVideo;
 			string biographyVideoPath;
 			vector<ofImage*> otherImages;
-		} President;
-
-		typedef struct
-		{
-			President* president;
-			float luminance;
-			float color;
-			int faces;
-			string texture;
-			string edges;
-		} GenerateMetadataThreadWork;
-
+		} President;*/
 
 		void setup();
 		void update();
@@ -82,8 +85,6 @@ class ofApp : public ofBaseApp {
         void extractMetadata(ofxDatGuiButtonEvent e);
 		void drawPresidentDescription();
         void initButtons();
-        void filterByColor(float hue);
-        void filterItems(string filter);
         //int objectTimesFilter(ofImage image, ofImage objImage);
     
         void importMetadata();
