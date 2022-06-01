@@ -132,10 +132,19 @@ public:
         const int n_threads = METADATA_GENERATION_N_THREADS;
         int n_presidents = appData->presidentsMedias.size();
 
+        auto xml = appData->presidentsMetadataXml;
+
+        assert(xml.getPushLevel() == 0);
+        xml.clear();
+        xml.save("data_xml/presidents_metadata.xml");
 
         int presidents_per_thread = n_presidents / n_threads;
 
         appData->isGeneratingMetadata = true;
+        
+        xml.load("data_xml/presidents_metadata.xml");
+        xml.addTag("presidentsMetadata");
+        xml.pushTag("presidentsMetadata");
 
         for (int i = 0; i < n_presidents && n_threads > 1; i += presidents_per_thread) {
             int endPres = i + presidents_per_thread > n_presidents - 1 ? n_presidents - 1 : i + presidents_per_thread;
@@ -163,9 +172,7 @@ public:
                 assert(false);
                 continue;
             }
-            
-            auto xml = appData->presidentsMetadataXml;
-
+           
             xml.addTag("president");
             xml.pushTag("president", w); // mudar para numberOfItems + 1 depois de testar
             // saves the id - itemName
@@ -184,8 +191,12 @@ public:
             xml.saveFile();
         }
 
-        this->appData->isGeneratingMetadata = false;
-        this->appData->metadataGenerated = true;
+        xml.popTag();
+
+        appData->isGeneratingMetadata = false;
+        appData->metadataGenerated = true;
+
+        
 
         stop();
 

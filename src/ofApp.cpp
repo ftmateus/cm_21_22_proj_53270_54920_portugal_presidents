@@ -33,7 +33,7 @@ void ofApp::setup() {
 
     if (!data->presidentsXml.load("data_xml/presidents.xml")) {
         ofLogError() << "Couldn't load file";
-        assert(false);
+        
     }
    
     getPresidentsInfo();
@@ -41,6 +41,7 @@ void ofApp::setup() {
     if (data->presidentsMetadataXml.load("data_xml/presidents_metadata.xml"))
     {
         importMetadata();
+        //assert(data->metadataGenerated == true);
     }
     else
     {
@@ -195,14 +196,19 @@ void ofApp::drawPresidents()
 }
 
 void ofApp::importMetadata()
-{
-    auto xml = data->presidentsMetadataXml;
+{    auto xml = data->presidentsMetadataXml;
 
     xml.pushTag("presidentsMetadata");
 
-    if (xml.getNumTags("president") < data->presidentsMedias.size()) return;
+    int n_presidents = xml.getNumTags("president");
 
-    for (int p = 0; p < data->presidentsMedias.size(); p++)
+    if (n_presidents != data->presidentsMedias.size())
+    {
+        assert(false);
+        return;
+    }
+
+    for (int p = 0; p < n_presidents; p++)
     {
         PresidentMetadata* metadata = new PresidentMetadata();
 
@@ -213,13 +219,14 @@ void ofApp::importMetadata()
         metadata->texturePath   = string(xml.getValue("president:texture", "", p));
         metadata->edgesPath     = string(xml.getValue("president:edges", "", p));
 
-        
-        data->metadataGenerated = true;
-
 
         President* president = data->presidentsMedias[p];
         president->metadata = metadata;
     }
+
+    data->metadataGenerated = true;
+
+    xml.popTag();
 }
 
 void ofApp::drawStringCentered(const std::string& c, float x, float y) 
