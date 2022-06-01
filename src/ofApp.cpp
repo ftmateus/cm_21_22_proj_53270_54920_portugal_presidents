@@ -195,7 +195,8 @@ void ofApp::drawPresidents()
 }
 
 void ofApp::importMetadata()
-{    auto xml = data->presidentsMetadataXml;
+{    
+    auto xml = data->presidentsMetadataXml;
 
     xml.pushTag("presidentsMetadata");
 
@@ -211,10 +212,10 @@ void ofApp::importMetadata()
     {
         PresidentMetadata* metadata = new PresidentMetadata();
 
-        metadata->luminance = stof(string(xml.getValue("president:luminance", "", p)));
-        metadata->faces     = stoi(string(xml.getValue("president:faces", "", p)));
-        metadata->rhythm    = stod(string(xml.getValue("president:rhythm", "", p)));
-        metadata->color     = stof(string(xml.getValue("president:color", "", p)));
+        metadata->luminance     = stof(string(xml.getValue("president:luminance", "", p)));
+        metadata->faces         = stoi(string(xml.getValue("president:faces", "", p)));
+        metadata->rhythm        = stod(string(xml.getValue("president:rhythm", "", p)));
+        metadata->color         = stof(string(xml.getValue("president:color", "", p)));
         metadata->texturePath   = string(xml.getValue("president:texture", "", p));
         metadata->edgesPath     = string(xml.getValue("president:edges", "", p));
 

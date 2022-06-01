@@ -40,3 +40,5 @@ enc_temp_folder/
 /enc_temp_folder
 
 bin/*.pdb 
+
+bin/data/textures_edges/*
