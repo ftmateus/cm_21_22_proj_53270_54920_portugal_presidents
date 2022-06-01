@@ -46,7 +46,6 @@ void ofApp::setup() {
     else
     {
         data->presidentsMetadataXml.clear();
-        data->presidentsMetadataXml.addTag("presidentsMetadata");
         data->presidentsMetadataXml.save("data_xml/presidents_metadata.xml");
         //data->presidentsMetadataXml.pushTag("presidentsMetadata");
         //data->presidentsMetadataXml.load("data_xml/presidents_metadata.xml");
@@ -319,6 +318,7 @@ void ofApp::pausePlayVideo()
 
 void ofApp::generateMetadata()
 {
+    if (data->isGeneratingMetadata) return;
     data->isGeneratingMetadata = true;
     data->metadataGenerated = false;
     //generateMetadataThread = new GenerateMetadata(data);

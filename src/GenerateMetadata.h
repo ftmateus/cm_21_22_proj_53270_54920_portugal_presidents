@@ -134,7 +134,8 @@ public:
 
         auto xml = appData->presidentsMetadataXml;
 
-        assert(xml.getPushLevel() == 0);
+        xml.popTag();
+        xml.removeTag("presidentsMetadata", 0);
         xml.clear();
         xml.save("data_xml/presidents_metadata.xml");
 
@@ -143,6 +144,10 @@ public:
         appData->isGeneratingMetadata = true;
         
         xml.load("data_xml/presidents_metadata.xml");
+
+        int presidentsMetadataNTags = xml.getNumTags("presidentsMetadata");
+        assert(presidentsMetadataNTags == 0);
+
         xml.addTag("presidentsMetadata");
         xml.pushTag("presidentsMetadata");
 
