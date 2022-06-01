@@ -1,4 +1,17 @@
 #include "ofApp.h"
+
+#include "opencv2/highgui.hpp"
+#include "opencv2/features2d.hpp"
+
+using namespace cv;
+using cv::Mat;
+using cv::Point2f;
+using cv::KeyPoint;
+using cv::Scalar;
+using cv::BFMatcher;
+using cv::FastFeatureDetector;
+using cv::SimpleBlobDetector;
+
 //--------------------------------------------------------------
 void ofApp::setup() {
 
@@ -85,7 +98,9 @@ void ofApp::draw(){
 
     pauseBtn.draw();
 
-    im1->draw();
+    importMetadataBtn->draw();
+    generateMetadataBtn->draw();
+    extractMetadataBtn->draw();
     /*im2->draw();
     im3->draw();*/
 
@@ -135,8 +150,7 @@ ofImage *ofApp::getPresidentProfilePicture(President* president)
     return img;
 }
 
-void ofApp::drawPresidents()
-{    
+void ofApp::drawPresidents() {
     ofSetColor(ofColor::white);
     ofImage* centerPresidentImg = getPresidentProfilePicture(data->presidentsMedias[data->currentPresidentIdx]);
     centerPresidentImg->draw(centerPresidentImgXPos, PRESIDENTS_CARROUSEL_Y_POS, CENTER_PRESIDENT_IMG_WIDTH, CENTER_PRESIDENT_IMG_HEIGHT);
@@ -229,20 +243,17 @@ void ofApp::importMetadata()
     xml.popTag();
 }
 
-void ofApp::drawStringCentered(const std::string& c, float x, float y) 
-{
+void ofApp::drawStringCentered(const std::string& c, float x, float y) {
     ofRectangle stringBox = myfont.getStringBoundingBox(c, 0, 0);
     myfont.drawString(c, x - (stringBox.width / 2), y);
     stringBox.~ofRectangle();
 }
 
-void ofApp::drawStringRight(const std::string& c, float x, float y)
-{
+void ofApp::drawStringRight(const std::string& c, float x, float y) {
     ofRectangle stringBox = myfont.getStringBoundingBox(c, 0, 0);
     myfont.drawString(c, x - (stringBox.width), y);
     stringBox.~ofRectangle();
 }
-
 
 void ofApp::drawBiographyVideo() {
 
@@ -340,14 +351,10 @@ void ofApp::switchPresident(President* previousPresident)
     President* currentPresident = data->presidentsMedias[data->currentPresidentIdx];
  
     if (previousPresident->biographyVideo != NULL)
-    {
         previousPresident->biographyVideo->stop();
-    }
 
-    if (currentPresident->biographyVideo != NULL)
-    {
+    if (currentPresident->biographyVideo != NULL) {
         currentPresident->biographyVideo->setLoopState(OF_LOOP_NORMAL);
-
         currentPresident->biographyVideo->play();
     }
 
@@ -374,33 +381,27 @@ void ofApp::mousePressed(int x, int y, int button){
 
 }
 
-bool ofApp::isMousePtrInCarrousel(int x, int y)
-{
+bool ofApp::isMousePtrInCarrousel(int x, int y) {
     return y >= PRESIDENTS_CARROUSEL_Y_POS && y <= PRESIDENTS_CARROUSEL_Y_POS + CENTER_PRESIDENT_IMG_HEIGHT;
 }
 
-bool ofApp::isMousePtrInsideCenterPresident(int x, int y)
-{
+bool ofApp::isMousePtrInsideCenterPresident(int x, int y) {
     return x >= centerPresidentImgXPos && x <= centerPresidentImgXPos + CENTER_PRESIDENT_IMG_WIDTH;
 }
 
-bool ofApp::isMousePtrOnCenterPresidentLeft(int x, int y)
-{
+bool ofApp::isMousePtrOnCenterPresidentLeft(int x, int y) {
     return x < centerPresidentImgXPos;
 }
 
-bool ofApp::isMousePtrOnCenterPresidentRight(int x, int y)
-{
+bool ofApp::isMousePtrOnCenterPresidentRight(int x, int y) {
     return x > centerPresidentImgXPos + CENTER_PRESIDENT_IMG_WIDTH;
 }
 
-bool ofApp::isMousePtrBelowNeighbourPresidents(int x, int y)
-{
+bool ofApp::isMousePtrBelowNeighbourPresidents(int x, int y) {
     return y > PRESIDENTS_CARROUSEL_Y_POS + NEIGHBOUR_PRESIDENT_IMG_HEIGHT;
 }
 
-int ofApp::getPresidentIndexWhereMouseIsPointing(int x, int y)
-{
+int ofApp::getPresidentIndexWhereMouseIsPointing(int x, int y) {
     //if it's outside of carrousel, skip
     if (!isMousePtrInCarrousel(x, y)) 
         return MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT;
@@ -421,7 +422,6 @@ int ofApp::getPresidentIndexWhereMouseIsPointing(int x, int y)
             if (previousPresidentImgXPos + NEIGHBOUR_PRESIDENT_IMG_WIDTH <= 0) break;
 
             if (x >= previousPresidentImgXPos && x <= previousPresidentImgXPos + NEIGHBOUR_PRESIDENT_IMG_WIDTH)
-            {
                 return prevImageIdx;
             }
 
@@ -437,9 +437,7 @@ int ofApp::getPresidentIndexWhereMouseIsPointing(int x, int y)
             if (nextPresidentImgXPos >= ofGetWidth()) break;
 
             if (x >= nextPresidentImgXPos && x <= nextPresidentImgXPos + NEIGHBOUR_PRESIDENT_IMG_WIDTH)
-            {
                 return nextImageIdx;
-            }
         }
     }
     return MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT;
@@ -493,16 +491,12 @@ void ofApp::getPresidentsInfo()
     //}
 }
 
-void ofApp::getPresidentsInfoThread(int startPres, int endPres)
-{
+void ofApp::getPresidentsInfoThread(int startPres, int endPres) {
     for (int i = startPres; i <= endPres; i++)
-    {
         getPresidentInfo(i);
-    }
 }
 
-void ofApp::getPresidentInfo(int xmlIndex)
-{
+void ofApp::getPresidentInfo(int xmlIndex) {
     President* presMedia = new President();
 
     //string name = data->presidentsXml.getValue("president:name", "", i);
@@ -547,8 +541,7 @@ void ofApp::mouseReleased(int x, int y, int button){
     OF_MOUSE_BUTTON_MIDDLE */
 
     //int centerPresidentImgXPos = windowXCenter - CENTER_PRESIDENT_IMG_WIDTH / 2;
-    if (button == OF_MOUSE_BUTTON_LEFT)
-    {
+    if (button == OF_MOUSE_BUTTON_LEFT) {
         int president = getPresidentIndexWhereMouseIsPointing(x, y);
         if (president != MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT)
         {
@@ -561,10 +554,8 @@ void ofApp::mouseReleased(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseScrolled(int x, int y, float scrollX, float scrollY) 
-{
-    if (isMousePtrInCarrousel(x, y))
-    {
+void ofApp::mouseScrolled(int x, int y, float scrollX, float scrollY) {
+    if (isMousePtrInCarrousel(x, y)) {
         int previousPresidentIdx = -1;
         if (scrollY >= 1.0 && data->currentPresidentIdx < data->presidentsMedias.size() - 1)
             previousPresidentIdx = data->currentPresidentIdx++;
@@ -588,15 +579,12 @@ void ofApp::mouseExited(int x, int y){
 }
 
 //--------------------------------------------------------------
-void ofApp::windowResized(ofResizeEventArgs& resize) 
-{
+void ofApp::windowResized(ofResizeEventArgs& resize) {
     windowXCenter = ofGetWidth() / 2;
     centerPresidentImgXPos = windowXCenter - CENTER_PRESIDENT_IMG_WIDTH / 2;
 
     if (resize.width <= CENTER_PRESIDENT_IMG_WIDTH + 2 * (NEIGHBOUR_PRESIDENT_IMG_WIDTH)+SPACE_BETWEEN_PRESIDENTS * 2)
-    {
         ofSetWindowShape(CENTER_PRESIDENT_IMG_WIDTH + 2 * (NEIGHBOUR_PRESIDENT_IMG_WIDTH)+SPACE_BETWEEN_PRESIDENTS * 2, ofGetHeight());
-    }
 }
 
 //--------------------------------------------------------------
@@ -791,31 +779,43 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
     
 }*/
 
-void ofApp::initButtons()
-{
+void ofApp::initButtons() {
     //---------Import
-    im1 = new ofxDatGuiButton("Import Metadata");
-    im1->setPosition(450, 550);
-    im1->setIndex(0);
-    im1->setWidth(100);
-    //im1->onButtonEvent(this, &ofApp::importMetadata);
+    importMetadataBtn = new ofxDatGuiButton("Import Metadata");
+        
+    importMetadataBtn->setPosition(50, 500);
+        importMetadataBtn->setIndex(0);
+        importMetadataBtn->setWidth(100);
+        importMetadataBtn->onButtonEvent(this, &ofApp::onButtonEvent);
 
-    /*im2 = new ofxDatGuiButton("Import Metadata");
-    im2->setPosition(200 + imageSize, imageSize + 100);
-    im2->setIndex(1);
-    im2->setWidth(100);
-    im2->onButtonEvent(this, &ofApp::importMetadata);
+        importMetadataBtn->setEnabled(true);
 
-    im3 = new ofxDatGuiButton("Import Metadata");
-    im3->setPosition(250 + imageSize * 2, imageSize + 100);
-    im3->setIndex(2);
-    im3->setWidth(100);
-    im3->onButtonEvent(this, &ofApp::importMetadata);*/
+        generateMetadataBtn = new ofxDatGuiButton("Generate Metadata");
+
+    generateMetadataBtn->setPosition(50, 550);
+        generateMetadataBtn->setIndex(1);
+        generateMetadataBtn->setWidth(105);
+        generateMetadataBtn->onButtonEvent(this, &ofApp::onButtonEvent);
+
+        generateMetadataBtn->setEnabled(true);
+    
+    extractMetadataBtn = new ofxDatGuiButton("Extract Metadata");
+    
+    extractMetadataBtn->setPosition(50, 600);
+    extractMetadataBtn->setIndex(2);
+    extractMetadataBtn->setWidth(100);
+    extractMetadataBtn->onButtonEvent(this, &ofApp::onButtonEvent);
+    
+    extractMetadataBtn->setEnabled(true);
 }
 
-/*int ofApp::objectTimesFilter(ofImage image, ofImage objImage) {
+void ofApp::onButtonEvent(ofxDatGuiButtonEvent e) {
+    
+}
+
+int ofApp::objectTimesFilter(ofImage image, ofImage objImage) {
     int numberOfMatches = 0;
-    ofImage  tempImg = image;
+    ofImage tempImg = image;
     tempImg.setImageType(OF_IMAGE_GRAYSCALE);
     Mat img1 = toCv(tempImg);
     objImage.setImageType(OF_IMAGE_GRAYSCALE);
@@ -837,7 +837,7 @@ void ofApp::initButtons()
         Mat desc2;
         vector<cv::DMatch> matches;
 
-        Ptr<ORB> detector = ORB::create();
+        cv::Ptr<ORB> detector = ORB::create();
         detector->detectAndCompute(img1, Mat(), keyP1, desc1);
         detector->detectAndCompute(img2, Mat(), keyP2, desc2);
         matches.clear();
@@ -858,4 +858,4 @@ void ofApp::initButtons()
         }
     }
     return numberOfMatches;
-}*/
+}

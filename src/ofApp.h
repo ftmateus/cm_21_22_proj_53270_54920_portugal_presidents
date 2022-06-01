@@ -3,7 +3,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "President.h"
 #include "ofxXmlSettings.h"
 #include "ofxCvHaarFinder.h"
 #include "ofxCv.h"
@@ -21,9 +20,7 @@
 
 using namespace cv;
 using namespace ofxCv;
-
-//using namespace Metadata;
-
+using cv::ORB;
 
 class ofApp : public ofBaseApp {
 
@@ -70,6 +67,8 @@ class ofApp : public ofBaseApp {
 		void pausePlayVideo();
 		void generateMetadata();
 		void searchPresidents();
+		int objectTimesFilter(ofImage image, ofImage objImage);
+
         //int objectTimesFilter(ofImage image, ofImage objImage);
 
 		void drawStringCentered(const std::string& c, float x, float y);
@@ -115,12 +114,12 @@ class ofApp : public ofBaseApp {
 
 		int itemsSize;
 
-		ofxDatGuiButton* im1;
-		ofxDatGuiButton* im2;
-		ofxDatGuiButton* im3;
+        ofxDatGuiButton* importMetadataBtn;
+        ofxDatGuiButton* generateMetadataBtn;
+        ofxDatGuiButton* extractMetadataBtn;
 
-		
-		ofAppData *data;
+
+		std::mutex mutex;
 
 		//computed
 		int windowXCenter;
@@ -130,7 +129,7 @@ class ofApp : public ofBaseApp {
 		GenerateMetadata generateMetadataThread;
 
 
-		Filters currentFilterApplied;
+        
 
 		const double PRESIDENT_PORTRAIT_ASPECT_RATIO = 4.0 / 5.0;
 		const int SPACE_BETWEEN_PRESIDENTS = 25;
