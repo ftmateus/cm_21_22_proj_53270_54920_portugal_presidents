@@ -28,6 +28,12 @@ using namespace ofxCv;
 class ofApp : public ofBaseApp {
 
 	public :
+
+		enum Filters
+		{
+			NO_FILTER, EDGES_FILTER, TEXTURE_FILTER
+		};
+
 		void setup();
 		void update();
 		void draw();
@@ -47,8 +53,6 @@ class ofApp : public ofBaseApp {
 		void drawPresidents();
 		void drawBiographyVideo();
         //void filterEdgeAndTexture();
-        string edgesFilter(President* president);
-        string textureFilter(President* president);
         //double rhythmFilter(string path);
 		void getPresidentsInfo();
 		void getPresidentsInfoThread(int startPres, int endPres);
@@ -61,10 +65,13 @@ class ofApp : public ofBaseApp {
         void extractMetadata(ofxDatGuiButtonEvent e);
 		ofImage *getPresidentProfilePicture(President *president);
         void initButtons();
+
+		void applyFilter(Filters filter);
+		void pausePlayVideo();
+		void generateMetadata();
+		void searchPresidents();
         //int objectTimesFilter(ofImage image, ofImage objImage);
-    
-        void importMetadata();
-        void exportMetadata();
+
 		void drawStringCentered(const std::string& c, float x, float y);
 		void drawStringRight(const std::string& c, float x, float y);
 		bool isMousePtrInCarrousel(int x, int y);
@@ -117,11 +124,7 @@ class ofApp : public ofBaseApp {
 
 		
 		GenerateMetadata generateMetadataThread;
-    
-		enum Filters
-		{
-			NONE, EDGES, TEXTURE
-		};
+
 
 		Filters currentFilterApplied;
 

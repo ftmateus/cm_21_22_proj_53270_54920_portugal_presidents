@@ -104,7 +104,9 @@ void ofApp::draw(){
 
 ofImage *ofApp::getPresidentProfilePicture(President* president)
 {
-    if (currentFilterApplied == EDGES)
+    ofImage* img;
+
+    if (currentFilterApplied == EDGES_FILTER)
     {
         if (president->metadata->edgesProfilePicture == NULL)
         {
@@ -112,9 +114,9 @@ ofImage *ofApp::getPresidentProfilePicture(President* president)
             president->metadata->edgesProfilePicture = new ofImage();
             president->metadata->edgesProfilePicture->load(edgesFilename);
         }
-        return president->metadata->edgesProfilePicture;
+        img = president->metadata->edgesProfilePicture;
     }
-    else if (currentFilterApplied == TEXTURE)
+    else if (currentFilterApplied == TEXTURE_FILTER)
     {
         if (president->metadata->edgesProfilePicture == NULL)
         {
@@ -122,13 +124,15 @@ ofImage *ofApp::getPresidentProfilePicture(President* president)
             president->metadata->textureProfilePicture = new ofImage();
             president->metadata->textureProfilePicture->load(textureFilename);
         }
-        return president->metadata->textureProfilePicture;
+        img = president->metadata->textureProfilePicture;
     }
     else
     {
-        assert(currentFilterApplied == NONE);
-        return president->profilePicture;
+        assert(currentFilterApplied == NO_FILTER);
+        img = president->profilePicture;
     }
+    assert(img != NULL);
+    return img;
 }
 
 void ofApp::drawPresidents()
@@ -248,30 +252,20 @@ void ofApp::keyPressed(int key){
                 previousPresidentIdx = data->currentPresidentIdx--;
             break;
         case ' ':
-        {
-            ofVideoPlayer* vid = data->presidentsMedias[data->currentPresidentIdx]->biographyVideo;
-
-            if (vid != NULL)
-            {
-                vid->setPaused(!vid->isPaused());
-                //vid->closeMovie();
-            }
+            pausePlayVideo();
             break;
-        }
         case 'E': case 'e':
-            if (!data->metadataGenerated) break;
-            currentFilterApplied = currentFilterApplied == EDGES ? NONE : EDGES;
+            applyFilter(EDGES_FILTER);
             break;
         case 'T': case 't':
-            if (!data->metadataGenerated) break;
-            currentFilterApplied = currentFilterApplied == TEXTURE ? NONE : TEXTURE;
+            applyFilter(TEXTURE_FILTER);
             break;
         case 'G': case 'g':
-            data->isGeneratingMetadata = true;
-            //generateMetadataThread = new GenerateMetadata(data);
-            generateMetadataThread.setup(data);
-            currentFilterApplied = NONE;
-            //std::thread _thread(&ofApp::startMetadataGeneration, this);
+            generateMetadata();
+            break;
+        case 'S': case 's':
+            string tags = ofSystemTextBoxDialog("Number of tags", "1");
+            int numberOfTags = stoi(tags);
             break;
     }        
     if (previousPresidentIdx != -1)
@@ -284,6 +278,36 @@ void ofApp::keyPressed(int key){
             currentMedia %= mediaFiles.size();*/
 }
 
+void ofApp::applyFilter(Filters filter)
+{
+    if (!data->metadataGenerated) return;
+    currentFilterApplied = currentFilterApplied == filter ? NO_FILTER : filter;
+}
+
+void ofApp::pausePlayVideo()
+{
+    ofVideoPlayer* vid = data->presidentsMedias[data->currentPresidentIdx]->biographyVideo;
+
+    if (vid == NULL) return;
+
+    vid->setPaused(!vid->isPaused());
+    //vid->closeMovie();
+}
+
+void ofApp::generateMetadata()
+{
+    data->isGeneratingMetadata = true;
+    data->metadataGenerated = false;
+    //generateMetadataThread = new GenerateMetadata(data);
+    generateMetadataThread.setup(data);
+    currentFilterApplied = NO_FILTER;
+    //std::thread _thread(&ofApp::startMetadataGeneration, this);
+}
+
+void ofApp::searchPresidents()
+{
+
+}
 
 void ofApp::switchPresident(President* previousPresident)
 {
@@ -580,72 +604,6 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
         ofImage img = ofImage(path);
         generateMetadata(presidentName, path, img, false);
     }
-}*/
-
-/*double ofApp::rhythmFilter(string path)
-{
-    ofVideoPlayer videoAux;
-    videoAux.load(path);
-
-    Mat src_0 = toCv(video.getPixels());
-    video.setPosition(0.25);
-    Mat src_1 = toCv(video.getPixels());
-    video.setPosition(0.5);
-    Mat src_2 = toCv(video.getPixels());
-    video.setPosition(0.75);
-    Mat src_3 = toCv(video.getPixels());
-    video.setPosition(1);
-    Mat src_4 = toCv(video.getPixels());
-
-    if (src_0.empty() || src_1.empty() || src_2.empty() || src_3.empty() || src_4.empty())
-    {
-        // something went wrong
-        return -1;
-    }
-
-    Mat hsv_0, hsv_1, hsv_2, hsv_3, hsv_4;
-    cvtColor(src_0, hsv_0, COLOR_BGR2HSV);
-    cvtColor(src_1, hsv_1, COLOR_BGR2HSV);
-    cvtColor(src_2, hsv_2, COLOR_BGR2HSV);
-    cvtColor(src_3, hsv_3, COLOR_BGR2HSV);
-    cvtColor(src_4, hsv_4, COLOR_BGR2HSV);
-
-    Mat hsv_half_down = src_0(Range(hsv_0.rows / 2, hsv_0.rows), Range(0, hsv_0.cols));
-    int h_bins = 50, s_bins = 60;
-    int histSize[] = { h_bins, s_bins };
-
-    // hue varies from 0 to 179, saturation from 0 to 255
-    float h_ranges[] = { 0, 180 };
-    float s_ranges[] = { 0, 256 };
-    const float* ranges[] = { h_ranges, s_ranges };
-
-    // Use the 0-th and 1-st channels
-    int channels[] = { 0, 1 };
-
-    Mat hist_0, hist_half_down, hist_1, hist_2, hist_3, hist_4;
-    calcHist(&hsv_0, 1, channels, Mat(), hist_0, 2, histSize, ranges, true, false);
-    normalize(hist_0, hist_0, 0, 1, NORM_MINMAX, -1, Mat());
-
-    calcHist(&hsv_1, 1, channels, Mat(), hist_1, 2, histSize, ranges, true, false);
-    normalize(hist_1, hist_1, 0, 1, NORM_MINMAX, -1, Mat());
-
-    calcHist(&hsv_2, 1, channels, Mat(), hist_2, 2, histSize, ranges, true, false);
-    normalize(hist_2, hist_2, 0, 1, NORM_MINMAX, -1, Mat());
-
-    calcHist(&hsv_3, 1, channels, Mat(), hist_3, 2, histSize, ranges, true, false);
-    normalize(hist_3, hist_3, 0, 1, NORM_MINMAX, -1, Mat());
-
-    calcHist(&hsv_4, 1, channels, Mat(), hist_4, 2, histSize, ranges, true, false);
-    normalize(hist_4, hist_4, 0, 1, NORM_MINMAX, -1, Mat());
-
-    vector<Mat> histVector = { hist_0, hist_1, hist_2, hist_3, hist_4 };
-    double rhythm = 0;
-    for (int i = 1; i < histVector.size(); i++)
-    {
-        rhythm += compareHist(hist_0, histVector[i], i);
-    }
-    rhythm /= histVector.size();
-    return rhythm;
 }*/
 
 /*void ofApp::handleUserItems(int userId, vector<Item*> items_input, bool useItemsInput) {

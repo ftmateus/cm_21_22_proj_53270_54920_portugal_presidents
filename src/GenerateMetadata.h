@@ -8,6 +8,7 @@
 #define METADATA_GENERATION_N_THREADS 1
 #endif
 
+#define RHYTHM_FILTER_N_IMAGES 5
 
 #include "ofMain.h"
 #include "ofApp.h"
@@ -175,6 +176,7 @@ public:
             xml.setValue("texture", metadata->texture, w);
             xml.setValue("faces", metadata->faces, w);
             xml.setValue("edges", metadata->edges, w);
+            xml.setValue("rhythm", metadata->rhythm, w);
 
 
             xml.popTag(); // item
@@ -218,7 +220,12 @@ public:
             return;
         }
 
-        PresidentMetadata* metadata = new PresidentMetadata();
+
+        PresidentMetadata* metadata = appData->presidentsMedias[president->pres_id]->metadata;
+
+        if (metadata == NULL)
+            metadata = new PresidentMetadata();
+
         //metadata->president = president;
 
         // color && luminance
@@ -275,24 +282,15 @@ public:
 
         // edges - filter2D
         string edges = edgesFilter(president);
+        //assert(edges != "");
+        metadata->edges = edges;
 
-        if (edges != "")
-            metadata->edges = edges;
-        //presidentsMetadataXml.setValue("edges", edges, president->pres_id);
-    //// texture
         string texture = textureFilter(president);
-
-        if (texture != "")
-        {
-            //presidentsMetadataXml.setValue("texture", texture, president->pres_id);
-            metadata->texture = texture;
-        }
+        //assert(texture != "");
+        metadata->texture = texture;
 
         // rhythm
-        /*if (isVideo) {
-            double rhythm = rhythmFilter(path);
-            presidentsXml.setValue("rhythm", rhythm, numPresidents);
-        }*/
+        metadata->rhythm = rhythmFilter(president);
 
         //haarFinderMutex.lock();
 
@@ -320,9 +318,6 @@ public:
         vector<Mat> channels;
         Mat hsv;
 
-        /**
-            Da erro em algumas imagens, como a do antonio salazar e francisco costa
-        */
         cvtColor(src, hsv, CV_RGB2HSV);
         split(hsv, channels);
         gray_image = channels[0];
@@ -362,6 +357,60 @@ public:
         saveTexture.save(path);
 
         return path;
+    }
+
+    double rhythmFilter(President* president)
+    {
+        ofVideoPlayer* video = president->biographyVideo;
+
+        if (video == NULL) return 0.0;
+
+        Mat src[RHYTHM_FILTER_N_IMAGES];
+        Mat hsv[RHYTHM_FILTER_N_IMAGES];
+
+        const float pct_offset = 1 / (RHYTHM_FILTER_N_IMAGES - 1);
+        float pct = 0.0f;
+        for (int i = 0; i < RHYTHM_FILTER_N_IMAGES; i++)
+        {
+            assert(pct <= 1);
+
+            video->setPosition(pct);
+            src[i] = toCv(video->getPixels());
+
+            if (src[i].empty()) return -1;
+
+            cvtColor(src[i], hsv[i], COLOR_BGR2HSV);
+
+            pct += pct_offset;
+        }
+
+        Mat hsv_half_down = src[0](Range(hsv[0].rows / 2, hsv[0].rows), Range(0, hsv[0].cols));
+        int h_bins = 50, s_bins = 60;
+        int histSize[] = { h_bins, s_bins };
+
+        // hue varies from 0 to 179, saturation from 0 to 255
+        float h_ranges[] = { 0, 180 };
+        float s_ranges[] = { 0, 256 };
+        const float* ranges[] = { h_ranges, s_ranges };
+
+        // Use the 0-th and 1-st channels
+        int channels[] = { 0, 1 };
+
+        Mat hist[RHYTHM_FILTER_N_IMAGES];
+
+        for (int i = 0; i < RHYTHM_FILTER_N_IMAGES; i++)
+        {
+            calcHist(&hsv[i], 1, channels, Mat(), hist[i], 2, histSize, ranges, true, false);
+            normalize(hist[i], hist[i], 0, 1, NORM_MINMAX, -1, Mat());
+        }
+
+        //vector<Mat> histVector = { hist_0, hist_1, hist_2, hist_3, hist_4 };
+        double rhythm = 0;
+        for (int i = 1; i < RHYTHM_FILTER_N_IMAGES; i++)
+            rhythm += compareHist(hist[0], hist[i], i);
+
+        rhythm /= RHYTHM_FILTER_N_IMAGES;
+        return rhythm;
     }
 
 

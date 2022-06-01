@@ -12,6 +12,7 @@ class PresidentMetadata
 		float luminance;
 		float color;
 		int faces;
+		double rhythm;
 		string texture;
 		string edges;
 		ofImage* edgesProfilePicture;
