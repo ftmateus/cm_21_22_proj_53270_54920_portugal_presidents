@@ -5,6 +5,21 @@
 
 using namespace std;
 
+class PresidentMetadata
+{
+	public:
+		//President* president;
+		float luminance;
+		float color;
+		int faces;
+		string texture;
+		string edges;
+		ofImage* edgesProfilePicture;
+		ofImage* textureProfilePicture;
+
+};
+
+
 class President
 {
 	public: 
@@ -19,5 +34,6 @@ class President
 		ofVideoPlayer* biographyVideo;
 		string biographyVideoPath;
 		vector<ofImage*> otherImages;
-
+		PresidentMetadata *metadata;
 };
+

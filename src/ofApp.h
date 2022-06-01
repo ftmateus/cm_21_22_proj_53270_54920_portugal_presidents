@@ -11,6 +11,8 @@
 #include "Item.h"
 #include "ofxOpenCv.h"
 #include "ofxGui.h"
+#include "GenerateMetadata.h"
+#include "ofAppData.h"
 //#include "Metadata.h"
 
 #define IMAGE_MEDIA_TYPE 0
@@ -25,33 +27,7 @@ using namespace ofxCv;
 
 class ofApp : public ofBaseApp {
 
-	public:
-
-		typedef struct GenerateMetadataThreadWork
-		{
-			President* president;
-			float luminance;
-			float color;
-			int faces;
-			string texture;
-			string edges;
-		} GenerateMetadataThreadWork;
-
-		/*typedef struct
-		{
-			string name;
-			int pres_id;
-			string startDate;
-			string endDate;
-			string birthDate;
-			string deathDate;
-			ofImage* profilePicture;
-			string profilePicturePath;
-			ofVideoPlayer* biographyVideo;
-			string biographyVideoPath;
-			vector<ofImage*> otherImages;
-		} President;*/
-
+	public :
 		void setup();
 		void update();
 		void draw();
@@ -77,13 +53,13 @@ class ofApp : public ofBaseApp {
 		void getPresidentsInfo();
 		void getPresidentsInfoThread(int startPres, int endPres);
 		void getPresidentInfo(int xmlIndex);
-		void generateMetadataThread(int startPres, int endPres);
+		/*void generateMetadataThread(int startPres, int endPres);
 		void generateMetadata(President *president, ofxCvHaarFinder* finder);
-		void startMetadataGeneration();
+		void startMetadataGeneration();*/
 		//void generateMetadata(string presidentName, string path, ofImage* image, bool isVideo);
 		void importMetadata(ofxDatGuiButtonEvent e);
         void extractMetadata(ofxDatGuiButtonEvent e);
-		void drawPresidentDescription();
+		ofImage *getPresidentProfilePicture(President *president);
         void initButtons();
         //int objectTimesFilter(ofImage image, ofImage objImage);
     
@@ -105,7 +81,7 @@ class ofApp : public ofBaseApp {
     
 		ofTrueTypeFont myfont;
 
-		bool isGeneratingMetadata;
+		
 		
 		// we will have a dynamic number of images, based on the content of a directory:
 		ofDirectory imagesDir;
@@ -115,11 +91,11 @@ class ofApp : public ofBaseApp {
 
 		vector<ofVideoPlayer*> biographyVideos;*/
 
-		map<int, President*> presidentsMedias;
+		//map<int, PresidentMetadata*> presidentsMetadata;
+
 
 		bool frameByframe;
 
-		int currentPresidentIdx;
 
 		ofxPanel gui;
 
@@ -133,20 +109,21 @@ class ofApp : public ofBaseApp {
 		ofxDatGuiButton* im3;
 
 		
-		map<int, GenerateMetadataThreadWork*> threadsWork;
-		
-
-		std::mutex mutex;
+		ofAppData *data;
 
 		//computed
 		int windowXCenter;
 		int centerPresidentImgXPos;
 
-		ofxXmlSettings presidentsXml;
-
-		ofxXmlSettings presidentsMetadataXml;
+		
+		GenerateMetadata generateMetadataThread;
     
-        
+		enum Filters
+		{
+			NONE, EDGES, TEXTURE
+		};
+
+		Filters currentFilterApplied;
 
 		const double PRESIDENT_PORTRAIT_ASPECT_RATIO = 4.0 / 5.0;
 		const int SPACE_BETWEEN_PRESIDENTS = 25;

@@ -1424,6 +1424,9 @@
     <ClInclude Include="..\..\of_v0.11.2_vs2017_release\addons\ofxXmlSettings\libs\tinyxml.h">
       <Filter>addons\ofxXmlSettings\libs</Filter>
     </ClInclude>
+    <ClInclude Include="src\GenerateMetadata.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

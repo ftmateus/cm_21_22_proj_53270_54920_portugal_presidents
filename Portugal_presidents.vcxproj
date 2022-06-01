@@ -226,6 +226,7 @@
     <ClCompile Include="..\..\of_v0.11.2_vs2017_release\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GenerateMetadata.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Gallery\Gallery.h" />
     <ClInclude Include="src\Item\Item.h" />
