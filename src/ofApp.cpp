@@ -61,15 +61,22 @@ void ofApp::setup() {
     initButtons();
         
     ofBackground(ofColor::white);
+
+    appData->latestPresidentsSelected.push(appData->getPresidentByCurrentCarrouselPosition());
 }
 
 //--------------------------------------------------------------
 void ofApp::update() {
 
-    ofVideoPlayer* vid = appData->presidentsMedias[appData->currentPresidentIdx]->biographyVideo;
+    int carrouselCurrentSize = appData->getCarrouselCurrentSize();
+
+    if (carrouselCurrentSize == 0) return;
+
+    President* president = appData->getPresidentByCurrentCarrouselPosition();
+
+    ofVideoPlayer* vid = president->biographyVideo;
 
     if (vid == NULL) return;
-
 
     vid->update();
 }
@@ -93,14 +100,14 @@ void ofApp::draw(){
     importMetadataBtn->draw();
     generateMetadataBtn->draw();
     extractMetadataBtn->draw();
-    /*im2->draw();
-    im3->draw();*/
 
-    //gui.draw();
+    int carrouselCurrentSize = appData->getCarrouselCurrentSize();
+    if (carrouselCurrentSize > 0)
+    {   
+        drawPresidents();
 
-    drawPresidents(); 
-
-    drawBiographyVideo();
+        drawBiographyVideo();
+    }
 
     if (appData->isGeneratingMetadata)
     {
@@ -147,7 +154,7 @@ void ofApp::drawPresidents() {
     ofSetColor(ofColor::white);
 
     int carrouselCurrentSize = appData->getCarrouselCurrentSize();
-    if (carrouselCurrentSize == 0) return;
+    assert(carrouselCurrentSize > 0);
 
     President* currentPresident = appData->getPresidentByCurrentCarrouselPosition();
 
@@ -258,9 +265,11 @@ void ofApp::drawStringRight(const std::string& c, float x, float y) {
     stringBox.~ofRectangle();
 }
 
-void ofApp::drawBiographyVideo() {
+void ofApp::drawBiographyVideo() 
+{
+    President* president = appData->getPresidentByCurrentCarrouselPosition();
 
-    ofVideoPlayer* vid = appData->presidentsMedias[appData->currentPresidentIdx]->biographyVideo;
+    ofVideoPlayer* vid = president->biographyVideo;
 
     if (vid == NULL) return;
 
@@ -288,7 +297,7 @@ void ofApp::keyPressed(int key){
             if (appData->currentPresidentIdx > 0)
                 previousPresidentIdx = appData->currentPresidentIdx--;
             break;
-        case ' ':
+        case ' ': //space key
             pausePlayVideo();
             break;
         case 'E': case 'e':
@@ -325,9 +334,9 @@ void ofApp::search()
         cancelSearch();
         return;
     }
+    appData->currentSearchResult = appData->presidentsSearchIndex[searchTerm];
     appData->currentPresidentIdx = 0;
     appData->currentSearchTerm = searchTerm;
-    appData->currentSearchResult = appData->presidentsSearchIndex[searchTerm];
     appData->showingSearchPresidents = true;
 }
 
@@ -346,7 +355,11 @@ void ofApp::applyFilter(Filters filter)
 
 void ofApp::pausePlayVideo()
 {
-    ofVideoPlayer* vid = appData->presidentsMedias[appData->currentPresidentIdx]->biographyVideo;
+    if (appData->getCarrouselCurrentSize() == 0) return;
+
+    President* president = appData->getPresidentByCurrentCarrouselPosition();
+
+    ofVideoPlayer* vid = president->biographyVideo;
 
     if (vid == NULL) return;
 
@@ -408,12 +421,37 @@ void ofApp::switchPresident(President* previousPresident)
 {
     if (previousPresident == NULL) return;
 
-    President* currentPresident = appData->presidentsMedias[appData->currentPresidentIdx];
- 
-    if (previousPresident->biographyVideo != NULL)
-        previousPresident->biographyVideo->stop();
 
+    President* currentPresident = appData->getPresidentByCurrentCarrouselPosition();
+
+    int latestPresSelectedSize = appData->latestPresidentsSelected.size();
+
+    assert(latestPresSelectedSize > 0 && latestPresSelectedSize <= MAX_LATEST_PRESIDENTS_SELECTED);
+    
+    if (latestPresSelectedSize == MAX_LATEST_PRESIDENTS_SELECTED)
+    {
+        President* popPresident = appData->latestPresidentsSelected.front();
+        appData->latestPresidentsSelected.pop();
+
+        if (popPresident->biographyVideo != NULL)
+        {
+            assert(popPresident->biographyVideoPath.length() > 0);
+            popPresident->biographyVideo->closeMovie();
+        }
+    }
+    appData->latestPresidentsSelected.push(currentPresident);
+
+    if (previousPresident->biographyVideo != NULL)
+    {
+        assert(previousPresident->biographyVideoPath.length() > 0);
+        previousPresident->biographyVideo->stop();
+    }
     if (currentPresident->biographyVideo != NULL) {
+        assert(currentPresident->biographyVideoPath.length() > 0);
+
+        if(!currentPresident->biographyVideo->isLoaded())
+            currentPresident->biographyVideo->load("videos/" + currentPresident->biographyVideoPath);
+
         currentPresident->biographyVideo->setLoopState(OF_LOOP_NORMAL);
         currentPresident->biographyVideo->play();
     }

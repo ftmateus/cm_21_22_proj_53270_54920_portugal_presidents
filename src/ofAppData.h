@@ -36,17 +36,29 @@ class ofAppData
 
 		ofxXmlSettings presidentsMetadataXml;
 
+		#define MAX_LATEST_PRESIDENTS_SELECTED 5
+
+		queue<President*> latestPresidentsSelected;
+
 		President* getPresidentByCarrouselPosition(int index)
 		{
+
 			if (showingSearchPresidents)
 			{
 				assert(&currentSearchTerm != NULL);
 				assert(currentSearchTerm.length() > 0);
 				assert(&currentSearchResult != NULL);
+				assert(index >= 0 && index < currentSearchResult.size());
+				assert(currentSearchResult[index] != NULL);
 				return currentSearchResult[index];
 			}
 			else
+			{
+				assert(index >= 0 && index < presidentsMedias.size());
+				assert(presidentsMedias[index] != NULL);
 				return presidentsMedias[index];
+			}
+				
 		}
 
 		President* getPresidentByCurrentCarrouselPosition()
