@@ -231,6 +231,7 @@
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Gallery\Gallery.h" />
     <ClInclude Include="src\Item\Item.h" />
+    <ClInclude Include="src\ofAppData.h" />
     <ClInclude Include="src\President.h" />
     <ClInclude Include="src\VideoPlayer\ColorMode.h" />
     <ClInclude Include="src\VideoPlayer\PlayMode.hpp" />

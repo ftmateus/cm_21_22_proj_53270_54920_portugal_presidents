@@ -1430,6 +1430,9 @@
     <ClInclude Include="src\ImportMetadata.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\ofAppData.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

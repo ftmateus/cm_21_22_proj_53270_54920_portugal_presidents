@@ -14,8 +14,20 @@
 #include "ofApp.h"
 #include <atomic>
 #include "ofAppData.h"
+#include "opencv2/highgui.hpp"
+#include "opencv2/features2d.hpp"
+
+
 using namespace cv;
 using namespace ofxCv;
+using cv::Mat;
+using cv::Point2f;
+using cv::KeyPoint;
+using cv::Scalar;
+using cv::BFMatcher;
+using cv::FastFeatureDetector;
+using cv::SimpleBlobDetector;
+
 
 /// This is a simple example of a ThreadedObject created by extending ofThread.
 /// It contains data (count) that will be accessed from within and outside the
@@ -427,6 +439,53 @@ public:
 
         rhythm /= RHYTHM_FILTER_N_IMAGES;
         return rhythm;
+    }
+
+    int objectTimesFilter(ofImage image, ofImage objImage) {
+        int numberOfMatches = 0;
+        ofImage tempImg = image;
+        tempImg.setImageType(OF_IMAGE_GRAYSCALE);
+        Mat img1 = toCv(tempImg);
+        objImage.setImageType(OF_IMAGE_GRAYSCALE);
+        Mat img2 = toCv(objImage);
+
+        if (!img1.empty() && !img2.empty())
+        {
+            if (img1.channels() != 1) {
+                cvtColor(img1, img1, cv::COLOR_RGB2GRAY);
+            }
+
+            if (img2.channels() != 1) {
+                cvtColor(img2, img2, cv::COLOR_RGB2GRAY);
+            }
+
+            vector<KeyPoint> keyP1;
+            vector<KeyPoint> keyP2;
+            Mat desc1;
+            Mat desc2;
+            vector<cv::DMatch> matches;
+
+            cv::Ptr<ORB> detector = ORB::create();
+            detector->detectAndCompute(img1, Mat(), keyP1, desc1);
+            detector->detectAndCompute(img2, Mat(), keyP2, desc2);
+            matches.clear();
+
+            BFMatcher bruteMatcher(cv::NORM_L2, true);
+            bruteMatcher.match(desc1, desc2, matches, Mat());
+
+            int k1s = keyP1.size();
+            int k2s = keyP2.size();
+            int ms = matches.size();
+            float distances = 0;
+            for (int j = 0; j < matches.size(); j++) {
+                distances += matches[j].distance;
+            }
+            float distanceAvg = distances / ms;
+            if (distanceAvg < 340) {
+                numberOfMatches = 1;
+            }
+        }
+        return numberOfMatches;
     }
 
 

@@ -80,6 +80,13 @@ class ofApp : public ofBaseApp {
 		bool isMousePtrBelowNeighbourPresidents(int x, int y);
 		int getPresidentIndexWhereMouseIsPointing(int x, int y);
 		void switchPresident(President* previousPresident);
+		void onButtonEvent(ofxDatGuiButtonEvent e);
+
+		void indexPresidentForSearch(President *president);
+		void indexStringForSearch(String str, President* president);
+		void search();
+		void cancelSearch();
+
 
 		void importMetadata();
 		void exportMetadata();
@@ -106,7 +113,6 @@ class ofApp : public ofBaseApp {
 
 		bool frameByframe;
 
-
 		ofxPanel gui;
 
 		vector<Item*> items; // contains the filtered items
@@ -127,6 +133,10 @@ class ofApp : public ofBaseApp {
 
 		
 		GenerateMetadata generateMetadataThread;
+
+		ofAppData *appData;
+
+		Filters currentFilterApplied;
 
 
         

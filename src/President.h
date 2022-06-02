@@ -36,5 +36,6 @@ class President
 		string biographyVideoPath;
 		vector<ofImage*> otherImages;
 		PresidentMetadata *metadata;
+		vector<string> tags;
 };
 
