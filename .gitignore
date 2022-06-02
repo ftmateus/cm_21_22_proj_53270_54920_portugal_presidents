@@ -41,4 +41,7 @@ enc_temp_folder/
 
 bin/*.pdb 
 
-bin/data/textures_edges/*
+bin/data/textures_edges/*.png
+bin/data/textures_edges/*.jpg
+bin/data/textures_edges/*.jpeg
+bin/data/textures_edges/*.gif

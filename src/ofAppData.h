@@ -19,6 +19,7 @@ class ofAppData
 
 		map<string, vector<President *>> presidentsSearchIndex;
 
+
 		map<int, President*> presidentsMedias;
 
 		bool showingSearchPresidents;

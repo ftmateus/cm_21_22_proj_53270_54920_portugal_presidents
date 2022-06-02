@@ -139,6 +139,7 @@ ofImage *ofApp::getPresidentProfilePicture(President* president)
         img = president->profilePicture;
     }
     assert(img != NULL);
+
     return img;
 }
 
@@ -150,7 +151,7 @@ void ofApp::drawPresidents() {
 
     President* currentPresident = appData->getPresidentByCurrentCarrouselPosition();
 
-    ofImage* centerPresidentImg = currentPresident->profilePicture;
+    ofImage* centerPresidentImg = getPresidentProfilePicture(currentPresident);
     centerPresidentImg->draw(centerPresidentImgXPos, PRESIDENTS_CARROUSEL_Y_POS, CENTER_PRESIDENT_IMG_WIDTH, CENTER_PRESIDENT_IMG_HEIGHT);
     
     for (int prevImageIdx = appData->currentPresidentIdx - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++)
@@ -162,7 +163,7 @@ void ofApp::drawPresidents() {
 
         President* previousPresident = appData->getPresidentByCarrouselPosition(prevImageIdx);
 
-        ofImage* prevPresidentImg = previousPresident->profilePicture;
+        ofImage* prevPresidentImg = getPresidentProfilePicture(previousPresident);;
         prevPresidentImg->draw(previousPresidentImgXPos, PRESIDENTS_CARROUSEL_Y_POS, NEIGHBOUR_PRESIDENT_IMG_WIDTH, NEIGHBOUR_PRESIDENT_IMG_HEIGHT);
     }
    
@@ -175,7 +176,7 @@ void ofApp::drawPresidents() {
 
         President* nextPresident = appData->getPresidentByCarrouselPosition(nextImageIdx);
 
-        ofImage* nextPresidentImg = nextPresident->profilePicture;
+        ofImage* nextPresidentImg = getPresidentProfilePicture(nextPresident);;
         nextPresidentImg->draw(nextPresidentImgXPos, PRESIDENTS_CARROUSEL_Y_POS, NEIGHBOUR_PRESIDENT_IMG_WIDTH, NEIGHBOUR_PRESIDENT_IMG_HEIGHT);
     }
 
@@ -378,12 +379,23 @@ void ofApp::indexPresidentForSearch(President *president)
 void ofApp::indexStringForSearch(string str, President *president)
 {
     int strLength = str.length();
+    subStrLoop:
     for (int c = 1; c < strLength; c++)
     {
         string subStr = str.substr(0, c);
-        vector<President *> *presList = &appData->presidentsSearchIndex[subStr];
-        
-        presList->push_back(president);
+        vector<President*>* presList = &appData->presidentsSearchIndex[subStr];
+        bool alreadyAdded = false;
+        for (President* p : *presList)
+        {
+            if (p->pres_id == president->pres_id)
+            {
+                alreadyAdded = true;
+                break;
+            }
+        }
+
+        if(!alreadyAdded)
+            presList->push_back(president);
     }
 }
 
