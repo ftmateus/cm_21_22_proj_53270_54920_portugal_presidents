@@ -410,6 +410,16 @@ void ofApp::indexStringForSearch(string str, President *president)
         if(!alreadyAdded)
             presList->push_back(president);
     }
+
+    int i = str.find(' ');
+
+    if (i != string::npos)
+    {
+        string _str = str.substr(i + 1);
+        indexStringForSearch(_str, president);
+    }
+
+
 }
 
 void ofApp::searchPresidents()
@@ -433,7 +443,7 @@ void ofApp::switchPresident(President* previousPresident)
         President* popPresident = appData->latestPresidentsSelected.front();
         appData->latestPresidentsSelected.pop();
 
-        if (popPresident->biographyVideo != NULL)
+        if (popPresident->biographyVideo != NULL && popPresident != currentPresident)
         {
             assert(popPresident->biographyVideoPath.length() > 0);
             popPresident->biographyVideo->closeMovie();
@@ -564,27 +574,6 @@ void ofApp::getPresidentsInfo()
 
     for (int t = 0; t < threads.size(); t++)
         threads[t].join();
-
-    //for (int w = 0; w < threadsWork.size(); w++)
-    //{
-    //    PresidentMetadata* work = threadsWork[w];
-
-    //    appData->presidentsMetadataXml.addTag("president");
-    //    appData->presidentsMetadataXml.pushTag("president", w); // mudar para numberOfItems + 1 depois de testar
-    //    // saves the id - itemName
-    //    appData->presidentsMetadataXml.setValue("id", work->president->name, w);
-
-    //    appData->presidentsMetadataXml.setValue("luminance", work->luminance, w);
-    //    appData->presidentsMetadataXml.setValue("color", work->color, w);
-    //    appData->presidentsMetadataXml.setValue("texture", work->texture, w);
-    //    appData->presidentsMetadataXml.setValue("faces", work->faces, w);
-    //    appData->presidentsMetadataXml.setValue("edges", work->edges, w);
-
-
-    //    appData->presidentsMetadataXml.popTag(); // item
-
-    //    appData->presidentsMetadataXml.saveFile();
-    //}
 }
 
 void ofApp::getPresidentsInfoThread(int startPres, int endPres) {
