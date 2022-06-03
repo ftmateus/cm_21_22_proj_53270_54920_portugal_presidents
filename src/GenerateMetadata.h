@@ -46,9 +46,13 @@ public:
 
     ofAppData* appData;
 
+    ofImage objectImage;
+
     
     void setup(ofAppData* appData) {
         this->appData = appData;
+
+        objectImage.loadImage("images/object_image.jpg");
         /*pixels.allocate(640, 480, OF_PIXELS_GRAY);
         tex.allocate(pixels);*/
         start();
@@ -201,6 +205,7 @@ public:
             xml.setValue("faces", metadata->faces, w);
             xml.setValue("edges", metadata->edgesPath, w);
             xml.setValue("rhythm", metadata->rhythm, w);
+            xml.setValue("objectTimes", metadata->objectTimes, w);
 
 
             xml.popTag(); // item
@@ -327,6 +332,11 @@ public:
         //presidentsMetadataXml.setValue("faces", faces, president->pres_id);
         metadata->faces = faces;
 
+        int objectTimes = objectTimesFilter(president);
+
+        metadata->objectTimes = objectTimes;
+
+
         appData->presidentsMedias[president->pres_id]->metadata = metadata;
 
         //haarFinderMutex.unlock();
@@ -367,16 +377,29 @@ public:
         Mat src, dst;
         int kernel_size = 31;
 
-        src = toCv(*president->profilePicture); // Load an image
+        ofImage tmpImg = *president->profilePicture;
+
+        tmpImg.setImageType(OF_IMAGE_GRAYSCALE);
+
+        src = toCv(tmpImg); // Load an image
 
         double lambda = 1.0;
         double theta = 0;
         double psi = 0;
         double gamma = 0.02;
         double sigma = 0.56 * lambda;
+        cv::Size matSize = cv::Size(kernel_size, kernel_size);
 
-        Mat kernel = getGaborKernel(cv::Size(kernel_size, kernel_size), sigma, theta, lambda, gamma, psi);
-        filter2D(src, dst, CV_32F, kernel);
+        while (theta <= 360.0)
+        {
+            Mat kernel = getGaborKernel(matSize, sigma, DegreesToRadians(theta), lambda, gamma, psi);
+            filter2D(src, dst, CV_32F, kernel);
+
+            //auto zeros = dst.
+
+            theta += 45.0;
+        }
+        
 
         ofImage saveTexture;
         toOf(dst, saveTexture);
@@ -385,6 +408,10 @@ public:
         saveTexture.save(path);
 
         return path;
+    }
+
+    float DegreesToRadians(float degrees) {
+        return degrees * (PI / 180);
     }
 
     double rhythmFilter(President* president)
@@ -441,13 +468,13 @@ public:
         return rhythm;
     }
 
-    int objectTimesFilter(ofImage image, ofImage objImage) {
+    int objectTimesFilter(President *president) {
         int numberOfMatches = 0;
-        ofImage tempImg = image;
+        ofImage tempImg = *president->profilePicture;
         tempImg.setImageType(OF_IMAGE_GRAYSCALE);
         Mat img1 = toCv(tempImg);
-        objImage.setImageType(OF_IMAGE_GRAYSCALE);
-        Mat img2 = toCv(objImage);
+        objectImage.setImageType(OF_IMAGE_GRAYSCALE);
+        Mat img2 = toCv(objectImage);
 
         if (!img1.empty() && !img2.empty())
         {
@@ -470,7 +497,7 @@ public:
             detector->detectAndCompute(img2, Mat(), keyP2, desc2);
             matches.clear();
 
-            BFMatcher bruteMatcher(cv::NORM_L2, true);
+            BFMatcher bruteMatcher(cv::NORM_L1, true);
             bruteMatcher.match(desc1, desc2, matches, Mat());
 
             int k1s = keyP1.size();
@@ -481,9 +508,14 @@ public:
                 distances += matches[j].distance;
             }
             float distanceAvg = distances / ms;
-            if (distanceAvg < 340) {
-                numberOfMatches = 1;
+            for (int j = 0; j < matches.size(); j++) {
+                if(matches[j].distance < (distances / (ms * 2)))
+                    numberOfMatches++;
             }
+
+            /*if (distanceAvg < (distances / ms*2)) {
+                numberOfMatches = 1;
+            }*/
         }
         return numberOfMatches;
     }

@@ -5,6 +5,14 @@
 
 using namespace std;
 
+class TextureProperties
+{
+	public:
+		int zeroes;
+
+};
+
+
 class PresidentMetadata
 {
 	public:
@@ -12,12 +20,12 @@ class PresidentMetadata
 		float luminance;
 		float color;
 		int faces;
+		int objectTimes;
 		double rhythm;
 		string texturePath;
 		string edgesPath;
 		ofImage* edgesProfilePicture;
 		ofImage* textureProfilePicture;
-
 };
 
 
@@ -38,4 +46,3 @@ class President
 		PresidentMetadata *metadata;
 		vector<string> tags;
 };
-

@@ -240,6 +240,7 @@ void ofApp::importMetadata()
         metadata->faces         = stoi(string(xml.getValue("president:faces", "", p)));
         metadata->rhythm        = stod(string(xml.getValue("president:rhythm", "", p)));
         metadata->color         = stof(string(xml.getValue("president:color", "", p)));
+        metadata->objectTimes   = stoi(string(xml.getValue("president:objectTimes", "", p)));
         metadata->texturePath   = string(xml.getValue("president:texture", "", p));
         metadata->edgesPath     = string(xml.getValue("president:edges", "", p));
 
