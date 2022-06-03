@@ -357,7 +357,7 @@ public:
         ofImage saveEdges;
         toOf(dst, saveEdges);
 
-        string path = "textures_edges/" + president->name + "-edges.jpg";
+        string path = "textures_edges/" + std::to_string(president->pres_id) + "-edges.jpg";
         saveEdges.save(path);
 
         return path;
@@ -381,7 +381,7 @@ public:
         ofImage saveTexture;
         toOf(dst, saveTexture);
 
-        string path = "textures_edges/" + president->name + "-texture.jpg";
+        string path = "textures_edges/" + std::to_string(president->pres_id) + "-texture.jpg";
         saveTexture.save(path);
 
         return path;
