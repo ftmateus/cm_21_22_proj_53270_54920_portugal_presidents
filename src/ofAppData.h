@@ -1,8 +1,7 @@
 #pragma once
 #include "President.h"
 
-class ofAppData
-{
+class ofAppData {
 
 	public :
 
@@ -13,12 +12,12 @@ class ofAppData
 
 			currentPresidentIdx = 0;
 		};
+    
 		bool isGeneratingMetadata;
 
 		bool metadataGenerated;
 
 		map<string, vector<President *>> presidentsSearchIndex;
-
 
 		map<int, President*> presidentsMedias;
 
@@ -40,43 +39,33 @@ class ofAppData
 
 		queue<President*> latestPresidentsSelected;
 
-		President* getPresidentByCarrouselPosition(int index)
-		{
-
-			if (showingSearchPresidents)
-			{
+		President* getPresidentByCarrouselPosition(int index) {
+            if (showingSearchPresidents) {
 				assert(&currentSearchTerm != NULL);
 				assert(currentSearchTerm.length() > 0);
 				assert(&currentSearchResult != NULL);
 				assert(index >= 0 && index < currentSearchResult.size());
 				assert(currentSearchResult[index] != NULL);
 				return currentSearchResult[index];
-			}
-			else
-			{
+			} else {
 				assert(index >= 0 && index < presidentsMedias.size());
 				assert(presidentsMedias[index] != NULL);
 				return presidentsMedias[index];
 			}
-				
 		}
 
-		President* getPresidentByCurrentCarrouselPosition()
-		{
+		President* getPresidentByCurrentCarrouselPosition() {
 			return getPresidentByCarrouselPosition(currentPresidentIdx);
 		}
 
-		int getCarrouselCurrentSize()
-		{
-			if (showingSearchPresidents)
-			{
+		int getCarrouselCurrentSize() {
+			if (showingSearchPresidents) {
 				assert(&currentSearchTerm != NULL);
 				assert(currentSearchTerm.length() > 0);
 				assert(&currentSearchResult != NULL);
 				return currentSearchResult.size();
-			}
-			else
+			} else
 				return presidentsMedias.size();
 		}
+    
 };
-

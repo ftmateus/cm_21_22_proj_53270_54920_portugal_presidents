@@ -1,7 +1,6 @@
 #include "ofApp.h"
 #include "ofAppData.h"
 
-
 using namespace cv;
 
 //--------------------------------------------------------------
@@ -15,14 +14,10 @@ void ofApp::setup() {
 
     appData = new ofAppData();
 
-    //gui.setup(); // most of the time you don't need a name
-
     pauseBtn.setup("Pause", 25, 25);
 
     pauseBtn.setBackgroundColor(ofColor::white);
 
-    //gui.add();
-    
     //load images
     {
         imagesDir.listDir("images");
@@ -35,21 +30,14 @@ void ofApp::setup() {
             assert(false);
     }
 
-
-    if (!appData->presidentsXml.load("data_xml/presidents.xml")) {
+    if (!appData->presidentsXml.load("data_xml/presidents.xml"))
         ofLogError() << "Couldn't load file";
-        
-    }
    
     getPresidentsInfo();
 
     if (appData->presidentsMetadataXml.load("data_xml/presidents_metadata.xml"))
-    {
         importMetadata();
-        //assert(appData->metadataGenerated == true);
-    }
-    else
-    {
+    else {
         appData->presidentsMetadataXml.clear();
         appData->presidentsMetadataXml.save("data_xml/presidents_metadata.xml");
         //appData->presidentsMetadataXml.pushTag("presidentsMetadata");
@@ -57,8 +45,6 @@ void ofApp::setup() {
         /*ofLogError() << "Couldn't load file";
         assert(false);*/
     }
-
-    initButtons();
         
     ofBackground(ofColor::white);
 
@@ -82,7 +68,7 @@ void ofApp::update() {
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
+void ofApp::draw() {
 
     {
         myfont.load("arial.ttf", 34);
@@ -97,51 +83,34 @@ void ofApp::draw(){
 
     pauseBtn.draw();
 
-    importMetadataBtn->draw();
-    generateMetadataBtn->draw();
-    extractMetadataBtn->draw();
-
     int carrouselCurrentSize = appData->getCarrouselCurrentSize();
-    if (carrouselCurrentSize > 0)
-    {   
+    if (carrouselCurrentSize > 0) {
         drawPresidents();
-
         drawBiographyVideo();
     }
 
     if (appData->isGeneratingMetadata)
-    {
         drawStringCentered("Generating Metadata...", windowXCenter, ofGetWindowHeight() - 50);
-    }
-    
 }
 
-ofImage *ofApp::getPresidentProfilePicture(President* president)
-{
+ofImage *ofApp::getPresidentProfilePicture(President* president) {
     ofImage* img;
 
-    if (currentFilterApplied == EDGES_FILTER)
-    {
-        if (president->metadata->edgesProfilePicture == NULL)
-        {
+    if (currentFilterApplied == EDGES_FILTER) {
+        if (president->metadata->edgesProfilePicture == NULL) {
             string edgesFilename = president->metadata->edgesPath;
             president->metadata->edgesProfilePicture = new ofImage();
             president->metadata->edgesProfilePicture->load(edgesFilename);
         }
         img = president->metadata->edgesProfilePicture;
-    }
-    else if (currentFilterApplied == TEXTURE_FILTER)
-    {
-        if (president->metadata->textureProfilePicture == NULL)
-        {
+    } else if (currentFilterApplied == TEXTURE_FILTER) {
+        if (president->metadata->textureProfilePicture == NULL) {
             string textureFilename = president->metadata->texturePath;
             president->metadata->textureProfilePicture = new ofImage();
             president->metadata->textureProfilePicture->load(textureFilename);
         }
         img = president->metadata->textureProfilePicture;
-    }
-    else
-    {
+    } else {
         assert(currentFilterApplied == NO_FILTER);
         img = president->profilePicture;
     }
@@ -161,8 +130,7 @@ void ofApp::drawPresidents() {
     ofImage* centerPresidentImg = getPresidentProfilePicture(currentPresident);
     centerPresidentImg->draw(centerPresidentImgXPos, PRESIDENTS_CARROUSEL_Y_POS, CENTER_PRESIDENT_IMG_WIDTH, CENTER_PRESIDENT_IMG_HEIGHT);
     
-    for (int prevImageIdx = appData->currentPresidentIdx - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++)
-    {        
+    for (int prevImageIdx = appData->currentPresidentIdx - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++) {
         int previousPresidentImgXPos = centerPresidentImgXPos - (NEIGHBOUR_PRESIDENT_IMG_WIDTH)*times - SPACE_BETWEEN_PRESIDENTS * times;
 
         //off window limits check
@@ -174,8 +142,7 @@ void ofApp::drawPresidents() {
         prevPresidentImg->draw(previousPresidentImgXPos, PRESIDENTS_CARROUSEL_Y_POS, NEIGHBOUR_PRESIDENT_IMG_WIDTH, NEIGHBOUR_PRESIDENT_IMG_HEIGHT);
     }
    
-    for (int nextImageIdx = appData->currentPresidentIdx + 1, times = 1; nextImageIdx < carrouselCurrentSize; nextImageIdx++, times++)
-    {
+    for (int nextImageIdx = appData->currentPresidentIdx + 1, times = 1; nextImageIdx < carrouselCurrentSize; nextImageIdx++, times++) {
         int nextPresidentImgXPos = (centerPresidentImgXPos + CENTER_PRESIDENT_IMG_WIDTH) + NEIGHBOUR_PRESIDENT_IMG_WIDTH*(times - 1) + SPACE_BETWEEN_PRESIDENTS * times;
 
         //off window limits check
@@ -192,13 +159,11 @@ void ofApp::drawPresidents() {
 
     {
         string presidentName = currentPresident->name;
-
         drawStringCentered(presidentName, windowXCenter, PRESIDENTS_CARROUSEL_Y_POS + CENTER_PRESIDENT_IMG_HEIGHT + 25);
     }
 
     {
         string startDate = currentPresident->startDate;
-
         drawStringRight(startDate, centerPresidentImgXPos - 10, PRESIDENTS_CARROUSEL_Y_POS + CENTER_PRESIDENT_IMG_HEIGHT - 75);
     }
 
@@ -210,30 +175,25 @@ void ofApp::drawPresidents() {
     {
         string birthDate = currentPresident->birthDate;
         string deathDate = currentPresident->deathDate;
-
         string presidentLifePeriod = birthDate + "->" + deathDate;
-
         drawStringCentered(presidentLifePeriod, windowXCenter, PRESIDENTS_CARROUSEL_Y_POS + CENTER_PRESIDENT_IMG_HEIGHT + 50);
     }
 
 }
 
-void ofApp::importMetadata()
-{    
+void ofApp::importMetadata() {
     auto xml = appData->presidentsMetadataXml;
 
     xml.pushTag("presidentsMetadata");
 
     int n_presidents = xml.getNumTags("president");
 
-    if (n_presidents != appData->presidentsMedias.size())
-    {
+    if (n_presidents != appData->presidentsMedias.size()) {
         assert(false);
         return;
     }
 
-    for (int p = 0; p < n_presidents; p++)
-    {
+    for (int p = 0; p < n_presidents; p++) {
         PresidentMetadata* metadata = new PresidentMetadata();
 
         metadata->luminance     = stof(string(xml.getValue("president:luminance", "", p)));
@@ -243,7 +203,6 @@ void ofApp::importMetadata()
         metadata->objectTimes   = stoi(string(xml.getValue("president:objectTimes", "", p)));
         metadata->texturePath   = string(xml.getValue("president:texture", "", p));
         metadata->edgesPath     = string(xml.getValue("president:edges", "", p));
-
 
         President* president = appData->presidentsMedias[p];
         president->metadata = metadata;
@@ -266,8 +225,7 @@ void ofApp::drawStringRight(const std::string& c, float x, float y) {
     stringBox.~ofRectangle();
 }
 
-void ofApp::drawBiographyVideo() 
-{
+void ofApp::drawBiographyVideo() {
     President* president = appData->getPresidentByCurrentCarrouselPosition();
 
     ofVideoPlayer* vid = president->biographyVideo;
@@ -287,13 +245,11 @@ void ofApp::keyPressed(int key){
 
     int previousPresidentIdx = -1;
 
-    switch (key)
-    {
+    switch (key) {
         case OF_KEY_RIGHT:
             if (appData->currentPresidentIdx < appData->getCarrouselCurrentSize() - 1)
                 previousPresidentIdx = appData->currentPresidentIdx++;
             break;
-
         case OF_KEY_LEFT:
             if (appData->currentPresidentIdx > 0)
                 previousPresidentIdx = appData->currentPresidentIdx--;
@@ -319,19 +275,11 @@ void ofApp::keyPressed(int key){
     }        
     if (previousPresidentIdx != -1)
         switchPresident(appData->presidentsMedias[previousPresidentIdx]);
-
-    
-       /* if (currentMedia < 0)
-            currentMedia = (int)mediaFiles.size() - 1;
-        else
-            currentMedia %= mediaFiles.size();*/
 }
 
-void ofApp::search()
-{
+void ofApp::search() {
     string searchTerm = ofSystemTextBoxDialog("Search:", "");
-    if (searchTerm.length() == 0)
-    {
+    if (searchTerm.length() == 0) {
         cancelSearch();
         return;
     }
@@ -341,21 +289,18 @@ void ofApp::search()
     appData->showingSearchPresidents = true;
 }
 
-void ofApp::cancelSearch()
-{
+void ofApp::cancelSearch() {
     if (appData->showingSearchPresidents)
         appData->currentPresidentIdx = 0;
     appData->showingSearchPresidents = false;
 }
 
-void ofApp::applyFilter(Filters filter)
-{
+void ofApp::applyFilter(Filters filter) {
     if (!appData->metadataGenerated) return;
     currentFilterApplied = currentFilterApplied == filter ? NO_FILTER : filter;
 }
 
-void ofApp::pausePlayVideo()
-{
+void ofApp::pausePlayVideo() {
     if (appData->getCarrouselCurrentSize() == 0) return;
 
     President* president = appData->getPresidentByCurrentCarrouselPosition();
@@ -365,11 +310,9 @@ void ofApp::pausePlayVideo()
     if (vid == NULL) return;
 
     vid->setPaused(!vid->isPaused());
-    //vid->closeMovie();
 }
 
-void ofApp::generateMetadata()
-{
+void ofApp::generateMetadata() {
     if (appData->isGeneratingMetadata) return;
     appData->isGeneratingMetadata = true;
     appData->metadataGenerated = false;
@@ -379,8 +322,7 @@ void ofApp::generateMetadata()
     //std::thread _thread(&ofApp::startMetadataGeneration, this);
 }
 
-void ofApp::indexPresidentForSearch(President *president)
-{
+void ofApp::indexPresidentForSearch(President *president) {
     indexStringForSearch(president->name, president);
     indexStringForSearch(president->startDate, president);
     indexStringForSearch(president->endDate, president);
@@ -390,19 +332,15 @@ void ofApp::indexPresidentForSearch(President *president)
         indexStringForSearch(tag, president);
 }
 
-void ofApp::indexStringForSearch(string str, President *president)
-{
+void ofApp::indexStringForSearch(string str, President *president) {
     int strLength = str.length();
     subStrLoop:
-    for (int c = 1; c < strLength; c++)
-    {
+    for (int c = 1; c < strLength; c++) {
         string subStr = str.substr(0, c);
         vector<President*>* presList = &appData->presidentsSearchIndex[subStr];
         bool alreadyAdded = false;
-        for (President* p : *presList)
-        {
-            if (p->pres_id == president->pres_id)
-            {
+        for (President* p : *presList) {
+            if (p->pres_id == president->pres_id) {
                 alreadyAdded = true;
                 break;
             }
@@ -414,12 +352,10 @@ void ofApp::indexStringForSearch(string str, President *president)
 
     int i = str.find(' ');
 
-    if (i != string::npos)
-    {
+    if (i != string::npos) {
         string _str = str.substr(i + 1);
         indexStringForSearch(_str, president);
     }
-
 
 }
 
@@ -428,10 +364,8 @@ void ofApp::searchPresidents()
 
 }
 
-void ofApp::switchPresident(President* previousPresident)
-{
+void ofApp::switchPresident(President* previousPresident) {
     if (previousPresident == NULL) return;
-
 
     President* currentPresident = appData->getPresidentByCurrentCarrouselPosition();
 
@@ -439,24 +373,22 @@ void ofApp::switchPresident(President* previousPresident)
 
     assert(latestPresSelectedSize > 0 && latestPresSelectedSize <= MAX_LATEST_PRESIDENTS_SELECTED);
     
-    if (latestPresSelectedSize == MAX_LATEST_PRESIDENTS_SELECTED)
-    {
+    if (latestPresSelectedSize == MAX_LATEST_PRESIDENTS_SELECTED) {
         President* popPresident = appData->latestPresidentsSelected.front();
         appData->latestPresidentsSelected.pop();
 
-        if (popPresident->biographyVideo != NULL && popPresident != currentPresident)
-        {
+        if (popPresident->biographyVideo != NULL && popPresident != currentPresident) {
             assert(popPresident->biographyVideoPath.length() > 0);
             popPresident->biographyVideo->closeMovie();
         }
     }
     appData->latestPresidentsSelected.push(currentPresident);
 
-    if (previousPresident->biographyVideo != NULL)
-    {
+    if (previousPresident->biographyVideo != NULL) {
         assert(previousPresident->biographyVideoPath.length() > 0);
         previousPresident->biographyVideo->stop();
     }
+    
     if (currentPresident->biographyVideo != NULL) {
         assert(currentPresident->biographyVideoPath.length() > 0);
 
@@ -521,10 +453,8 @@ int ofApp::getPresidentIndexWhereMouseIsPointing(int x, int y) {
     if (isMousePtrBelowNeighbourPresidents(x, y)) 
         return MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT;
 
-    if (isMousePtrOnCenterPresidentLeft(x, y))
-    {
-        for (int prevImageIdx = appData->currentPresidentIdx - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++)
-        {
+    if (isMousePtrOnCenterPresidentLeft(x, y)) {
+        for (int prevImageIdx = appData->currentPresidentIdx - 1, times = 1; prevImageIdx >= 0; prevImageIdx--, times++) {
             int previousPresidentImgXPos = centerPresidentImgXPos - (NEIGHBOUR_PRESIDENT_IMG_WIDTH)*times - SPACE_BETWEEN_PRESIDENTS * times;
 
             //off window limits check
@@ -533,11 +463,8 @@ int ofApp::getPresidentIndexWhereMouseIsPointing(int x, int y) {
             if (x >= previousPresidentImgXPos && x <= previousPresidentImgXPos + NEIGHBOUR_PRESIDENT_IMG_WIDTH)
                 return prevImageIdx;
         }
-    }
-    else if (isMousePtrOnCenterPresidentRight(x, y))
-    {
-        for (int nextImageIdx = appData->currentPresidentIdx + 1, times = 1; nextImageIdx < appData->getCarrouselCurrentSize(); nextImageIdx++, times++)
-        {
+    } else if (isMousePtrOnCenterPresidentRight(x, y)) {
+        for (int nextImageIdx = appData->currentPresidentIdx + 1, times = 1; nextImageIdx < appData->getCarrouselCurrentSize(); nextImageIdx++, times++) {
             int nextPresidentImgXPos = (centerPresidentImgXPos + CENTER_PRESIDENT_IMG_WIDTH) + NEIGHBOUR_PRESIDENT_IMG_WIDTH * (times - 1) + SPACE_BETWEEN_PRESIDENTS * times;
 
             //off window limits check
@@ -547,11 +474,11 @@ int ofApp::getPresidentIndexWhereMouseIsPointing(int x, int y) {
                 return nextImageIdx;
         }
     }
+    
     return MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT;
 }
 
-void ofApp::getPresidentsInfo()
-{
+void ofApp::getPresidentsInfo() {
     appData->presidentsXml.pushTag("presidents");
 
     vector<thread> threads;
@@ -611,7 +538,6 @@ void ofApp::getPresidentInfo(int xmlIndex) {
     presMedia->profilePicturePath = xml.getValue("profilePicture", "", 0);
     presMedia->profilePicture = new ofImage();
     
-    
     xml.pushTag("tags", 0);
     assert(xml.getPushLevel() == 3);
     {
@@ -627,13 +553,11 @@ void ofApp::getPresidentInfo(int xmlIndex) {
     xml.popTag();
     assert(xml.getPushLevel() == 2);
     
-
     if (!presMedia->profilePicture->load("images/" + presMedia->profilePicturePath))
         assert(false);
 
     presMedia->biographyVideoPath = xml.getValue("biographyVideo", "", 0);
-    if (presMedia->biographyVideoPath != "")
-    {
+    if (presMedia->biographyVideoPath != "") {
         presMedia->biographyVideo = new ofVideoPlayer();
         if(!presMedia->biographyVideo->load("videos/" + presMedia->biographyVideoPath))
             assert(false);
@@ -684,7 +608,6 @@ void ofApp::mouseScrolled(int x, int y, float scrollX, float scrollY) {
 
         if (previousPresidentIdx != -1)
             switchPresident(appData->presidentsMedias[previousPresidentIdx]);
-
     }
 }
 
@@ -716,220 +639,3 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
-
-
-/*void ofApp::handleUserItems(int userId, vector<Item*> items_input, bool useItemsInput) {
-    if (!useItemsInput) {
-        int numberOfUsers = user_data->presidentsXml.getNumTags("user_items");
-
-        int numberOfItems = 0;
-        vector<string> user_items;
-
-        for (int i = 0; i < numberOfUsers; i++) {
-            user_data->presidentsXml.pushTag("user_items", i);
-
-            if (user_data->presidentsXml.getValue("user", 0) == userId) {
-                // get items
-                user_data->presidentsXml.pushTag("items", i);
-                numberOfItems = user_data->presidentsXml.getNumTags("item");
-
-                user_items.assign(numberOfItems, string());
-
-                for (int j = 0; j < numberOfItems; j++) {
-                    user_data->presidentsXml.pushTag("item", j);
-                    string itemId = user_data->presidentsXml.getValue("id", "");
-                    // add to vector
-                    user_items.push_back(itemId);
-
-                    user_data->presidentsXml.popTag(); // item
-                }
-            }
-            user_data->presidentsXml.popTag(); // items
-            user_data->presidentsXml.popTag(); // user_items
-        }
-        //----------ofDirectory
-        dir.listDir("items/");
-        dir.sort();
-
-        if (dir.size()) {
-            items.assign(numberOfItems, &Item("", ofImage(), false, false));
-            auxItems.assign(numberOfItems, &Item("", ofImage(), false, false));
-        }
-
-        int counter = 0;
-
-        for (int i = 0; i < (int)dir.size(); i++) {
-            // checks if user has the item
-            string fileName = dir.getName(i);
-            string presidentName = ofFilePath().getBaseName(fileName);
-
-            if (find(user_items.begin(), user_items.end(), itemName) != user_items.end()) {
-                string path = dir.getPath(i);
-                ofImage img = ofImage(path);
-                bool isVideo = false;
-                if (!img.bAllocated()) {
-                    isVideo = true;
-
-                    video.load(path);
-                    video.play();
-                    video.setPaused(true);
-                    video.setPosition(0.5);
-
-                    img.setFromPixels(video.getPixels());
-                }
-                Item* item = new Item(path, img, isVideo, false);
-                items[counter] = item;
-
-                auxItems[counter++] = item;
-
-                (void)ofLog(OF_LOG_NOTICE, "Generating metadata for : " + itemName);
-
-                // generate metadata if not already generated
-                generateMetadata(itemName, path, img, isVideo);
-            }
-        }
-        itemsSize = counter;
-    }
-    else {
-        int counter = items_input.size();
-        items.clear();
-        itemsSize = counter;
-        items = items_input;
-    }
-    currentItem = 0;
-}*/
-
-//void ofApp::importMetadata(ofxDatGuiButtonEvent e) {
-//    int index = e.target->getIndex();
-//    ofImage auxImg = items[index]->getImage();
-//    ofImage object = ofImage();
-//
-//    string tags = ofSystemTextBoxDialog("Number of tags", "1");
-//    int numberOfTags = stoi(tags);
-//
-//    vector<string> listTags;
-//    listTags.assign(numberOfTags, string());
-//
-//    for (int i = 0; i < numberOfTags; i++) {
-//        string tag = ofSystemTextBoxDialog("Tag " + ofToString(i + 1), "");
-//        listTags[i] = tag;
-//    }
-//
-//    string times = ofSystemTextBoxDialog("Number of objects to process (times a specific object (input as an image) appears in the item):", "1");
-//    int numberTimes = stoi(times);
-//    map<string, int> mapTimes;
-//
-//    for (int i = 0; i < numberTimes; i++) {
-//        ofFileDialogResult result = ofSystemLoadDialog("Load file", false, "object_items/");
-//
-//        if (result.bSuccess) {
-//            string path = result.getPath();
-//            object.load(path);
-//            // Number of times the object appears
-//            /*int numberOfTimes = objectTimesFilter(auxImg, object);
-//            if(numberOfTimes!=0)
-//                mapTimes.insert({ ofFilePath().getBaseName(result.filePath), numberOfTimes });*/
-//        }
-//        else {
-//            ofSystemTextBoxDialog("Error loading file...");
-//        }
-//    }
-//
-//    
-//    (void)ofLog(OF_LOG_NOTICE, "index: " + ofToString(index));
-//
-//    appData->presidentsMetadataXml.pushTag("item", index);
-//    if (appData->presidentsMetadataXml.getNumTags("tags") == 0)
-//        appData->presidentsMetadataXml.addTag("tags");
-//
-//        appData->presidentsMetadataXml.pushTag("tags");
-//        int numExTags = appData->presidentsMetadataXml.getNumTags("tag"); // number of existing tags
-//
-//        for (int j = 0; j < numberOfTags; j++) {
-//            appData->presidentsMetadataXml.addValue("tag", listTags[j]);
-//        }
-//        appData->presidentsMetadataXml.popTag(); // tags
-//
-//        if (appData->presidentsMetadataXml.getNumTags("times") == 0)
-//            appData->presidentsMetadataXml.addTag("times");
-//
-//        appData->presidentsMetadataXml.pushTag("times");
-//        int numExTimes = appData->presidentsMetadataXml.getNumTags("time"); // number of existing times
-//
-//        int j = numExTimes;
-//        for (map<string, int>::iterator itr = mapTimes.begin(); itr != mapTimes.end(); ++itr) {
-//            bool found = false;
-//
-//            int numTimesTag = appData->presidentsMetadataXml.getNumTags("time");
-//            for (int i = 0; i < numTimesTag; i++) {
-//                appData->presidentsMetadataXml.pushTag("time", i);
-//                if (appData->presidentsMetadataXml.getValue("name", "") == itr->first)
-//                    found = true;
-//                
-//                appData->presidentsMetadataXml.popTag(); // time
-//            }
-//
-//            if (!found) {
-//                appData->presidentsMetadataXml.addTag("time");
-//                appData->presidentsMetadataXml.pushTag("time", j);
-//
-//                appData->presidentsMetadataXml.addValue("name", itr->first);
-//                appData->presidentsMetadataXml.addValue("numTime", itr->second);
-//
-//                appData->presidentsMetadataXml.popTag(); // time
-//            }
-//            j++;
-//        }
-//        appData->presidentsMetadataXml.popTag(); // times
-//
-//        appData->presidentsMetadataXml.popTag(); // item
-//
-//        // Saves file
-//        if (appData->presidentsMetadataXml.saveFile())
-//            (void)ofLog(OF_LOG_NOTICE, "Saved!");
-//        else
-//            (void)ofLog(OF_LOG_NOTICE, "Didn't save!");
-//}
-
-/*void Gallery::extractMetadata() {
-    
-}*/
-
-/*void Gallery::initXmlObjects() {
-    
-}*/
-
-void ofApp::initButtons() {
-    //---------Import
-    importMetadataBtn = new ofxDatGuiButton("Import Metadata");
-        
-    importMetadataBtn->setPosition(50, 500);
-    importMetadataBtn->setIndex(0);
-    importMetadataBtn->setWidth(100);
-    importMetadataBtn->onButtonEvent(this, &ofApp::onButtonEvent);
-
-    importMetadataBtn->setEnabled(true);
-
-    generateMetadataBtn = new ofxDatGuiButton("Generate Metadata");
-
-    generateMetadataBtn->setPosition(50, 550);
-    generateMetadataBtn->setIndex(1);
-    generateMetadataBtn->setWidth(105);
-    generateMetadataBtn->onButtonEvent(this, &ofApp::onButtonEvent);
-
-    generateMetadataBtn->setEnabled(true);
-    
-    extractMetadataBtn = new ofxDatGuiButton("Extract Metadata");
-    
-    extractMetadataBtn->setPosition(50, 600);
-    extractMetadataBtn->setIndex(2);
-    extractMetadataBtn->setWidth(100);
-    extractMetadataBtn->onButtonEvent(this, &ofApp::onButtonEvent);
-    
-    extractMetadataBtn->setEnabled(true);
-}
-
-void ofApp::onButtonEvent(ofxDatGuiButtonEvent e) {
-    
-}
-
