@@ -317,7 +317,9 @@ void ofApp::generateMetadata() {
     appData->isGeneratingMetadata = true;
     appData->metadataGenerated = false;
     //generateMetadataThread = new GenerateMetadata(appData);
-    generateMetadataThread.setup(appData);
+    //generateMetadataThread.setup(appData);
+    generateMetadataThread.appData = appData;
+    generateMetadataThread.startMetadataGeneration();
     currentFilterApplied = NO_FILTER;
     //std::thread _thread(&ofApp::startMetadataGeneration, this);
 }

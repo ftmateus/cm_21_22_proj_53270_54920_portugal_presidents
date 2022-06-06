@@ -7,7 +7,6 @@
 #include "ofxCvHaarFinder.h"
 #include "ofxCv.h"
 #include "ofxDatGui.h"
-#include "Item.h"
 #include "ofxOpenCv.h"
 #include "ofxGui.h"
 #include "GenerateMetadata.h"
@@ -90,12 +89,7 @@ class ofApp : public ofBaseApp {
 		bool frameByframe;
 
 		ofxPanel gui;
-
-		vector<Item*> items; // contains the filtered items
-		vector<Item*> auxItems; // contains all the items
-
-		int itemsSize;
-
+    
 		std::mutex mutex;
 
 		//computed

@@ -32,7 +32,6 @@ class ofAppData {
 		std::mutex mutex;
 
 		ofxXmlSettings presidentsXml;
-
 		ofxXmlSettings presidentsMetadataXml;
 
 		#define MAX_LATEST_PRESIDENTS_SELECTED 5

@@ -195,7 +195,7 @@ class GenerateMetadata : public ofThread {
                 xml.setValue("rhythm", metadata->rhythm, w);
                 xml.setValue("objectTimes", metadata->objectTimes, w);
 
-                xml.popTag(); // item
+                xml.popTag();
 
                 xml.saveFile();
             }
@@ -261,6 +261,7 @@ class GenerateMetadata : public ofThread {
             
             metadata->edgesPath = edges;
 
+            // textures
             string texture = textureFilter(president);
             
             metadata->texturePath = texture;
@@ -270,6 +271,7 @@ class GenerateMetadata : public ofThread {
 
             //haarFinderMutex.lock();
 
+            // number of faces
             int faces = finder->findHaarObjects(*president->profilePicture);
 
             //presidentsMetadataXml.setValue("faces", faces, president->pres_id);
@@ -434,11 +436,11 @@ class GenerateMetadata : public ofThread {
                 int k2s = keyP2.size();
                 int ms = matches.size();
                 float distances = 0;
-                for (int j = 0; j < matches.size(); j++)
+                for (int j = 0; j < ms; j++)
                     distances += matches[j].distance;
                 float distanceAvg = distances / ms;
-                for (int j = 0; j < matches.size(); j++) {
-                    if(matches[j].distance < (distances / (ms * 2)))
+                for (int k = 0; k < ms; k++) {
+                    if(matches[k].distance < (distances / (ms * 2)))
                         numberOfMatches++;
                 }
 
