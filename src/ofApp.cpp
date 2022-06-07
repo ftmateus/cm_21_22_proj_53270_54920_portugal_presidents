@@ -483,6 +483,8 @@ void ofApp::switchPresident(President* previousPresident)
         if (popPresident->biographyVideo != NULL && popPresident != currentPresident)
         {
             assert(popPresident->biographyVideoPath.length() > 0);
+            assert(popPresident->biographyVideo->getMoviePath() == "videos/" + popPresident->biographyVideoPath);
+
             popPresident->biographyVideo->closeMovie();
         }
     }
@@ -491,10 +493,14 @@ void ofApp::switchPresident(President* previousPresident)
     if (previousPresident->biographyVideo != NULL)
     {
         assert(previousPresident->biographyVideoPath.length() > 0);
+        assert(previousPresident->biographyVideo->getMoviePath() == "videos/" + previousPresident->biographyVideoPath);
+
         previousPresident->biographyVideo->stop();
     }
     if (currentPresident->biographyVideo != NULL) {
         assert(currentPresident->biographyVideoPath.length() > 0);
+        assert(currentPresident->biographyVideo->getMoviePath() == "videos/" + currentPresident->biographyVideoPath);
+
 
         if(!currentPresident->biographyVideo->isLoaded())
             currentPresident->biographyVideo->load("videos/" + currentPresident->biographyVideoPath);

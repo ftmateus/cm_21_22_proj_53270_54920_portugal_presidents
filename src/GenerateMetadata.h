@@ -148,25 +148,11 @@ public:
         const int n_threads = METADATA_GENERATION_N_THREADS;
         int n_presidents = appData->presidentsMedias.size();
 
-        auto xml = appData->presidentsMetadataXml;
-
-        xml.popTag();
-        xml.removeTag("presidentsMetadata", 0);
-        xml.clear();
-        xml.save("data_xml/presidents_metadata.xml");
-
         int presidents_per_thread = n_presidents / n_threads;
 
         appData->isGeneratingMetadata = true;
         
-        xml.load("data_xml/presidents_metadata.xml");
-
-        int presidentsMetadataNTags = xml.getNumTags("presidentsMetadata");
-        assert(presidentsMetadataNTags == 0);
-
-        xml.addTag("presidentsMetadata");
-        xml.pushTag("presidentsMetadata");
-
+        
         for (int i = 0; i < n_presidents && n_threads > 1; i += presidents_per_thread) {
             int endPres = i + presidents_per_thread > n_presidents - 1 ? n_presidents - 1 : i + presidents_per_thread;
 
@@ -183,6 +169,22 @@ public:
         {
             threads[t].join();
         }
+
+        auto xml = appData->presidentsMetadataXml;
+
+        xml.popTag();
+        xml.removeTag("presidentsMetadata", 0);
+        xml.clear();
+        xml.save("data_xml/presidents_metadata.xml");
+
+        xml.load("data_xml/presidents_metadata.xml");
+
+        int presidentsMetadataNTags = xml.getNumTags("presidentsMetadata");
+        assert(presidentsMetadataNTags == 0);
+
+        xml.addTag("presidentsMetadata");
+        xml.pushTag("presidentsMetadata");
+
 
         for (int w = 0; w < appData->presidentsMedias.size(); w++)
         {
@@ -468,11 +470,11 @@ public:
         return rhythm;
     }
 
-    int objectTimesFilter(President *president) {
+    int _objectTimesFilter(ofImage img)
+    {
         int numberOfMatches = 0;
-        ofImage tempImg = *president->profilePicture;
-        tempImg.setImageType(OF_IMAGE_GRAYSCALE);
-        Mat img1 = toCv(tempImg);
+        img.setImageType(OF_IMAGE_GRAYSCALE);
+        Mat img1 = toCv(img);
         objectImage.setImageType(OF_IMAGE_GRAYSCALE);
         Mat img2 = toCv(objectImage);
 
@@ -509,7 +511,7 @@ public:
             }
             float distanceAvg = distances / ms;
             for (int j = 0; j < matches.size(); j++) {
-                if(matches[j].distance < (distances / (ms * 2)))
+                if (matches[j].distance < (distances / (ms * 2)))
                     numberOfMatches++;
             }
 
@@ -517,6 +519,31 @@ public:
                 numberOfMatches = 1;
             }*/
         }
+        return numberOfMatches;
+    }
+
+    int objectTimesFilter(President *president) {
+
+        int numberOfMatches = 0;
+
+        numberOfMatches += _objectTimesFilter(*(president->profilePicture));
+
+        /*if (president->biographyVideo != NULL)
+        {
+            assert(president->biographyVideoPath.length() > 0);
+            assert(president->biographyVideo->getMoviePath() == "videos/" + president->biographyVideoPath);
+            ofVideoPlayer tempVid = *(president->biographyVideo);
+            int total_frames = tempVid.getTotalNumFrames();
+
+            for (int f = 0; f < total_frames; f++)
+            {
+                tempVid.setFrame(f);
+                assert(tempVid.getCurrentFrame() <= f);
+                assert(tempVid.getCurrentFrame() >= f - 1);
+                numberOfMatches += _objectTimesFilter(tempVid.getPixels()); 
+            }
+        }*/
+
         return numberOfMatches;
     }
 
