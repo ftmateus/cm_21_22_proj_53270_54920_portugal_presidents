@@ -5,16 +5,12 @@
 
 using namespace std;
 
-class TextureProperties
-{
+class TextureProperties {
 	public:
 		int zeroes;
-
 };
 
-
-class PresidentMetadata
-{
+class PresidentMetadata {
 	public:
 		//President* president;
 		float luminance;
@@ -28,9 +24,7 @@ class PresidentMetadata
 		ofImage* textureProfilePicture;
 };
 
-
-class President
-{
+class President {
 	public: 
 		string name;
 		int pres_id;

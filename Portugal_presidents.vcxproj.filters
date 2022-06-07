@@ -7,26 +7,11 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Gallery\Gallery.cpp">
-      <Filter>src\Gallery</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Item\Item.cpp">
-      <Filter>src\Item</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\ofApp.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VideoPlayer\ColorMode.cpp">
-      <Filter>src\VideoPlayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VideoPlayer\PlayMode.cpp">
-      <Filter>src\VideoPlayer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VideoPlayer\VideoPlayer.cpp">
-      <Filter>src\VideoPlayer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\of_v0.11.2_vs2017_release\addons\ofxOpenCv\src\ofxCvColorImage.cpp">
       <Filter>addons\ofxOpenCv\src</Filter>
@@ -143,15 +128,6 @@
   <ItemGroup>
     <Filter Include="src">
       <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Gallery">
-      <UniqueIdentifier>{459853A0-DD80-7F6C-DDA3-3BB0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Item">
-      <UniqueIdentifier>{B148205C-9076-9293-F277-FE28}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\VideoPlayer">
-      <UniqueIdentifier>{B877E405-465B-88AB-E47A-0029}</UniqueIdentifier>
     </Filter>
     <Filter Include="addons">
       <UniqueIdentifier>{71834F65-F3A9-211E-73B8-DC85}</UniqueIdentifier>
@@ -371,26 +347,11 @@
     <ClInclude Include="src\ofApp.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Gallery\Gallery.h">
-      <Filter>src\Gallery</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Item\Item.h">
-      <Filter>src\Item</Filter>
-    </ClInclude>
     <ClInclude Include="src\ofApp.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\President.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VideoPlayer\ColorMode.h">
-      <Filter>src\VideoPlayer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VideoPlayer\PlayMode.hpp">
-      <Filter>src\VideoPlayer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VideoPlayer\VideoPlayer.hpp">
-      <Filter>src\VideoPlayer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\of_v0.11.2_vs2017_release\addons\ofxOpenCv\src\ofxCvBlob.h">
       <Filter>addons\ofxOpenCv\src</Filter>

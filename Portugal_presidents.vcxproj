@@ -182,11 +182,6 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
-    <ClCompile Include="src\Gallery\Gallery.cpp" />
-    <ClCompile Include="src\Item\Item.cpp" />
-    <ClCompile Include="src\VideoPlayer\ColorMode.cpp" />
-    <ClCompile Include="src\VideoPlayer\PlayMode.cpp" />
-    <ClCompile Include="src\VideoPlayer\VideoPlayer.cpp" />
     <ClCompile Include="..\..\of_v0.11.2_vs2017_release\addons\ofxOpenCv\src\ofxCvColorImage.cpp" />
     <ClCompile Include="..\..\of_v0.11.2_vs2017_release\addons\ofxOpenCv\src\ofxCvContourFinder.cpp" />
     <ClCompile Include="..\..\of_v0.11.2_vs2017_release\addons\ofxOpenCv\src\ofxCvFloatImage.cpp" />
@@ -229,13 +224,8 @@
     <ClInclude Include="src\GenerateMetadata.h" />
     <ClInclude Include="src\ImportMetadata.h" />
     <ClInclude Include="src\ofApp.h" />
-    <ClInclude Include="src\Gallery\Gallery.h" />
-    <ClInclude Include="src\Item\Item.h" />
     <ClInclude Include="src\ofAppData.h" />
     <ClInclude Include="src\President.h" />
-    <ClInclude Include="src\VideoPlayer\ColorMode.h" />
-    <ClInclude Include="src\VideoPlayer\PlayMode.hpp" />
-    <ClInclude Include="src\VideoPlayer\VideoPlayer.hpp" />
     <ClInclude Include="..\..\of_v0.11.2_vs2017_release\addons\ofxOpenCv\src\ofxCvBlob.h" />
     <ClInclude Include="..\..\of_v0.11.2_vs2017_release\addons\ofxOpenCv\src\ofxCvColorImage.h" />
     <ClInclude Include="..\..\of_v0.11.2_vs2017_release\addons\ofxOpenCv\src\ofxCvConstants.h" />

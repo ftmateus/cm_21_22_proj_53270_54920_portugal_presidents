@@ -7,12 +7,10 @@
 #include "ofxCvHaarFinder.h"
 #include "ofxCv.h"
 #include "ofxDatGui.h"
-#include "Item.h"
 #include "ofxOpenCv.h"
 #include "ofxGui.h"
 #include "GenerateMetadata.h"
 #include "ofAppData.h"
-//#include "Metadata.h"
 
 #define IMAGE_MEDIA_TYPE 0
 
@@ -26,8 +24,7 @@ class ofApp : public ofBaseApp {
 
 	public :
 
-		enum Filters
-		{
+		enum Filters {
 			NO_FILTER, EDGES_FILTER, TEXTURE_FILTER
 		};
 
@@ -49,17 +46,9 @@ class ofApp : public ofBaseApp {
 		void mouseScrolled(int x, int y, float scrollX, float scrollY);
 		void drawPresidents();
 		void drawBiographyVideo();
-        //void filterEdgeAndTexture();
-        //double rhythmFilter(string path);
 		void getPresidentsInfo();
 		void getPresidentsInfoThread(int startPres, int endPres);
 		void getPresidentInfo(int xmlIndex);
-		/*void generateMetadataThread(int startPres, int endPres);
-		void generateMetadata(President *president, ofxCvHaarFinder* finder);
-		void startMetadataGeneration();*/
-		//void generateMetadata(string presidentName, string path, ofImage* image, bool isVideo);
-		/*void importMetadata(ofxDatGuiButtonEvent e);
-        void extractMetadata(ofxDatGuiButtonEvent e);*/
 		ofImage *getPresidentProfilePicture(President *president);
         void initButtons();
 
@@ -68,8 +57,6 @@ class ofApp : public ofBaseApp {
 		void generateMetadata();
 		void searchPresidents();
 		int objectTimesFilter(ofImage image, ofImage objImage);
-
-        //int objectTimesFilter(ofImage image, ofImage objImage);
 
 		void drawStringCentered(const std::string& c, float x, float y);
 		void drawStringRight(const std::string& c, float x, float y);
@@ -80,7 +67,6 @@ class ofApp : public ofBaseApp {
 		bool isMousePtrBelowNeighbourPresidents(int x, int y);
 		int getPresidentIndexWhereMouseIsPointing(int x, int y);
 		void switchPresident(President* previousPresident);
-		void onButtonEvent(ofxDatGuiButtonEvent e);
 
 		void indexPresidentForSearch(President *president);
 		void indexStringForSearch(String str, President* president);
@@ -88,10 +74,8 @@ class ofApp : public ofBaseApp {
 		void cancelSearch();
 		void setVideoFullScreen();
 
-
 		void importMetadata();
 		void exportMetadata();
-
 
 		#define MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT -1
 
@@ -106,43 +90,22 @@ class ofApp : public ofBaseApp {
 		// we will have a dynamic number of images, based on the content of a directory:
 		ofDirectory imagesDir;
 		ofDirectory videosDir;
-		//vector<ofImage> images;
-		/*vector<ofImage*> profilePictures;
-
-		vector<ofVideoPlayer*> biographyVideos;*/
-
-		//map<int, PresidentMetadata*> presidentsMetadata;
-
 
 		bool frameByframe;
 
 		ofxPanel gui;
-
-		vector<Item*> items; // contains the filtered items
-		vector<Item*> auxItems; // contains all the items
-
-		int itemsSize;
-
-        ofxDatGuiButton* importMetadataBtn;
-        ofxDatGuiButton* generateMetadataBtn;
-        ofxDatGuiButton* extractMetadataBtn;
-
-
+    
 		std::mutex mutex;
 
 		//computed
 		int windowXCenter;
 		int centerPresidentImgXPos;
 
-		
 		GenerateMetadata generateMetadataThread;
 
 		ofAppData *appData;
 
 		Filters currentFilterApplied;
-
-
-        
 
 		const double PRESIDENT_PORTRAIT_ASPECT_RATIO = 4.0 / 5.0;
 		const int SPACE_BETWEEN_PRESIDENTS = 25;
@@ -157,6 +120,4 @@ class ofApp : public ofBaseApp {
 
 		const int NEIGHBOUR_PRESIDENT_IMG_HEIGHT = 200;
 		const int NEIGHBOUR_PRESIDENT_IMG_WIDTH = NEIGHBOUR_PRESIDENT_IMG_HEIGHT * PRESIDENT_PORTRAIT_ASPECT_RATIO;
-
 };
-
