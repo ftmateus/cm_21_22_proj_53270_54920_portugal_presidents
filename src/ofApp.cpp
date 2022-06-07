@@ -404,8 +404,13 @@ void ofApp::generateMetadata()
     if (appData->isGeneratingMetadata) return;
     appData->isGeneratingMetadata = true;
     appData->metadataGenerated = false;
-    //generateMetadataThread = new GenerateMetadata(appData);
-    generateMetadataThread.setup(appData);
+    #ifdef __APPLE__ //mac os has a bug that prevents thread from running sucessfuly
+        if (generateMetadataThread.appData == NULL)
+            generateMetadataThread.appData = appData;
+        generateMetadataThread.startMetadataGeneration();
+    #else //assuming is windows 
+        generateMetadataThread.setup(appData);
+    #endif
     currentFilterApplied = NO_FILTER;
     //std::thread _thread(&ofApp::startMetadataGeneration, this);
 }
