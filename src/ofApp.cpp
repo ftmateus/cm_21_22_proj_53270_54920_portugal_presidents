@@ -230,17 +230,11 @@ void ofApp::drawBiographyVideo() {
 
     if (vid == NULL) return;
 
-    
-
-    if (fullScreen)
-    {
+    if (fullScreen) {
         ofSetHexColor(0xFFFFFF);
         vid->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
         ofSetHexColor(0x000000);
-
-    }
-    else
-    {
+    } else {
         ofSetHexColor(0xFFFFFF);
         vid->draw(windowXCenter - BIOGRAPHY_VIDEO_WIDTH / 2, 512, BIOGRAPHY_VIDEO_WIDTH, BIOGRAPHY_VIDEO_HEIGH);
         ofSetHexColor(0x000000);
@@ -249,7 +243,7 @@ void ofApp::drawBiographyVideo() {
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
+void ofApp::keyPressed(int key) {
     if (imagesDir.size() == 0) return;
 
     int previousPresidentIdx = -1;
@@ -290,8 +284,7 @@ void ofApp::keyPressed(int key){
         switchPresident(appData->presidentsMedias[previousPresidentIdx]);
 }
 
-void ofApp::search()
-{
+void ofApp::search() {
     string searchTerm = ofSystemTextBoxDialog("Search:", appData->currentSearchTerm);
     if (searchTerm.length() == 0)
     {

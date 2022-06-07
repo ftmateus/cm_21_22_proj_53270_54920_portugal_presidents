@@ -272,12 +272,9 @@ class GenerateMetadata : public ofThread {
             // rhythm
             metadata->rhythm = rhythmFilter(president);
 
-            //haarFinderMutex.lock();
-
             // number of faces
             int faces = finder->findHaarObjects(*president->profilePicture);
 
-            //presidentsMetadataXml.setValue("faces", faces, president->pres_id);
             metadata->faces = faces;
 
             int objectTimes = objectTimesFilter(president);
@@ -285,8 +282,6 @@ class GenerateMetadata : public ofThread {
             metadata->objectTimes = objectTimes;
         
             appData->presidentsMedias[president->pres_id]->metadata = metadata;
-
-            //haarFinderMutex.unlock();
         }
 
         string edgesFilter(President* president) {
@@ -335,11 +330,8 @@ class GenerateMetadata : public ofThread {
             cv::Size matSize = cv::Size(kernel_size, kernel_size);
 
             while (theta <= 360.0) {
-                Mat kernel = getGaborKernel(matSize, sigma, DegreesToRadians(theta), lambda, gamma, psi);
+                Mat kernel = getGaborKernel(matSize, sigma, degreesToRadians(theta), lambda, gamma, psi);
                 filter2D(src, dst, CV_32F, kernel);
-
-                //auto zeros = dst.
-
                 theta += 45.0;
             }
 
@@ -352,7 +344,7 @@ class GenerateMetadata : public ofThread {
             return path;
         }
 
-        float DegreesToRadians(float degrees) {
+        float degreesToRadians(float degrees) {
             return degrees * (PI / 180);
         }
 
@@ -406,13 +398,12 @@ class GenerateMetadata : public ofThread {
             return rhythm;
         }
 
-    int _objectTimesFilter(ofImage img)
-    {
-        int numberOfMatches = 0;
-        img.setImageType(OF_IMAGE_GRAYSCALE);
-        Mat img1 = toCv(img);
-        objectImage.setImageType(OF_IMAGE_GRAYSCALE);
-        Mat img2 = toCv(objectImage);
+        int _objectTimesFilter(ofImage img) {
+            int numberOfMatches = 0;
+            img.setImageType(OF_IMAGE_GRAYSCALE);
+            Mat img1 = toCv(img);
+            objectImage.setImageType(OF_IMAGE_GRAYSCALE);
+            Mat img2 = toCv(objectImage);
 
             if (!img1.empty() && !img2.empty()) {
                 if (img1.channels() != 1)
@@ -435,23 +426,20 @@ class GenerateMetadata : public ofThread {
                 BFMatcher bruteMatcher(cv::NORM_L1, true);
                 bruteMatcher.match(desc1, desc2, matches, Mat());
 
-            int k1s = keyP1.size();
-            int k2s = keyP2.size();
-            int ms = matches.size();
-            float distances = 0;
-            for (int j = 0; j < matches.size(); j++) {
-                distances += matches[j].distance;
-            }
-            float distanceAvg = distances / ms;
-            for (int j = 0; j < matches.size(); j++) {
-                if (matches[j].distance < (distances / (ms * 2)))
-                    numberOfMatches++;
-            }
+                int k1s = keyP1.size();
+                int k2s = keyP2.size();
+                int ms = matches.size();
+                float distances = 0;
+                for (int j = 0; j < ms; j++)
+                    distances += matches[j].distance;
 
-            /*if (distanceAvg < (distances / ms*2)) {
-                numberOfMatches = 1;
-            }*/
-        }
+                float distanceAvg = distances / ms;
+                for (int j = 0; j < ms; j++) {
+                    if (matches[j].distance < (distances / (ms * 2)))
+                        numberOfMatches++;
+                }
+                
+            }
         return numberOfMatches;
     }
 
