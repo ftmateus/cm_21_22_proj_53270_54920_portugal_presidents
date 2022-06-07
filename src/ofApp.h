@@ -86,6 +86,7 @@ class ofApp : public ofBaseApp {
 		void indexStringForSearch(String str, President* president);
 		void search();
 		void cancelSearch();
+		void setVideoFullScreen();
 
 
 		void importMetadata();
@@ -97,6 +98,8 @@ class ofApp : public ofBaseApp {
 		ofxButton pauseBtn;
     
 		ofTrueTypeFont myfont;
+
+		bool fullScreen;
 
 		
 		

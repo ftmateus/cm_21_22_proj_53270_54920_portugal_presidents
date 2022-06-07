@@ -95,11 +95,11 @@ void ofApp::draw(){
 
     pauseBtn.setPosition(windowXCenter, 600);
 
-    pauseBtn.draw();
+    /*pauseBtn.draw();
 
     importMetadataBtn->draw();
     generateMetadataBtn->draw();
-    extractMetadataBtn->draw();
+    extractMetadataBtn->draw();*/
 
     int carrouselCurrentSize = appData->getCarrouselCurrentSize();
     if (carrouselCurrentSize > 0)
@@ -274,11 +274,22 @@ void ofApp::drawBiographyVideo()
 
     if (vid == NULL) return;
 
-    ofSetHexColor(0xFFFFFF);
+    
 
-    vid->draw(windowXCenter - BIOGRAPHY_VIDEO_WIDTH/2, 512, BIOGRAPHY_VIDEO_WIDTH, BIOGRAPHY_VIDEO_HEIGH);
-    ofSetHexColor(0x000000);
-    ofPixels& pixels = vid->getPixels();
+    if (fullScreen)
+    {
+        ofSetHexColor(0xFFFFFF);
+        vid->draw(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+        ofSetHexColor(0x000000);
+
+    }
+    else
+    {
+        ofSetHexColor(0xFFFFFF);
+        vid->draw(windowXCenter - BIOGRAPHY_VIDEO_WIDTH / 2, 512, BIOGRAPHY_VIDEO_WIDTH, BIOGRAPHY_VIDEO_HEIGH);
+        ofSetHexColor(0x000000);
+    }
+    
 }
 
 //--------------------------------------------------------------
@@ -290,11 +301,13 @@ void ofApp::keyPressed(int key){
     switch (key)
     {
         case OF_KEY_RIGHT:
+            if (fullScreen) break;
             if (appData->currentPresidentIdx < appData->getCarrouselCurrentSize() - 1)
                 previousPresidentIdx = appData->currentPresidentIdx++;
             break;
 
         case OF_KEY_LEFT:
+            if (fullScreen) break;
             if (appData->currentPresidentIdx > 0)
                 previousPresidentIdx = appData->currentPresidentIdx--;
             break;
@@ -316,6 +329,8 @@ void ofApp::keyPressed(int key){
         case 'C': case 'c':
             cancelSearch();
             break;
+        case 'F': case 'f':
+            setVideoFullScreen();
     }        
     if (previousPresidentIdx != -1)
         switchPresident(appData->presidentsMedias[previousPresidentIdx]);
@@ -329,7 +344,7 @@ void ofApp::keyPressed(int key){
 
 void ofApp::search()
 {
-    string searchTerm = ofSystemTextBoxDialog("Search:", "");
+    string searchTerm = ofSystemTextBoxDialog("Search:", appData->currentSearchTerm);
     if (searchTerm.length() == 0)
     {
         cancelSearch();
@@ -345,7 +360,23 @@ void ofApp::cancelSearch()
 {
     if (appData->showingSearchPresidents)
         appData->currentPresidentIdx = 0;
+    appData->currentSearchTerm = "";
     appData->showingSearchPresidents = false;
+}
+
+void ofApp::setVideoFullScreen()
+{
+    President* president = appData->getPresidentByCurrentCarrouselPosition();
+
+    if (president->biographyVideo == NULL)
+    {
+        assert(!fullScreen);
+        return;
+    }
+
+    fullScreen = !fullScreen;
+    ofSetFullscreen(fullScreen);
+
 }
 
 void ofApp::applyFilter(Filters filter)
@@ -394,7 +425,7 @@ void ofApp::indexStringForSearch(string str, President *president)
 {
     int strLength = str.length();
     subStrLoop:
-    for (int c = 1; c < strLength; c++)
+    for (int c = 1; c <= strLength; c++)
     {
         string subStr = str.substr(0, c);
         vector<President*>* presList = &appData->presidentsSearchIndex[subStr];
@@ -511,6 +542,7 @@ bool ofApp::isMousePtrBelowNeighbourPresidents(int x, int y) {
 }
 
 int ofApp::getPresidentIndexWhereMouseIsPointing(int x, int y) {
+    if (fullScreen) return MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT;
     //if it's outside of carrousel, skip
     if (!isMousePtrInCarrousel(x, y)) 
         return MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT;
@@ -675,6 +707,7 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseScrolled(int x, int y, float scrollX, float scrollY) {
+    if (fullScreen) return;
     if (isMousePtrInCarrousel(x, y)) {
         int previousPresidentIdx = -1;
         if (scrollY >= 1.0 && appData->currentPresidentIdx < appData->getCarrouselCurrentSize() - 1)
