@@ -1,8 +1,8 @@
 <presidentsMetadata>
     <president>
         <id>Teófilo Braga</id>
-        <luminance>144.252105713</luminance>
-        <color>21.250000000</color>
+        <luminance>145.083602905</luminance>
+        <color>18.478260040</color>
         <texture>textures_edges/0-texture.jpg</texture>
         <faces>2</faces>
         <edges>textures_edges/0-edges.jpg</edges>
@@ -11,30 +11,30 @@
     </president>
     <president>
         <id>Manuel de Arriaga</id>
-        <luminance>125.759017944</luminance>
-        <color>21.250000000</color>
+        <luminance>126.851211548</luminance>
+        <color>19.615385056</color>
         <texture>textures_edges/1-texture.jpg</texture>
-        <faces>2</faces>
+        <faces>1</faces>
         <edges>textures_edges/1-edges.jpg</edges>
         <rhythm>0.000000000</rhythm>
-        <objectTimes>0</objectTimes>
+        <objectTimes>1</objectTimes>
     </president>
     <president>
         <id>Bernardino Machado</id>
-        <luminance>126.734725952</luminance>
-        <color>23.306451797</color>
+        <luminance>127.668922424</luminance>
+        <color>21.935483932</color>
         <texture>textures_edges/2-texture.jpg</texture>
-        <faces>4</faces>
+        <faces>3</faces>
         <edges>textures_edges/2-edges.jpg</edges>
         <rhythm>0.000000000</rhythm>
         <objectTimes>0</objectTimes>
     </president>
     <president>
         <id>Sidónio Pais</id>
-        <luminance>77.335868835</luminance>
-        <color>37.187500000</color>
+        <luminance>78.241447449</luminance>
+        <color>33.055557251</color>
         <texture>textures_edges/3-texture.jpg</texture>
-        <faces>2</faces>
+        <faces>4</faces>
         <edges>textures_edges/3-edges.jpg</edges>
         <rhythm>0.000000000</rhythm>
         <objectTimes>0</objectTimes>
@@ -51,13 +51,13 @@
     </president>
     <president>
         <id>António José de Almeida</id>
-        <luminance>83.489089966</luminance>
-        <color>20.090909958</color>
+        <luminance>84.622238159</luminance>
+        <color>19.318181992</color>
         <texture>textures_edges/5-texture.jpg</texture>
         <faces>2</faces>
         <edges>textures_edges/5-edges.jpg</edges>
         <rhythm>0.000000000</rhythm>
-        <objectTimes>0</objectTimes>
+        <objectTimes>1</objectTimes>
     </president>
     <president>
         <id>Manuel Teixeira Gomes</id>
@@ -71,13 +71,13 @@
     </president>
     <president>
         <id>José Mendes Cabeçadas Júnior</id>
-        <luminance>122.166313171</luminance>
-        <color>24.285715103</color>
+        <luminance>123.648345947</luminance>
+        <color>19.615385056</color>
         <texture>textures_edges/7-texture.jpg</texture>
-        <faces>3</faces>
+        <faces>4</faces>
         <edges>textures_edges/7-edges.jpg</edges>
         <rhythm>0.000000000</rhythm>
-        <objectTimes>0</objectTimes>
+        <objectTimes>1</objectTimes>
     </president>
     <president>
         <id>Manuel Gomes da Costa</id>
@@ -91,28 +91,28 @@
     </president>
     <president>
         <id>Óscar Carmona</id>
-        <luminance>73.373741150</luminance>
-        <color>53.125000000</color>
+        <luminance>74.301727295</luminance>
+        <color>48.571426392</color>
         <texture>textures_edges/9-texture.jpg</texture>
-        <faces>2</faces>
+        <faces>3</faces>
         <edges>textures_edges/9-edges.jpg</edges>
         <rhythm>0.000000000</rhythm>
         <objectTimes>0</objectTimes>
     </president>
     <president>
         <id>António Salazar</id>
-        <luminance>75.894515991</luminance>
-        <color>184.166671753</color>
+        <luminance>77.196327209</luminance>
+        <color>188.214279175</color>
         <texture>textures_edges/10-texture.jpg</texture>
-        <faces>4</faces>
+        <faces>3</faces>
         <edges>textures_edges/10-edges.jpg</edges>
         <rhythm>0.000000000</rhythm>
-        <objectTimes>0</objectTimes>
+        <objectTimes>1</objectTimes>
     </president>
     <president>
         <id>Francisco Craveiro Lopes</id>
-        <luminance>113.712158203</luminance>
-        <color>20.035715103</color>
+        <luminance>114.895729065</luminance>
+        <color>19.094203949</color>
         <texture>textures_edges/11-texture.jpg</texture>
         <faces>4</faces>
         <edges>textures_edges/11-edges.jpg</edges>
@@ -131,8 +131,8 @@
     </president>
     <president>
         <id>António Spínola</id>
-        <luminance>96.502044678</luminance>
-        <color>18.593750000</color>
+        <luminance>97.777175903</luminance>
+        <color>14.166666985</color>
         <texture>textures_edges/13-texture.jpg</texture>
         <faces>1</faces>
         <edges>textures_edges/13-edges.jpg</edges>
@@ -141,10 +141,10 @@
     </president>
     <president>
         <id>Francisco da Costa Gomes</id>
-        <luminance>66.679336548</luminance>
-        <color>49.583339691</color>
+        <luminance>67.457351685</luminance>
+        <color>47.812500000</color>
         <texture>textures_edges/14-texture.jpg</texture>
-        <faces>3</faces>
+        <faces>2</faces>
         <edges>textures_edges/14-edges.jpg</edges>
         <rhythm>0.000000000</rhythm>
         <objectTimes>0</objectTimes>
@@ -156,7 +156,7 @@
         <texture>textures_edges/15-texture.jpg</texture>
         <faces>2</faces>
         <edges>textures_edges/15-edges.jpg</edges>
-        <rhythm>0.373896494</rhythm>
+        <rhythm>0.200000000</rhythm>
         <objectTimes>0</objectTimes>
     </president>
     <president>
@@ -166,37 +166,37 @@
         <texture>textures_edges/16-texture.jpg</texture>
         <faces>3</faces>
         <edges>textures_edges/16-edges.jpg</edges>
-        <rhythm>-1.000000000</rhythm>
-        <objectTimes>0</objectTimes>
+        <rhythm>0.200000000</rhythm>
+        <objectTimes>16</objectTimes>
     </president>
     <president>
         <id>Jorge Sampaio</id>
-        <luminance>74.245834351</luminance>
-        <color>42.500000000</color>
+        <luminance>75.096778870</luminance>
+        <color>36.428569794</color>
         <texture>textures_edges/17-texture.jpg</texture>
         <faces>2</faces>
         <edges>textures_edges/17-edges.jpg</edges>
-        <rhythm>-1.000000000</rhythm>
+        <rhythm>0.200000000</rhythm>
         <objectTimes>0</objectTimes>
     </president>
     <president>
         <id>Aníbal Cavaco Silva</id>
-        <luminance>63.854969025</luminance>
-        <color>22.368421555</color>
+        <luminance>64.637672424</luminance>
+        <color>20.131578445</color>
         <texture>textures_edges/18-texture.jpg</texture>
-        <faces>3</faces>
+        <faces>4</faces>
         <edges>textures_edges/18-edges.jpg</edges>
-        <rhythm>0.373458103</rhythm>
+        <rhythm>0.200000000</rhythm>
         <objectTimes>0</objectTimes>
     </president>
     <president>
         <id>Marcelo Rebelo de Sousa</id>
-        <luminance>130.415283203</luminance>
-        <color>155.833328247</color>
+        <luminance>131.523468018</luminance>
+        <color>158.666671753</color>
         <texture>textures_edges/19-texture.jpg</texture>
-        <faces>1</faces>
+        <faces>2</faces>
         <edges>textures_edges/19-edges.jpg</edges>
-        <rhythm>0.210792760</rhythm>
+        <rhythm>0.200000000</rhythm>
         <objectTimes>0</objectTimes>
     </president>
 </presidentsMetadata>

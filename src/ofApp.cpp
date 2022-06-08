@@ -148,7 +148,7 @@ void ofApp::drawPresidents() {
 
         President* nextPresident = appData->getPresidentByCarrouselPosition(nextImageIdx);
 
-        ofImage* nextPresidentImg = getPresidentProfilePicture(nextPresident);;
+        ofImage* nextPresidentImg = getPresidentProfilePicture(nextPresident);
         nextPresidentImg->draw(nextPresidentImgXPos, PRESIDENTS_CARROUSEL_Y_POS, NEIGHBOUR_PRESIDENT_IMG_WIDTH, NEIGHBOUR_PRESIDENT_IMG_HEIGHT);
     }
 
@@ -175,6 +175,15 @@ void ofApp::drawPresidents() {
         string deathDate = currentPresident->deathDate;
         string presidentLifePeriod = birthDate + "->" + deathDate;
         drawStringCentered(presidentLifePeriod, windowXCenter, PRESIDENTS_CARROUSEL_Y_POS + CENTER_PRESIDENT_IMG_HEIGHT + 50);
+    }
+
+    {
+        std::stringstream tagsStr;
+        tagsStr << "Tags: \n";
+        for (string tag : currentPresident->tags)
+            tagsStr << "\t" + tag + "; \n";
+
+        myfont.drawString(tagsStr.str(), 50, ofGetWindowHeight() - 300);
     }
 
 }

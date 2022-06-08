@@ -141,13 +141,13 @@ class GenerateMetadata : public ofThread {
             const int n_threads = METADATA_GENERATION_N_THREADS;
             int n_presidents = appData->presidentsMedias.size();
 
-        int presidents_per_thread = n_presidents / n_threads;
+            int presidents_per_thread = n_presidents / n_threads;
 
             appData->isGeneratingMetadata = true;
         
         
-        for (int i = 0; i < n_presidents && n_threads > 1; i += presidents_per_thread) {
-            int endPres = i + presidents_per_thread > n_presidents - 1 ? n_presidents - 1 : i + presidents_per_thread;
+            for (int i = 0; i < n_presidents && n_threads > 1; i += presidents_per_thread) {
+                int endPres = i + presidents_per_thread > n_presidents - 1 ? n_presidents - 1 : i + presidents_per_thread;
 
                 std::thread _thread(&GenerateMetadata::generateMetadataThread, this, i, endPres);
 
@@ -161,25 +161,24 @@ class GenerateMetadata : public ofThread {
             for (int t = 0; t < threads.size(); t++)
                 threads[t].join();
 
-        auto xml = appData->presidentsMetadataXml;
+            auto xml = appData->presidentsMetadataXml;
 
-        xml.popTag();
-        xml.removeTag("presidentsMetadata", 0);
-        xml.clear();
-        xml.save("data_xml/presidents_metadata.xml");
+            xml.popTag();
+            xml.removeTag("presidentsMetadata", 0);
+            xml.clear();
+            xml.save("data_xml/presidents_metadata.xml");
 
-        xml.load("data_xml/presidents_metadata.xml");
+            xml.load("data_xml/presidents_metadata.xml");
 
-        int presidentsMetadataNTags = xml.getNumTags("presidentsMetadata");
-        assert(presidentsMetadataNTags == 0);
+            int presidentsMetadataNTags = xml.getNumTags("presidentsMetadata");
+            assert(presidentsMetadataNTags == 0);
 
-        xml.addTag("presidentsMetadata");
-        xml.pushTag("presidentsMetadata");
+            xml.addTag("presidentsMetadata");
+            xml.pushTag("presidentsMetadata");
 
-
-        for (int w = 0; w < appData->presidentsMedias.size(); w++)
-        {
-            PresidentMetadata* metadata = appData->presidentsMedias[w]->metadata;
+            for (int w = 0; w < appData->presidentsMedias.size(); w++)
+            {
+                PresidentMetadata* metadata = appData->presidentsMedias[w]->metadata;
 
                 if (metadata == NULL) {
                     assert(false);
@@ -203,6 +202,9 @@ class GenerateMetadata : public ofThread {
                 xml.saveFile();
             }
 
+            int presidentsNTags = xml.getNumTags("president");
+            assert(presidentsNTags == appData->presidentsMedias.size());
+
             xml.popTag();
 
             appData->isGeneratingMetadata = false;
@@ -212,11 +214,20 @@ class GenerateMetadata : public ofThread {
         }
     
         void generateMetadataThread(int startPres, int endPres) {
+            assert(endPres < appData->presidentsMedias.size());
             ofxCvHaarFinder finder;
             finder.setup("data_xml/haarcascade_frontalface_default.xml");
 
             for (int i = startPres; i <= endPres; i++)
-                generateMetadata(appData->presidentsMedias[i], &finder);
+            {
+                try {
+                    generateMetadata(appData->presidentsMedias[i], &finder);
+                }
+                catch (...) {
+                    assert(false);
+                }
+            }
+                
         }
 
         void generateMetadata(President* president, ofxCvHaarFinder* finder) {
