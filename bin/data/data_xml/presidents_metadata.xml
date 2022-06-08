@@ -156,7 +156,7 @@
         <texture>textures_edges/15-texture.jpg</texture>
         <faces>2</faces>
         <edges>textures_edges/15-edges.jpg</edges>
-        <rhythm>0.373896494</rhythm>
+        <rhythm>-1.000000000</rhythm>
         <objectTimes>0</objectTimes>
     </president>
     <president>
@@ -176,7 +176,7 @@
         <texture>textures_edges/17-texture.jpg</texture>
         <faces>2</faces>
         <edges>textures_edges/17-edges.jpg</edges>
-        <rhythm>-1.000000000</rhythm>
+        <rhythm>0.369015897</rhythm>
         <objectTimes>0</objectTimes>
     </president>
     <president>
@@ -186,7 +186,7 @@
         <texture>textures_edges/18-texture.jpg</texture>
         <faces>3</faces>
         <edges>textures_edges/18-edges.jpg</edges>
-        <rhythm>0.373458103</rhythm>
+        <rhythm>0.305294960</rhythm>
         <objectTimes>0</objectTimes>
     </president>
     <president>
@@ -196,7 +196,7 @@
         <texture>textures_edges/19-texture.jpg</texture>
         <faces>1</faces>
         <edges>textures_edges/19-edges.jpg</edges>
-        <rhythm>0.210792760</rhythm>
+        <rhythm>0.207414965</rhythm>
         <objectTimes>0</objectTimes>
     </president>
 </presidentsMetadata>
