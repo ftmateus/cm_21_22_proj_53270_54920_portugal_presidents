@@ -12,7 +12,6 @@ class TextureProperties {
 
 class PresidentMetadata {
 	public:
-		//President* president;
 		float luminance;
 		float color;
 		int faces;

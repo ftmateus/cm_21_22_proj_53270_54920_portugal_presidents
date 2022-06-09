@@ -33,16 +33,8 @@ class ofApp : public ofBaseApp {
 		void draw();
 		
 		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
 		void windowResized(ofResizeEventArgs& resize);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);		
 		void mouseScrolled(int x, int y, float scrollX, float scrollY);
 		void drawPresidents();
 		void drawBiographyVideo();
@@ -50,13 +42,10 @@ class ofApp : public ofBaseApp {
 		void getPresidentsInfoThread(int startPres, int endPres);
 		void getPresidentInfo(int xmlIndex);
 		ofImage *getPresidentProfilePicture(President *president);
-        void initButtons();
 
 		void applyFilter(Filters filter);
 		void pausePlayVideo();
 		void generateMetadata();
-		void searchPresidents();
-		int objectTimesFilter(ofImage image, ofImage objImage);
 
 		void drawStringCentered(const std::string& c, float x, float y);
 		void drawStringRight(const std::string& c, float x, float y);
@@ -75,7 +64,6 @@ class ofApp : public ofBaseApp {
 		void setVideoFullScreen();
 
 		void importMetadata();
-		void exportMetadata();
 
 		#define MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT -1
 
@@ -84,8 +72,6 @@ class ofApp : public ofBaseApp {
 		ofTrueTypeFont myfont;
 
 		bool fullScreen;
-
-		
 		
 		// we will have a dynamic number of images, based on the content of a directory:
 		ofDirectory imagesDir;
