@@ -40,10 +40,6 @@ void ofApp::setup() {
     else {
         appData->presidentsMetadataXml.clear();
         appData->presidentsMetadataXml.save("data_xml/presidents_metadata.xml");
-        //appData->presidentsMetadataXml.pushTag("presidentsMetadata");
-        //appData->presidentsMetadataXml.load("data_xml/presidents_metadata.xml");
-        /*ofLogError() << "Couldn't load file";
-        assert(false);*/
     }
         
     ofBackground(ofColor::white);
@@ -295,11 +291,11 @@ void ofApp::keyPressed(int key) {
 
 void ofApp::search() {
     string searchTerm = ofSystemTextBoxDialog("Search:", appData->currentSearchTerm);
-    if (searchTerm.length() == 0)
-    {
+    if (searchTerm.length() == 0) {
         cancelSearch();
         return;
     }
+    
     appData->currentSearchResult = appData->presidentsSearchIndex[searchTerm];
     appData->currentPresidentIdx = 0;
     appData->currentSearchTerm = searchTerm;
@@ -313,23 +309,19 @@ void ofApp::cancelSearch() {
     appData->showingSearchPresidents = false;
 }
 
-void ofApp::setVideoFullScreen()
-{
+void ofApp::setVideoFullScreen() {
     President* president = appData->getPresidentByCurrentCarrouselPosition();
 
-    if (president->biographyVideo == NULL)
-    {
+    if (president->biographyVideo == NULL) {
         assert(!fullScreen);
         return;
     }
 
     fullScreen = !fullScreen;
     ofSetFullscreen(fullScreen);
-
 }
 
-void ofApp::applyFilter(Filters filter)
-{
+void ofApp::applyFilter(Filters filter) {
     if (!appData->metadataGenerated) return;
     currentFilterApplied = currentFilterApplied == filter ? NO_FILTER : filter;
 }
@@ -358,7 +350,6 @@ void ofApp::generateMetadata() {
         generateMetadataThread.setup(appData);
     #endif
     currentFilterApplied = NO_FILTER;
-    //std::thread _thread(&ofApp::startMetadataGeneration, this);
 }
 
 void ofApp::indexPresidentForSearch(President *president) {
@@ -374,8 +365,7 @@ void ofApp::indexPresidentForSearch(President *president) {
 void ofApp::indexStringForSearch(string str, President *president) {
     int strLength = str.length();
     subStrLoop:
-    for (int c = 1; c <= strLength; c++)
-    {
+    for (int c = 1; c <= strLength; c++) {
         string subStr = str.substr(0, c);
         vector<President*>* presList = &appData->presidentsSearchIndex[subStr];
         bool alreadyAdded = false;
@@ -399,11 +389,6 @@ void ofApp::indexStringForSearch(string str, President *president) {
 
 }
 
-void ofApp::searchPresidents()
-{
-
-}
-
 void ofApp::switchPresident(President* previousPresident) {
     if (previousPresident == NULL) return;
 
@@ -423,6 +408,7 @@ void ofApp::switchPresident(President* previousPresident) {
 
             popPresident->biographyVideo->closeMovie();
         }
+        
     }
     appData->latestPresidentsSelected.push(currentPresident);
 
@@ -437,34 +423,12 @@ void ofApp::switchPresident(President* previousPresident) {
         assert(currentPresident->biographyVideoPath.length() > 0);
         assert(currentPresident->biographyVideo->getMoviePath() == "videos/" + currentPresident->biographyVideoPath);
 
-
         if(!currentPresident->biographyVideo->isLoaded())
             currentPresident->biographyVideo->load("videos/" + currentPresident->biographyVideoPath);
 
         currentPresident->biographyVideo->setLoopState(OF_LOOP_NORMAL);
         currentPresident->biographyVideo->play();
     }
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y )
-{
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
 
 }
 
@@ -539,13 +503,11 @@ void ofApp::getPresidentsInfo() {
     //does not make cycle if n_threads == 1
     for (int i = 0; i < n_presidents && n_threads > 1; i+=presidents_per_thread) {
         int endPres = i + presidents_per_thread > n_presidents - 1 ? n_presidents - 1 : i + presidents_per_thread;
-
         threads.push_back(std::thread(&ofApp::getPresidentsInfoThread, this, i, endPres));
-
-        //getPresidentsInfoThread(i, endPres);
     }
 
-    if(n_threads == 1) getPresidentsInfoThread(0, n_presidents - 1);
+    if(n_threads == 1)
+        getPresidentsInfoThread(0, n_presidents - 1);
 
     for (int t = 0; t < threads.size(); t++)
         threads[t].join();
@@ -565,14 +527,10 @@ void ofApp::getPresidentInfo(int xmlIndex) {
 
     President* presMedia = new President();
 
-    //string name = appData->presidentsXml.getValue("president:name", "", i);
-
     presMedia->pres_id = xmlIndex;
     presMedia->name = string(xml.getValue("name", "", 0));
 
-   
-    if (presMedia->name == "")
-    {  
+    if (presMedia->name == "") {
         assert(false);
         return;
     }
@@ -590,8 +548,7 @@ void ofApp::getPresidentInfo(int xmlIndex) {
     {
         int n_tags = xml.getNumTags("tag");
         presMedia->tags.reserve(n_tags);
-        for (int t = 0; t < n_tags; t++)
-        {
+        for (int t = 0; t < n_tags; t++) {
             string tag = string(xml.getValue("tag", "", t));
             assert(tag != "");
             presMedia->tags.push_back(tag);
@@ -621,21 +578,13 @@ void ofApp::getPresidentInfo(int xmlIndex) {
     xml.popTag();
 
     assert(xml.getPushLevel() == 1);
-
-    //generateMetadata(presMedia);
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-    /* OF_MOUSE_BUTTON_LEFT
-    OF_MOUSE_BUTTON_RIGHT
-    OF_MOUSE_BUTTON_MIDDLE */
-
-    //int centerPresidentImgXPos = windowXCenter - CENTER_PRESIDENT_IMG_WIDTH / 2;
+void ofApp::mouseReleased(int x, int y, int button) {
     if (button == OF_MOUSE_BUTTON_LEFT) {
         int president = getPresidentIndexWhereMouseIsPointing(x, y);
-        if (president != MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT)
-        {
+        if (president != MOUSE_PTR_NOT_POINTING_TO_ANY_PRESIDENT) {
             int previousPresidentIdx = appData->currentPresidentIdx;
             appData->currentPresidentIdx = president;
             switchPresident(appData->presidentsMedias[previousPresidentIdx]);
@@ -660,30 +609,10 @@ void ofApp::mouseScrolled(int x, int y, float scrollX, float scrollY) {
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
 void ofApp::windowResized(ofResizeEventArgs& resize) {
     windowXCenter = ofGetWidth() / 2;
     centerPresidentImgXPos = windowXCenter - CENTER_PRESIDENT_IMG_WIDTH / 2;
 
     if (resize.width <= CENTER_PRESIDENT_IMG_WIDTH + 2 * (NEIGHBOUR_PRESIDENT_IMG_WIDTH)+SPACE_BETWEEN_PRESIDENTS * 2)
         ofSetWindowShape(CENTER_PRESIDENT_IMG_WIDTH + 2 * (NEIGHBOUR_PRESIDENT_IMG_WIDTH)+SPACE_BETWEEN_PRESIDENTS * 2, ofGetHeight());
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){
-
 }

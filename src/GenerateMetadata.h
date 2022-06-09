@@ -148,15 +148,12 @@ class GenerateMetadata : public ofThread {
         
             for (int i = 0; i < n_presidents && n_threads > 1; i += presidents_per_thread) {
                 int endPres = i + presidents_per_thread > n_presidents - 1 ? n_presidents - 1 : i + presidents_per_thread;
-
                 std::thread _thread(&GenerateMetadata::generateMetadataThread, this, i, endPres);
-
-                //_thread.join();
-
                 threads.push_back(std::move(_thread));
             }
 
-            if (n_threads == 1) generateMetadataThread(0, n_presidents - 1);
+            if (n_threads == 1)
+                generateMetadataThread(0, n_presidents - 1);
 
             for (int t = 0; t < threads.size(); t++)
                 threads[t].join();
@@ -176,8 +173,7 @@ class GenerateMetadata : public ofThread {
             xml.addTag("presidentsMetadata");
             xml.pushTag("presidentsMetadata");
 
-            for (int w = 0; w < appData->presidentsMedias.size(); w++)
-            {
+            for (int w = 0; w < appData->presidentsMedias.size(); w++) {
                 PresidentMetadata* metadata = appData->presidentsMedias[w]->metadata;
 
                 if (metadata == NULL) {
@@ -218,12 +214,10 @@ class GenerateMetadata : public ofThread {
             ofxCvHaarFinder finder;
             finder.setup("data_xml/haarcascade_frontalface_default.xml");
 
-            for (int i = startPres; i <= endPres; i++)
-            {
+            for (int i = startPres; i <= endPres; i++) {
                 try {
                     generateMetadata(appData->presidentsMedias[i], &finder);
-                }
-                catch (...) {
+                } catch (...) {
                     assert(false);
                 }
             }
@@ -451,33 +445,30 @@ class GenerateMetadata : public ofThread {
                 }
                 
             }
-        return numberOfMatches;
-    }
+            return numberOfMatches;
+        }
 
-    int objectTimesFilter(President *president) {
+        int objectTimesFilter(President *president) {
+            int numberOfMatches = 0;
+            
+            numberOfMatches += _objectTimesFilter(*(president->profilePicture));
 
-        int numberOfMatches = 0;
+            /*if (president->biographyVideo != NULL) {
+                assert(president->biographyVideoPath.length() > 0);
+                assert(president->biographyVideo->getMoviePath() == "videos/" + president->biographyVideoPath);
+                ofVideoPlayer tempVid = *(president->biographyVideo);
+                int total_frames = tempVid.getTotalNumFrames();
 
-        numberOfMatches += _objectTimesFilter(*(president->profilePicture));
+                for (int f = 0; f < total_frames; f++) {
+                    tempVid.setFrame(f);
+                    assert(tempVid.getCurrentFrame() <= f);
+                    assert(tempVid.getCurrentFrame() >= f - 1);
+                    numberOfMatches += _objectTimesFilter(tempVid.getPixels());
+                }
+            }*/
 
-        /*if (president->biographyVideo != NULL)
-        {
-            assert(president->biographyVideoPath.length() > 0);
-            assert(president->biographyVideo->getMoviePath() == "videos/" + president->biographyVideoPath);
-            ofVideoPlayer tempVid = *(president->biographyVideo);
-            int total_frames = tempVid.getTotalNumFrames();
-
-            for (int f = 0; f < total_frames; f++)
-            {
-                tempVid.setFrame(f);
-                assert(tempVid.getCurrentFrame() <= f);
-                assert(tempVid.getCurrentFrame() >= f - 1);
-                numberOfMatches += _objectTimesFilter(tempVid.getPixels()); 
-            }
-        }*/
-
-        return numberOfMatches;
-    }
+            return numberOfMatches;
+        }
 
     protected:
         // pixels represents shared data that we aim to always access from both the
