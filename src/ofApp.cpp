@@ -361,7 +361,6 @@ void ofApp::generateMetadata() {
         generateMetadataThread.setup(appData);
     #endif
     currentFilterApplied = NO_FILTER;
-    //std::thread _thread(&ofApp::startMetadataGeneration, this);
 }
 
 //--------------------------------------------------------------

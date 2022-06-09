@@ -34,8 +34,6 @@ class ImportMetadata : public ofThread {
 
         void setup(ofAppData* appData) {
             this->appData = appData;
-            /*pixels.allocate(640, 480, OF_PIXELS_GRAY);
-             tex.allocate(pixels);*/
             start();
         }
 
@@ -61,73 +59,6 @@ class ImportMetadata : public ofThread {
             condition.notify_all();
         }
 
-        // Everything in this function will happen in a different
-        // thread which leaves the main thread completelty free for
-        // other tasks.
-        void threadedFunction() {
-            //while (isThreadRunning()) {
-                // since we are only writting to the frame number from one thread
-                // and there's no calculations that depend on it we can just write to
-                // it without locking
-                //threadFrameNum++;
-
-                // Lock the mutex until the end of the block, until the closing }
-                // in which this variable is contained or we unlock it explicitly
-                //std::unique_lock<std::mutex> lock(mutex);
-
-                // The mutex is now locked so we can modify
-                // the shared memory without problem
-                //auto t = ofGetElapsedTimef();
-                //for (auto line : pixels.getLines()) {
-                //    auto x = 0;
-                //    for (auto pixel : line.getPixels()) {
-                //        auto ux = x / float(pixels.getWidth());
-                //        auto uy = line.getLineNum() / float(pixels.getHeight());
-                //        pixel[0] = ofNoise(ux, uy, t);
-                //        x++;
-                //    }
-                //}
-
-                // Now we wait for the main thread to finish
-                // with this frame until we can generate a new one
-                // This sleeps the thread until the condition is signaled
-                // and unlocks the mutex so the main thread can lock it
-                //condition.wait(lock);
-                //startMetadataGeneration();
-            //}
-        }
-
-        void update() {
-            // if we didn't lock here we would see
-            // tearing as the thread would be updating
-            // the pixels while we upload them to the texture
-            //std::unique_lock<std::mutex> lock(mutex);
-            //tex.loadData(pixels);
-            //condition.notify_all();
-        }
-
-        void updateNoLock() {
-            // we don't lock here so we will see
-            // tearing as the thread will update
-            // the pixels while we upload them to the texture
-            //tex.loadData(pixels);
-            //condition.notify_all();
-        }
-
-        // This drawing function cannot be called from the thread itself because
-        // it includes OpenGL calls
-        void draw() {
-            //tex.draw(0, 0);
-        }
-
     protected:
-        // pixels represents shared data that we aim to always access from both the
-        // main thread AND this threaded object and at least from one of them for
-        // writing. Therefore, we need to protect it with the mutex.
-        // Otherwise it wouldn't make sense to lock.
-        //ofFloatPixels pixels;
-
-        //ofTexture tex;
         std::condition_variable condition;
-        //int threadFrameNum = 0;
 };

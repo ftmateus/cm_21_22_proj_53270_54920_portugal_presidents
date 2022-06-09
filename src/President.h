@@ -5,11 +5,6 @@
 
 using namespace std;
 
-class TextureProperties {
-	public:
-		int zeroes;
-};
-
 class PresidentMetadata {
 	public:
 		float luminance;

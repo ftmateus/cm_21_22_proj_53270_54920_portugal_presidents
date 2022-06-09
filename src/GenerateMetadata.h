@@ -49,8 +49,6 @@ class GenerateMetadata : public ofThread {
         void setup(ofAppData* appData) {
             this->appData = appData;
             objectImage.load("images/object_image.jpg");
-            /*pixels.allocate(640, 480, OF_PIXELS_GRAY);
-             tex.allocate(pixels);*/
             start();
         }
 
@@ -80,59 +78,7 @@ class GenerateMetadata : public ofThread {
         // thread which leaves the main thread completelty free for
         // other tasks.
         void threadedFunction() {
-            //while (isThreadRunning()) {
-                //since we are only writting to the frame number from one thread
-                // and there's no calculations that depend on it we can just write to
-                // it without locking
-                //threadFrameNum++;
-
-                // Lock the mutex until the end of the block, until the closing }
-                // in which this variable is contained or we unlock it explicitly
-                //std::unique_lock<std::mutex> lock(mutex);
-
-                // The mutex is now locked so we can modify
-                // the shared memory without problem
-                //auto t = ofGetElapsedTimef();
-                //for (auto line : pixels.getLines()) {
-                //    auto x = 0;
-                //    for (auto pixel : line.getPixels()) {
-                //        auto ux = x / float(pixels.getWidth());
-                //        auto uy = line.getLineNum() / float(pixels.getHeight());
-                //        pixel[0] = ofNoise(ux, uy, t);
-                //        x++;
-                //    }
-                //}
-
-                // Now we wait for the main thread to finish
-                // with this frame until we can generate a new one
-                // This sleeps the thread until the condition is signaled
-                // and unlocks the mutex so the main thread can lock it
-                //condition.wait(lock);
             startMetadataGeneration();
-            //}
-        }
-
-        void update() {
-            // if we didn't lock here we would see
-            // tearing as the thread would be updating
-            // the pixels while we upload them to the texture
-            //std::unique_lock<std::mutex> lock(mutex);
-            //tex.loadData(pixels);
-            //condition.notify_all();
-        }
-
-        void updateNoLock() {
-            // we don't lock here so we will see
-            // tearing as the thread will update
-            // the pixels while we upload them to the texture
-            //tex.loadData(pixels);
-            //condition.notify_all();
-        }
-
-        // This drawing function cannot be called from the thread itself because
-        // it includes OpenGL calls
-        void draw() {
-            //tex.draw(0, 0);
         }
 
         void startMetadataGeneration() {
@@ -145,18 +91,14 @@ class GenerateMetadata : public ofThread {
 
             appData->isGeneratingMetadata = true;
         
-        
             for (int i = 0; i < n_presidents && n_threads > 1; i += presidents_per_thread) {
                 int endPres = i + presidents_per_thread > n_presidents - 1 ? n_presidents - 1 : i + presidents_per_thread;
-
                 std::thread _thread(&GenerateMetadata::generateMetadataThread, this, i, endPres);
-
-                //_thread.join();
-
                 threads.push_back(std::move(_thread));
             }
 
-            if (n_threads == 1) generateMetadataThread(0, n_presidents - 1);
+            if (n_threads == 1)
+                generateMetadataThread(0, n_presidents - 1);
 
             for (int t = 0; t < threads.size(); t++)
                 threads[t].join();
@@ -176,8 +118,7 @@ class GenerateMetadata : public ofThread {
             xml.addTag("presidentsMetadata");
             xml.pushTag("presidentsMetadata");
 
-            for (int w = 0; w < appData->presidentsMedias.size(); w++)
-            {
+            for (int w = 0; w < appData->presidentsMedias.size(); w++) {
                 PresidentMetadata* metadata = appData->presidentsMedias[w]->metadata;
 
                 if (metadata == NULL) {
@@ -218,12 +159,10 @@ class GenerateMetadata : public ofThread {
             ofxCvHaarFinder finder;
             finder.setup("data_xml/haarcascade_frontalface_default.xml");
 
-            for (int i = startPres; i <= endPres; i++)
-            {
+            for (int i = startPres; i <= endPres; i++) {
                 try {
                     generateMetadata(appData->presidentsMedias[i], &finder);
-                }
-                catch (...) {
+                } catch (...) {
                     assert(false);
                 }
             }
@@ -288,6 +227,7 @@ class GenerateMetadata : public ofThread {
 
             metadata->faces = faces;
 
+            // number of times a specific object(input as an image) appears in the image or video
             int objectTimes = objectTimesFilter(president);
 
             metadata->objectTimes = objectTimes;
@@ -451,42 +391,17 @@ class GenerateMetadata : public ofThread {
                 }
                 
             }
-        return numberOfMatches;
-    }
+            return numberOfMatches;
+        }
 
-    int objectTimesFilter(President *president) {
+        int objectTimesFilter(President *president) {
+            int numberOfMatches = 0;
 
-        int numberOfMatches = 0;
+            numberOfMatches += _objectTimesFilter(*(president->profilePicture));
 
-        numberOfMatches += _objectTimesFilter(*(president->profilePicture));
-
-        /*if (president->biographyVideo != NULL)
-        {
-            assert(president->biographyVideoPath.length() > 0);
-            assert(president->biographyVideo->getMoviePath() == "videos/" + president->biographyVideoPath);
-            ofVideoPlayer tempVid = *(president->biographyVideo);
-            int total_frames = tempVid.getTotalNumFrames();
-
-            for (int f = 0; f < total_frames; f++)
-            {
-                tempVid.setFrame(f);
-                assert(tempVid.getCurrentFrame() <= f);
-                assert(tempVid.getCurrentFrame() >= f - 1);
-                numberOfMatches += _objectTimesFilter(tempVid.getPixels()); 
-            }
-        }*/
-
-        return numberOfMatches;
-    }
+            return numberOfMatches;
+        }
 
     protected:
-        // pixels represents shared data that we aim to always access from both the
-        // main thread AND this threaded object and at least from one of them for
-        // writing. Therefore, we need to protect it with the mutex.
-        // Otherwise it wouldn't make sense to lock.
-        //ofFloatPixels pixels;
-
-        //ofTexture tex;
         std::condition_variable condition;
-        //int threadFrameNum = 0;
 };
